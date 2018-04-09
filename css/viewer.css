@@ -1,0 +1,115 @@
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+  }
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #f5f5f5;
+  }  
+  /* Custom page CSS
+  -------------------------------------------------- */
+  /* Not required for template or sticky footer method. */
+  
+  body > .container {
+    padding: 60px 15px 0;
+  }
+  
+  .footer > .footer-text {
+    padding-right: 15px;
+    padding-left: 15px;
+    font-family: 'Quicksand', sans-serif;
+  }
+  
+  code {
+    font-size: 80%;
+  }
+
+  /* header */
+  div.page_header {
+    padding-left: 20;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 60px;
+    background-color: #363636;
+    text-align: left;
+    vertical-align: middle;
+    display: table-cell;
+    color:#cccccc;
+    font-size:18pt;
+    font-family: 'Quicksand', sans-serif;
+  }
+  div.page_header_menu {
+    font-size:14pt;
+    font-family: 'Roboto', sans-serif;
+    padding-right: 15px;
+  }
+
+  div.page-title {
+    color:#444444;
+    font-size: 28pt;
+    font-family: 'Nunito', sans-serif;
+    padding-top:20;
+  }
+
+  div.main-panel {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  div.receiver-panel {
+      max-width: 550;
+  }
+  
+  div.price-feed {
+    color:#444444;
+    font-size: 10pt;
+    font-family: 'Nunito', sans-serif;
+    background-color: #cccccc; 
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  
+  table.pay-summary {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #888888;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    font-size: 18pt;
+  }
+
+  td.pay-summary-left {
+    width: 100px;
+    padding: 5px;
+    text-align: right;
+    padding-right: 20px;
+    font-weight: 700;
+  }
+  td.pay-summary-right {
+    padding: 5px;
+    text-align: left;
+    font-size: 14pt;
+  }
+
+    /** QR **/
+    .qrcode-text {padding-right:1.7em; margin-right:0}
+    .qrcode-text-btn {display:inline-block; background:url(//dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg) 50% 50% no-repeat; height:1em; width:1.7em; margin-left:-1.7em; cursor:pointer}
+    .qrcode-text-btn > input[type=file] {position:absolute; overflow:hidden; width:1px; height:1px; opacity:0}
