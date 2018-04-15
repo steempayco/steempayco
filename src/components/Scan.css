@@ -1,0 +1,8 @@
+.videoContainer 
+{
+    height:100%;
+    width:100%;
+    overflow: hidden;
+    background-color: black;
+    border-radius: 10px;
+}
