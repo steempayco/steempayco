@@ -3,7 +3,6 @@ import { Button, Image, List, Divider, Container, Modal } from 'semantic-ui-reac
 import AddUser from './AddUser';
 import AddExchange from './AddExchange';
 
-
 let steem = require('steem');
 
 const config = {
@@ -36,12 +35,13 @@ class SettingEditor extends Component {
         this.addExchange = this.addExchange.bind(this);
         this.deleteExchange = this.deleteExchange.bind(this);
         this.save = this.save.bind(this);
-        
     }
 
     getStateFromConfig() {
+        let rawConfig = localStorage.getItem('steempay_config');
+        if (!rawConfig) return config;
         try {
-            return JSON.parse(localStorage.getItem('steempay_config'));
+            return JSON.parse(rawConfig);
         } catch(error) {
             return config;
         }
@@ -70,6 +70,7 @@ class SettingEditor extends Component {
         this.setState(this.state.config.users);
         this.getUserAccounts();
     }
+
     deleteUser(userId) {
         this.state.config.users = this.state.config.users.filter((user) => user.account != userId);
         this.setState(this.state.config.users);
@@ -89,6 +90,7 @@ class SettingEditor extends Component {
 
     save() {
         this.setStateToConfig();
+        this.props.onSave();
     }
 
     componentDidMount() {

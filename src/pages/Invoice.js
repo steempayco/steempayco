@@ -1,6 +1,6 @@
 import React from 'react';
 import './PageCommon.css'
-import InvoiceForm from 'components/InvoiceForm'
+import InvoiceFormContainer from 'containers/InvoiceFormContainer'
 
 const Invoice = () => {
     return (
@@ -8,7 +8,7 @@ const Invoice = () => {
             <h2>
                 Invoice
             </h2>
-            <InvoiceForm />
+            <InvoiceFormContainer />
         </div>
     );
 };

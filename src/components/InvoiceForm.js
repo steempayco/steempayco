@@ -1,20 +1,67 @@
 import React, { Component } from "react";
-import { Button, Header, Icon, Modal, Segment, Input, Select } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Segment, Input, Select, Form, Label } from 'semantic-ui-react'
 import { QRCode } from 'react-qr-svg';
+import * as actions from '../actions';
 
 
 class InvoiceForm extends Component {
     constructor(props) {
         super(props);
+        this.state = {invoiceData: {}};
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange = (event, data) => {
+        console.log(data.value);
+        this.state.invoiceData[data.name] = data.value;
+        this.setState(this.state.invoiceData);
     }
 
     render() {
+        const receivers = [];
+
+        this.props.users.map((user) => {
+            var key = JSON.stringify(user);
+            receivers.push({text: user.account, key: user.account, value: key})
+        });
+
+        this.props.exchanges.map((exchange) => {
+            var key = JSON.stringify(exchange);
+            receivers.push(
+                {text: exchange.nickname + ' (' + exchange.account + ')',
+                value: key,
+                key: key })
+        });
         return (
             <div>
-            <Receiver />
+                <Segment>
+                    Create a QR code with the values, and show it to your customer!
+                </Segment>
+                <Form>
+                    <Form.Select fluid name='receiver' label='Receiver' options={receivers} placeholder='Choose Receiver'  onChange={this.handleChange}/>
+                    <Form.Input fluid name='amount' label='Amount (KRW)' placeholder='Amount'  onChange={this.handleChange}/>
+                    <div style={{marginBottom: 10, textAlign: 'right', marginTop: -10}}>
+                        <span style={{fontSize: 11}}>
+                        1 SBD = {this.props.feed.price} KRW ({this.props.feed.exchange}, {this.props.feed.lastUpdate})
+                        </span>
+                        {this.state.invoiceData.amount && (
+                            <Label size='big' color='green' tag>{(this.state.invoiceData.amount / this.props.feed.price).toFixed(3)} SBD</Label>
+                        )}<br/>
+                    </div>
+                    <Form.Input fluid name='memo' label='Memo' placeholder='Transaction message'  onChange={this.handleChange}/>
+                    <ShowQRCodeModal data={"aa"}/>
+
+                </Form>
+
             </div>
         );
     }
+}
+
+InvoiceForm.defaultProps = {
+    users: [],
+    exchanges: [],
+    feed: {}
 }
 
 const inlineStyle = {
@@ -149,10 +196,16 @@ class Receiver extends React.Component {
                     <img src={this.state.qrData}/>
                 )}
                 <ShowQRCodeModal data={"aa"}/>
-
             </div>
         )
     }
+}
+
+Receiver.defaultProps = {
+    users: [],
+    exchanges: [],
+    currency: null,
+    exchangeRate: null
 }
 
 export default InvoiceForm;

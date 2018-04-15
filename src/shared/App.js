@@ -1,8 +1,9 @@
 import React from "react";
 import { Router, Route } from 'react-router'
 import AppFrame from 'components/AppFrame'
+import PriceFeedContainer from 'containers/PriceFeedContainer'
 
-import { Home, Payment, Invoice, Setting } from 'pages';
+import { Home, Payment, Invoice, Price, Setting } from 'pages';
 
 
 const leftItems = [
@@ -18,7 +19,9 @@ const Content = () => (
         <Route exact path="/" component={Home} />
         <Route path="/pay" component={Payment} />
         <Route path="/invoice" component={Invoice} />
+        <Route path="/price" component={Price} />
         <Route path="/setting" component={Setting} />
+        <PriceFeedContainer />
     </div>
 );
 

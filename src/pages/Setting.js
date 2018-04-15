@@ -1,5 +1,5 @@
 import React from 'react';
-import SettingEditor from 'components/setting/SettingEditor';
+import SettingEditorContainer from 'containers/SettingEditorContainer';
 
 
 const Setting = () => {
@@ -8,7 +8,7 @@ const Setting = () => {
             <h2>
                 Setting
             </h2>
-            <SettingEditor />
+            <SettingEditorContainer />
         </div>
     );
 };
