@@ -1,4 +1,15 @@
+import Exchange from 'resources/exchange.json'
+
 var Utils = {
+    getExchange: () => {
+        return Exchange;
+    },
+    getExchangeImage: (name) => {
+        return Exchange.find((item) => item.name === name).image;
+    },
+    getExchangeAccount: (name) => {
+        return Exchange.find((item) => item.name === name).account;
+    },
     shortenNumber: (num, digits) => {
         var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
             decimal;

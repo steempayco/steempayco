@@ -1,7 +1,6 @@
-import InvoiceForm from '../components/InvoiceForm';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import React, { Component } from "react";
+import { Component } from "react";
 
 class PriceFetcher extends Component {
     constructor(props) {

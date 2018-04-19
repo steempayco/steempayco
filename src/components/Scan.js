@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Divider, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 
 import './Scan.css';
 let Instascan = window.Instascan;

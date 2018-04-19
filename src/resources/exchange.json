@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Upbit",
+        "account": "myupbit",
+        "image": "./img/upbit.jpg",
+        "currency": "KRW"
+    },
+    {
+        "name": "Bittrex",
+        "account": "bittrex",
+        "image": "./img/bittrex.png",
+        "currency": "USD"
+    }
+]

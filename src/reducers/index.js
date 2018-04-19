@@ -15,14 +15,13 @@ function getConfig() {
     }
 }
 
-// 초기 상태를 정의합니다
 const initialState = {
     config: getConfig(),
     feed: {}
 };
 
 function configManager(state = initialState, action) {
-    switch (action. type) {
+    switch (action.type) {
         case types.UPDATE_CONFIG:
             return {
                 ...state,

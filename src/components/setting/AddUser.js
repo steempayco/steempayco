@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Header, Icon, Modal, Segment, Input, Form } from 'semantic-ui-react'
+import { Button, Header, Modal, Input, Form } from 'semantic-ui-react'
 
 const inlineStyle = {
     modal : {
@@ -13,6 +13,7 @@ class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = { modalOpen: false };
+        this.handleOpen = this.handleOpen.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
@@ -34,7 +35,7 @@ class AddUser extends Component {
     render() {
         return (
         <Modal size='tiny' 
-            trigger={<Button fluid onClick={this.handleOpen}>New User</Button>}
+            trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{backgroundColor: 'white'}}/>}
             open={this.state.modalOpen}
             onClose={this.handleClose}
             style={inlineStyle.modal}>

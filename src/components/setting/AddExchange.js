@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, Header, Icon, Modal, Segment, Input, Form, Dropdown } from 'semantic-ui-react'
+import { Button, Header, Modal, Form } from 'semantic-ui-react'
+import Utils from 'shared/Utils'
 
 const inlineStyle = {
     modal : {
@@ -9,9 +10,8 @@ const inlineStyle = {
     }
 };
 
-const exchanges = [
-    { key: 'upbit', text: 'Upbit', value: 'myupbit' },
-];
+const exchanges = Utils.getExchange().map((exchange) => (
+{key: exchange.name, value: exchange.name, text: exchange.name, image: exchange.image }));
 
 class AddExchange extends Component {
     constructor(props) {
@@ -29,8 +29,7 @@ class AddExchange extends Component {
     }
 
     handleSave = () => {
-        console.log(this.state.exchangeData);
-
+        this.state.exchangeData.account = Utils.getExchangeAccount(this.state.exchangeData.name);
         this.props.onSave(this.state.exchangeData);
         this.state.exchangeData = {};
         this.handleClose();
@@ -39,14 +38,14 @@ class AddExchange extends Component {
     render() {
         return (
         <Modal size='tiny' 
-            trigger={<Button fluid onClick={this.handleOpen}>New Exchange</Button>}
+            trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{backgroundColor: 'white'}}/>}
             open={this.state.modalOpen}
             onClose={this.handleClose}
             style={inlineStyle.modal}>
         <Header icon='paste' content='Add an exchange account' />
         <Modal.Content>
         <Form>
-            <Form.Select fluid name='account' label='Gender' options={exchanges} placeholder='Choose Exchange'  onChange={this.handleChange}/>
+            <Form.Select fluid name='name' label='Gender' options={exchanges} placeholder='Choose Exchange'  onChange={this.handleChange}/>
             <Form.Input fluid name='nickname' label='Nick Name' placeholder='Nick name of this wallet'  onChange={this.handleChange}/>
             <Form.Input fluid name='wallet' label='Wallet Code' placeholder='Your personal SBD wallet code'  onChange={this.handleChange}/>
         </Form>

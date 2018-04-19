@@ -4,11 +4,8 @@ import { Link } from 'react-router-dom';
 import {
     Container,
     Icon,
-    Image,
     Menu,
     Sidebar,
-    Responsive,
-    Header
   } from "semantic-ui-react";
 
 import Footer from 'components/Footer'
@@ -88,7 +85,7 @@ class AppFrame extends Component {
   handleToggle = () => this.setState({ visible: !this.state.visible });
 
   render() {
-    const { children, leftItems, rightItems } = this.props;
+    const { children, rightItems } = this.props;
     const { visible } = this.state;
 
     return (

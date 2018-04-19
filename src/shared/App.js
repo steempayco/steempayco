@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route } from 'react-router'
+import { Route } from 'react-router'
 import AppFrame from 'components/AppFrame'
 import PriceFeedContainer from 'containers/PriceFeedContainer'
 

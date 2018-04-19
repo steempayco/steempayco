@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Image, List, Divider, Container, Modal } from 'semantic-ui-react'
+import { Button, Image, List, Divider, Container, Header, Segment } from 'semantic-ui-react'
 import AddUser from './AddUser';
 import AddExchange from './AddExchange';
+import Utils from 'shared/Utils'
 
 let steem = require('steem');
 
@@ -9,18 +10,6 @@ const config = {
     users: [],
     exchanges: [],
 }
-
-const exchangeImg = {
-    'myupbit': './img/upbit.jpg',
-};
-
-const inlineStyle = {
-    modal : {
-      marginTop: '40px !important',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    }
-};
 
 class SettingEditor extends Component {
     constructor(props) {
@@ -100,8 +89,12 @@ class SettingEditor extends Component {
     render() {
         return (
             <div>
-                <Divider horizontal >User Accounts</Divider>
-                <List verticalAlign='middle' size='huge'>
+                <Header as='h4' attached='top'>
+                    Steem Accounts
+                    <AddUser onSave={this.addUser}/>
+                </Header>
+                <Segment attached>
+                <List verticalAlign='middle' size='big'>
                     {this.state.config.users.map( (user, key) => ( 
                         <List.Item key={key}>
                             <List.Content floated='right'>
@@ -114,29 +107,32 @@ class SettingEditor extends Component {
                         </List.Item>
                     ))}
                 </List>
-                <AddUser onSave={this.addUser}/>
+                </Segment>
 
-                <Divider horizontal>Exchange Accounts</Divider>
-                <List divided verticalAlign='middle' size='huge'>
+                <Header as='h4' attached='top'>
+                    Exchange Accounts
+                    <AddExchange onSave={this.addExchange} />
+                </Header>
+                <Segment attached>
+                <List divided verticalAlign='middle' size='big'>
                     {this.state.config.exchanges.map( (exchange, index) => ( 
                         <List.Item key={index}>
                             <List.Content floated='right'>
                                 <Button onClick={() => this.deleteExchange(index)}>Delete</Button>
                             </List.Content>
-                            <Image avatar src={exchangeImg[exchange.account]} />
+                            <Image avatar src={Utils.getExchangeImage(exchange.name)} />
                             <List.Content>
                                 {exchange.nickname}
                             </List.Content>
                             <Container text textAlign='left'>
-                                <span style={{fontSize: 11, fontFamily: "'Source Code Pro', monospace"}}>
+                                <span style={{fontSize: 11, fontFamily: "monospace"}}>
                                 {exchange.wallet}
                                 </span>
                             </Container>
                         </List.Item>
                     ))}
                 </List>
-                <AddExchange onSave={this.addExchange}/>
-
+                </Segment>
                 <Divider/>
                 <Button large fluid positive onClick={ this.save }>Save</Button>
             </div>
