@@ -5,6 +5,7 @@ var Utils = {
         return Exchange;
     },
     getExchangeImage: (name) => {
+        if (!name) return;
         return Exchange.find((item) => item.name === name).image;
     },
     getExchangeAccount: (name) => {

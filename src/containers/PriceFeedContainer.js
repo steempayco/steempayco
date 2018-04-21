@@ -10,7 +10,7 @@ class PriceFetcher extends Component {
 
     componentDidMount() {
         this.getPrice();
-        setInterval(() => this.getPrice(), 10000);
+        setInterval(() => this.getPrice(), 30000);
     }
 
     getPrice() {

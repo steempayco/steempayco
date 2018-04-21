@@ -10,7 +10,6 @@ class Scan extends Component {
         this.state = {scanValue: null, scanning: false};
 
         this.toggleScan = this.toggleScan.bind(this);
-        this.onVideoClick = this.onVideoClick.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +19,7 @@ class Scan extends Component {
         this.scanner.addListener('scan', function (content) {
             console.log(content);
             _this.setState({scanValue: content});
+            _this.props.onScanFinished(content.split("q=")[1]);
             _this.toggleScan();
         });
     }
@@ -41,11 +41,6 @@ class Scan extends Component {
         }
         this.setState({scanning: !this.state.scanning});
     }
-
-    onVideoClick() {
-        console.log('video clicked!');
-        this.scanner.stop();
-    }
     
     render() {
         return (
@@ -66,9 +61,6 @@ class Scan extends Component {
                             <div> {this.state.scanValue} </div>
                         )}
                     </div>
-                </div>
-                <div>
-                    Information
                 </div>
             </div>
         );
