@@ -45,7 +45,7 @@ class AddExchange extends Component {
         <Header icon='paste' content='Add an exchange account' />
         <Modal.Content>
         <Form>
-            <Form.Select fluid name='name' label='Gender' options={exchanges} placeholder='Choose Exchange'  onChange={this.handleChange}/>
+            <Form.Select fluid name='name' label='Exchange' options={exchanges} placeholder='Choose Exchange'  onChange={this.handleChange}/>
             <Form.Input fluid name='nickname' label='Nick Name' placeholder='Nick name of this wallet'  onChange={this.handleChange}/>
             <Form.Input fluid name='wallet' label='Wallet Code' placeholder='Your personal SBD wallet code'  onChange={this.handleChange}/>
         </Form>
