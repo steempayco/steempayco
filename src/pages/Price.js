@@ -6,6 +6,7 @@ const Price = () => {
             <h2>
                 Price
             </h2>
+            Not implemented yet.
         </div>
     );
 };

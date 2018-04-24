@@ -17,8 +17,8 @@ const rightItems = [
 const Content = () => (
     <div>
         <Route exact path="/" component={Home} />
-        <Route path="/pay" component={Payment} />
-        <Route path="/invoice" component={Invoice} />
+        <Route path="/pay/:id?" component={Payment} />
+        <Route path="/invoice/:id?" component={Invoice} />
         <Route path="/price" component={Price} />
         <Route path="/setting" component={Setting} />
         <PriceFeedContainer />

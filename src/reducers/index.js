@@ -17,7 +17,7 @@ function getConfig() {
 
 const initialState = {
     config: getConfig(),
-    feed: {}
+    feed: null
 };
 
 function configManager(state = initialState, action) {

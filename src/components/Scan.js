@@ -19,7 +19,7 @@ class Scan extends Component {
         this.scanner.addListener('scan', function (content) {
             console.log(content);
             _this.setState({scanValue: content});
-            _this.props.onScanFinished(content.split("q=")[1]);
+            _this.props.onScanFinished(content.split("/").pop());
             _this.toggleScan();
         });
     }

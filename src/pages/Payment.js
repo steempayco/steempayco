@@ -1,18 +1,14 @@
 import React from 'react';
 
-import PaymentComponent from 'components/PaymentComponent'
+import PaymentInject from 'components/PaymentInject'
+import PaymentView from 'components/PaymentView'
 import Utils from 'shared/Utils'
 import './PageCommon.css'
 
-const Payment = () => {
-    let paymentId = Utils.getQueryVariable("q");
+const Payment = ({match}) => {
     return (
-        <div className="pageArea">
-            <h2>
-                Payment
-            </h2>
-            
-            <PaymentComponent paymentId={paymentId} />
+        <div>
+            {match.params.id ? <PaymentView invoiceId={match.params.id} /> : <PaymentInject />}
         </div>
     );
 };

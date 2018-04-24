@@ -21,7 +21,7 @@ const NavBarMobile = ({
     <Sidebar.Pushable>
       <Sidebar
         as={Menu}
-        animation="push"
+        animation="overlay"
         icon="labeled"
         inverted
         vertical
