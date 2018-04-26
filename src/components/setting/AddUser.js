@@ -39,7 +39,7 @@ class AddUser extends Component {
             open={this.state.modalOpen}
             onClose={this.handleClose}
             style={inlineStyle.modal}>
-        <Header icon='paste' content='Add a Steem accoubt' />
+        <Header icon='paste' content='Add a Steem account' />
         <Modal.Content>
         <Form>
             <Form.Group widths='equal'>
