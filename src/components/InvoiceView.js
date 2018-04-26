@@ -1,15 +1,8 @@
 import React, { Component } from "react";
 import { QRCode } from 'react-qr-svg';
-import { Button, Header, Modal, Segment, Form, Label, Dimmer, Loader, Table } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
-
-const inlineStyle = {
-    modal : {
-      marginTop: '40px !important',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    }
-};
+import Api from 'shared/Api'
 
 class InvoiceView extends Component {
     constructor(props) {
@@ -21,7 +14,11 @@ class InvoiceView extends Component {
     }
 
     componentDidMount() {
-        this.fetchInvoice();
+        Api.fetchInvoice(
+            this.props.invoiceId,
+            (data) => { this.setState({invoice: data}); },
+            (error) => { this.setState({errorMessage: "Failed to open invoice"}); }
+        );
     }
 
     getData = () => {

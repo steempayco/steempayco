@@ -1,5 +1,4 @@
 import InvoiceForm from '../components/InvoiceForm';
-import * as actions from '../actions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => ({

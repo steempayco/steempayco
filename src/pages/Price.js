@@ -1,8 +1,9 @@
 import React from 'react';
+import './PageCommon.css'
 
 const Price = () => {
     return (
-        <div>
+        <div className="pageArea">
             <h2>
                 Price
             </h2>

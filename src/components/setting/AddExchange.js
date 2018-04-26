@@ -24,14 +24,16 @@ class AddExchange extends Component {
     handleClose = () => this.setState({ modalOpen: false })
 
     handleChange = (event, data) => {
-        this.state.exchangeData[data.name] = data.value;
-        this.setState(this.state.exchangeData);
+        let exchange = this.state.exchangeData;
+        exchange[data.name] = data.value;
+        this.setState({exchangeData: exchange});
     }
 
     handleSave = () => {
-        this.state.exchangeData.account = Utils.getExchangeAccount(this.state.exchangeData.name);
-        this.props.onSave(this.state.exchangeData);
-        this.state.exchangeData = {};
+        let exchange = this.state.exchangeData;
+        exchange.account = Utils.getExchangeAccount(this.state.exchangeData.name);
+        this.props.onSave(exchange);
+        this.setState({exchangeData: {}});
         this.handleClose();
     }
 

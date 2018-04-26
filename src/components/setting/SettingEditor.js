@@ -44,10 +44,11 @@ class SettingEditor extends Component {
         let userList = this.state.config.users.map((user) => user.account);
         steem.api.getAccountsAsync(userList)
         .then( (result) => {
+            let config = this.state.config;
             for (let i = 0  ; i < result.length ; i++) {
-                this.state.config.users[i].img = "https://steemitimages.com/400x0/" + JSON.parse(result[i].json_metadata).profile.profile_image;
+                config.users[i].img = "https://steemitimages.com/400x0/" + JSON.parse(result[i].json_metadata).profile.profile_image;
             }
-            this.setState(this.state.config);
+            this.setState(config);
         })
         .catch((error) => {
         })
@@ -61,7 +62,7 @@ class SettingEditor extends Component {
     }
 
     deleteUser(userId) {
-        this.state.config.users = this.state.config.users.filter((user) => user.account != userId);
+        this.state.config.users = this.state.config.users.filter((user) => user.account !== userId);
         this.setState(this.state.config.users);
     }
 

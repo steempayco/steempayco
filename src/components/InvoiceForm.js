@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Button, Header, Segment, Form, Label, Dimmer, Loader, Table } from 'semantic-ui-react'
+import { Button, Segment, Form, Label, Dimmer, Loader } from 'semantic-ui-react'
 import { Redirect, withRouter } from 'react-router-dom';
-import { QRCode } from 'react-qr-svg';
-import Utils from 'shared/Utils';
 
 class InvoiceForm extends Component {
     constructor(props) {
@@ -16,8 +14,9 @@ class InvoiceForm extends Component {
     }
 
     handleChange = (event, data) => {
-        this.state.invoiceData[data.name] = data.value;
-        this.setState(this.state.invoiceData);
+        let invoiceData = this.state.invoiceData;
+        invoiceData[data.name] = data.value;
+        this.setState(invoiceData);
     }
 
     onPaymentCreated = (result) => {
@@ -83,18 +82,13 @@ class InvoiceForm extends Component {
     }
 
     showInvoiceForm = () => {
-        const receivers = [];
-        this.props.users.map((user) => {
+        const receivers = this.props.users.map((user) => {
             var key = JSON.stringify({account: user.account});
-            receivers.push({text: user.account, key: user.account, value: key})
+            return {text: user.account, key: user.account, value: key}
         });
-
-        this.props.exchanges.map((exchange) => {
+        const exchanges = this.props.exchanges.map((exchange) => {
             var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-            receivers.push(
-                {text: exchange.nickname + ' (' + exchange.account + ')',
-                value: key,
-                key: key })
+            return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
         });
         return (
             <div>
@@ -108,7 +102,7 @@ class InvoiceForm extends Component {
                     Create a QR code with the values, and show it to your customer!
                 </Segment>
                 <Form>
-                    <Form.Select fluid name='receiver' label='Receiver' options={receivers} placeholder='Choose Receiver'  onChange={this.handleChange}/>
+                    <Form.Select fluid name='receiver' label='Receiver' options={[...receivers, ...exchanges]} placeholder='Choose Receiver'  onChange={this.handleChange}/>
                     <Form.Input fluid name='amount' type="number" label='Amount (KRW)' placeholder='Amount'  onChange={this.handleChange}/>
                     {this.showConvertRate()}
                     <Form.Input fluid name='memo' label='Memo (optional)' placeholder='Transaction message'  onChange={this.handleChange}/>

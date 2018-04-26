@@ -11,25 +11,18 @@ const leftItems = [
   { as: "a", content: "Users", key: "users" }
 ];
 const rightItems = [
-  { as: "a", content: "Login", key: "login" },
 ];
-
-const Content = () => (
-    <div>
-        <Route exact path="/" component={Home} />
-        <Route path="/pay/:id?" component={Payment} />
-        <Route path="/invoice/:id?" component={Invoice} />
-        <Route path="/price" component={Price} />
-        <Route path="/setting" component={Setting} />
-        <PriceFeedContainer />
-    </div>
-);
 
 const App = () => (
   <div>
     <div>
     <AppFrame leftItems={leftItems} rightItems={rightItems}>
-        <Content />
+      <Route exact path="/" component={Home} />
+          <Route path="/pay/:id?" component={Payment} />
+          <Route path="/invoice/:id?" component={Invoice} />
+          <Route path="/price" component={Price} />
+          <Route path="/setting" component={Setting} />
+      <PriceFeedContainer />
     </AppFrame>
   </div>
   </div>

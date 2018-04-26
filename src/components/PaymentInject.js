@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Image, Segment, Button, Table } from 'semantic-ui-react'
 import Scan from 'components/Scan'
 import { Redirect, withRouter } from 'react-router-dom';
 

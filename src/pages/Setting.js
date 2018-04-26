@@ -1,6 +1,6 @@
 import React from 'react';
 import SettingEditorContainer from 'containers/SettingEditorContainer';
-
+import './PageCommon.css'
 
 const Setting = () => {
     return (

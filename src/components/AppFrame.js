@@ -1,12 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import {
-    Container,
-    Icon,
-    Menu,
-    Sidebar,
-  } from "semantic-ui-react";
+import { Icon, Menu, Sidebar } from "semantic-ui-react";
 
 import Footer from 'components/Footer'
 
@@ -37,7 +32,7 @@ const NavBarMobile = ({
           ))}
           <Footer/>
         </Sidebar>
-      <div onClick={visible && onToggle}>
+      <div onClick={visible ? onToggle : null}>
         <Menu fixed="top">
           <Menu secondary>
           <Menu.Item onClick={onToggle}>
@@ -57,7 +52,7 @@ const NavBarMobile = ({
   );
   
 const NavBarChildren = ({ children }) => (
-  <div style={{ display: 'inline-block', width: '100%', marginTop: 50, padding: 10}}>{children}</div>
+  <div style={{ display: 'inline-block', marginTop: '50px'}}>{children}</div>
 );
 
 const slideMenu = [

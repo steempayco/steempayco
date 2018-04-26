@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
+import Api from 'shared/Api'
 
 class PaymentView extends Component {
     constructor(props) {
@@ -11,7 +12,11 @@ class PaymentView extends Component {
     }
 
     componentDidMount() {
-        this.fetchInvoice();
+        Api.fetchInvoice(
+            this.props.invoiceId,
+            (data) => { this.setState({invoice: data}); },
+            (error) => { this.setState({errorMessage: "Failed to open invoice"}); }
+        );
     }
 
     payViaSteemConnect = () => {
