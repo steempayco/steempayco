@@ -4,7 +4,7 @@ import bgimg from './tothemoon.jpeg'
 
 const Home = () => {
     return (
-        <div style={{textAlign: "center", fontFamily: "'Oxygen', sans-serif"}}>
+        <div  className="pageArea" style={{textAlign: "center", fontFamily: "'Oxygen', sans-serif"}}>
             <br/>
             <h1 className="oxygen" style={{color: "#cccccc"}}>Sell Real</h1>
             <h1 className="oxygen" style={{color: "#999999"}}>Buy Real</h1>

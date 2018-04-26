@@ -53,7 +53,7 @@ class InvoiceView extends Component {
                     Scan to Pay
                 </h2>
                 <div style={{width: '100%', textAlign: 'center' }} >
-                    <QRCode style={{width: '100%', maxWidth: 300}} value={this.getData()} />
+                    <QRCode style={{width: '100%', maxWidth: 260}} value={this.getData()} />
                     <InvoiceDetailView invoice = {this.state.invoice} />
                 </div>
             </div>

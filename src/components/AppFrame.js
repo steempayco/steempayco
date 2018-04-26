@@ -18,29 +18,26 @@ const NavBarMobile = ({
     rightItems,
     visible
   }) => (
-    <Sidebar.Pushable>
-      <Sidebar
-        as={Menu}
-        animation="overlay"
-        icon="labeled"
-        inverted
-        vertical
-        visible={visible}
-        width="thin">
-        { slideMenu.map( (item, key) => (
-          <Link key={key} to={item.link} onClick={onToggle}>
-            <Menu.Item name={item.name} >
-              <Icon name={item.icon} />
-              {item.name}
-            </Menu.Item>
-          </Link>
-        ))}
-        <Footer/>
-      </Sidebar>
-      <Sidebar.Pusher
-        dimmed={visible}
-        onClick={onPusherClick}
-        style={{ minHeight: "100vh" }}>
+    <div>
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          icon="labeled"
+          inverted
+          vertical
+          visible={visible}
+          width="thin">
+          { slideMenu.map( (item, key) => (
+            <Link key={key} to={item.link} onClick={onToggle}>
+              <Menu.Item name={item.name} >
+                <Icon name={item.icon} />
+                {item.name}
+              </Menu.Item>
+            </Link>
+          ))}
+          <Footer/>
+        </Sidebar>
+      <div onClick={visible && onToggle}>
         <Menu fixed="top">
           <Menu secondary>
           <Menu.Item onClick={onToggle}>
@@ -55,12 +52,12 @@ const NavBarMobile = ({
           </Menu.Menu>
         </Menu>
         {children}
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
+      </div>
+      </div>
   );
   
 const NavBarChildren = ({ children }) => (
-  <Container style={{ marginTop: "5em" }}>{children}</Container>
+  <div style={{ display: 'inline-block', width: '100%', marginTop: 50, padding: 10}}>{children}</div>
 );
 
 const slideMenu = [
