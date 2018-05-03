@@ -51,6 +51,22 @@ var Utils = {
                 return decodeURIComponent(pair[1]);
             }
         }
+    },
+    copyToClipboard: (str) => {
+        // This is one way of copying
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+    },
+    getBaseUrl: () => {
+        let loc = window.location;
+        return loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "";
     }
 };
 

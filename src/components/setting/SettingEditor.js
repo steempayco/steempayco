@@ -99,7 +99,7 @@ class SettingEditor extends Component {
                     {this.state.config.users.map( (user, key) => ( 
                         <List.Item key={key}>
                             <List.Content floated='right'>
-                                <Button onClick={() => this.deleteUser(user.account)}>Delete</Button>
+                                <Button circular onClick={() => this.deleteUser(user.account)}>Delete</Button>
                             </List.Content>
                             <Image avatar src={user.img} />
                             <List.Content>
@@ -119,7 +119,7 @@ class SettingEditor extends Component {
                     {this.state.config.exchanges.map( (exchange, index) => ( 
                         <List.Item key={index}>
                             <List.Content floated='right'>
-                                <Button onClick={() => this.deleteExchange(index)}>Delete</Button>
+                                <Button circular onClick={() => this.deleteExchange(index)}>Delete</Button>
                             </List.Content>
                             <Image avatar src={Utils.getExchangeImage(exchange.name)} />
                             <List.Content>

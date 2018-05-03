@@ -6,6 +6,12 @@
         "currency": "KRW"
     },
     {
+        "name": "Gopax",
+        "account": "gopax-deposit",
+        "image": "./img/gopax.jpg",
+        "currency": "KRW"
+    },
+    {
         "name": "Bittrex",
         "account": "bittrex",
         "image": "./img/bittrex.png",

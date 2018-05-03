@@ -109,7 +109,7 @@ class InvoiceForm extends Component {
                     <div style={{marginBottom: 10, textAlign: 'right', marginTop: -10}}>
                         <span style={{fontSize: 11}}>Ignored for exchange accounts</span>
                     </div>
-                    <Button disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
+                    <Button circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
                         Create Invoice
                     </Button>
                 </Form>

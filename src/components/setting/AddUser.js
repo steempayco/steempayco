@@ -48,10 +48,10 @@ class AddUser extends Component {
         </Form>
         </Modal.Content>
         <Modal.Actions>
-            <Button negative onClick={this.handleClose}>
+            <Button circular onClick={this.handleClose}>
                 Cancel
             </Button>
-            <Button positive onClick={this.handleSave} 
+            <Button circular positive onClick={this.handleSave} 
                 icon='checkmark' labelPosition='right' content='Add' />
             </Modal.Actions>
         </Modal>

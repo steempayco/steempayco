@@ -59,7 +59,6 @@ const slideMenu = [
   { name: 'Home', link: '/', icon: 'home' },
   { name: 'Payment', link: '/pay', icon: 'payment' },
   { name: 'Invoice', link: '/invoice', icon: 'tag' },
-  { name: 'Price', link: '/price', icon: 'line chart'},
   { name: 'Setting', link: '/setting', icon: 'setting' },
 ];
 

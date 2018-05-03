@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { QRCode } from 'react-qr-svg';
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
 import Api from 'shared/Api'
+import Utils from 'shared/Utils'
 
 class InvoiceView extends Component {
     constructor(props) {
@@ -22,12 +23,12 @@ class InvoiceView extends Component {
     }
 
     getData = () => {
-        var loc = window.location;
-        var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "";
-        var url = baseUrl + "/pay/" + this.props.invoiceId;
-        console.log(this.props.data);
-        console.log(url);
-        return url;
+        return Utils.getBaseUrl() + "/pay/" + this.props.invoiceId;
+    }
+
+    copyLink = () => {
+        let url = Utils.getBaseUrl() + "/invoice/" + this.props.invoiceId;
+        Utils.copyToClipboard(url);
     }
 
     fetchInvoice = () => {
@@ -52,6 +53,8 @@ class InvoiceView extends Component {
                 <div style={{width: '100%', textAlign: 'center' }} >
                     <QRCode style={{width: '100%', maxWidth: 260}} value={this.getData()} />
                     <InvoiceDetailView invoice = {this.state.invoice} />
+                    <p><Button circular onClick={this.copyLink}>Get Link</Button></p>
+
                 </div>
             </div>
         ) : this.state.errorMessage ? (<div>{this.state.errorMessage}</div>) : (
