@@ -27,8 +27,7 @@ class InvoiceView extends Component {
     }
 
     copyLink = () => {
-        let url = Utils.getBaseUrl() + "/invoice/" + this.props.invoiceId;
-        Utils.copyToClipboard(url);
+        Utils.copyToClipboard(this.getData());
     }
 
     fetchInvoice = () => {
