@@ -35,10 +35,9 @@ I will now walk you through what it does for the sellers and buyers currently.
 
 # Main page
 This web app is currently not responsible but dedicated for mobile devices. There is a button to open and close the sidebar in which there are some buttons to move around the features.
-<table>
-<tr><td>[](https://steemitimages.com/DQmTHeipWbUwhDTjPPVFGivfKjdvZci9HGLLdJwSLmQVx6d/Screen%20Shot%202018-04-26%20at%2022.44.08.png)</td>
-<td>https://steemitimages.com/DQmPdV36EWTuEdJyofDcB5YBDkBQVc29ScsUMNRnYpBWAnL/Screen%20Shot%202018-04-26%20at%2022.44.14.png</td></tr>
-</table>
+
+https://steemitimages.com/DQmTHeipWbUwhDTjPPVFGivfKjdvZci9HGLLdJwSLmQVx6d/Screen%20Shot%202018-04-26%20at%2022.44.08.png
+https://steemitimages.com/DQmPdV36EWTuEdJyofDcB5YBDkBQVc29ScsUMNRnYpBWAnL/Screen%20Shot%202018-04-26%20at%2022.44.14.png
 
 # Setting
 Seller must setup their Steem accounts and exchange accounts in order to generate an invoice. Once it's done, seller can simply choose which account they want to receive the payment to. You must click "Save" as now it does not do auto save.
