@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { Button, Segment, Form, Label, Dimmer, Loader } from 'semantic-ui-react'
+import { Button, Segment, Form, Label, Dimmer, Loader, Input, Dropdown, Select } from 'semantic-ui-react'
 import { Redirect, withRouter } from 'react-router-dom';
+
+const currency = [
+    { key: 'KRW', text: 'KRW', value: 'KRW' },
+    { key: 'USD', text: 'USD', value: 'USD' },
+    { key: 'JPY', text: 'JPY', value: 'JPY' },
+  ];
+
 
 class InvoiceForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            invoiceData: {},
+            invoiceData: {currency: 'KRW'},
             invoiceId: null,
             fetching: false
         };
@@ -26,18 +33,15 @@ class InvoiceForm extends Component {
     createPayment = (onSuccess) => {
         this.setState({fetching: true});
         var receiver = JSON.parse(this.state.invoiceData.receiver);
-        receiver.type = receiver.exchange ? 'exchange' : 'user';
-        var credit = {
-            amount: this.state.invoiceData.amount,
-            currency: this.props.feed.currency,
-            sbdAmount: (this.state.invoiceData.amount / this.props.feed.price)
-        }
         var payload = {
-            receiver: receiver,
-            credit: credit,
-            rate: this.props.feed,
+            receiver: receiver.account,
+            type: receiver.exchange ? 'exchange' : 'user',
+            receiverDetail: receiver,
+            amount: this.state.invoiceData.amount,
+            currency: this.state.invoiceData.currency,
             memo: this.state.invoiceData.memo
         };
+        console.log(payload);
 
         var data = new FormData();
         data.append( "json", JSON.stringify( payload ) );
@@ -64,23 +68,6 @@ class InvoiceForm extends Component {
             && this.state.invoiceData.amount;
     }
 
-    showConvertRate = () => {
-        console.log(this.props.feed);
-        return (<div style={{marginBottom: 10, textAlign: 'right', marginTop: -10}}>
-            {this.props.feed ? (
-                <div>
-                    <p style={{fontSize: 11}}>
-                    1 SBD = {this.props.feed.price} KRW ({this.props.feed.exchange}, {this.props.feed.lastUpdate})
-                    </p>
-                    {this.state.invoiceData.amount && (
-                        <Label size='big' color='green' tag>{(this.state.invoiceData.amount / this.props.feed.price).toFixed(3)} SBD</Label>
-                    )}<br/>
-                </div>) : (
-                <p style={{fontSize: 11, color: 'red'}}>No feed</p>
-            )}
-        </div>);
-    }
-
     showInvoiceForm = () => {
         const receivers = this.props.users.map((user) => {
             var key = JSON.stringify({account: user.account});
@@ -101,18 +88,20 @@ class InvoiceForm extends Component {
                 <Segment>
                     Create a QR code with the values, and show it to your customer!
                 </Segment>
-                <Form>
-                    <Form.Select fluid name='receiver' label='Receiver' options={[...receivers, ...exchanges]} placeholder='Choose Receiver'  onChange={this.handleChange}/>
-                    <Form.Input fluid name='amount' type="number" label='Amount (KRW)' placeholder='Amount'  onChange={this.handleChange}/>
-                    {this.showConvertRate()}
-                    <Form.Input fluid name='memo' label='Memo (optional)' placeholder='Transaction message'  onChange={this.handleChange}/>
-                    <div style={{marginBottom: 10, textAlign: 'right', marginTop: -10}}>
-                        <span style={{fontSize: 11}}>Ignored for exchange accounts</span>
-                    </div>
-                    <Button circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
-                        Create Invoice
-                    </Button>
-                </Form>
+                <h5>Amount (KRW)</h5>
+                <Input fluid name='amount' size='huge' type="number" selection
+                    label={<Dropdown name='currency' defaultValue={this.state.invoiceData.currency} options={currency} onChange={this.handleChange} />}
+                    labelPosition='right' placeholder='Price' onChange={this.handleChange}
+                />
+                <h5>Receiver</h5>
+                <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...receivers, ...exchanges]}  onChange={this.handleChange} />
+                <h5>Memo (optional)</h5>
+
+                <Input fluid name='memo' placeholder='Transaction message'  onChange={this.handleChange}/>
+                <br/>
+                <Button circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
+                    Create Invoice
+                </Button>
             </div>
         );
     }
@@ -131,7 +120,6 @@ InvoiceForm.defaultProps = {
     exchanges: [],
     feed: {}
 }
-
 
 
 

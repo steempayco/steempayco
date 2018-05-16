@@ -135,7 +135,7 @@ class SettingEditor extends Component {
                 </List>
                 </Segment>
                 <Divider/>
-                <Button large fluid positive onClick={ this.save }>Save</Button>
+                <Button circular large fluid positive onClick={ this.save }>Save</Button>
             </div>
         )
     }

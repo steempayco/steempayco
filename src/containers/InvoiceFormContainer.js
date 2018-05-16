@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => ({
     users: state.config.users,
     exchanges: state.config.exchanges,
-    feed: state.feed
 });
 
 const mapDispatchToProps = (dispatch) => ({

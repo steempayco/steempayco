@@ -67,6 +67,9 @@ var Utils = {
     getBaseUrl: () => {
         let loc = window.location;
         return loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "";
+    },
+    numberWithCommas: (x) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 };
 

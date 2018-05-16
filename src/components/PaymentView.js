@@ -19,46 +19,42 @@ class PaymentView extends Component {
         );
     }
 
-    payViaSteemConnect = () => {
+    payViaSteemConnect = (rate) => {
         let info = this.state.invoice;
-        let amount = info.credit.amount + " " + info.credit.currency;
-        let amountSBD = (info.credit.amount / info.rate.price).toFixed(3) + " SBD";
+        let amount = info.amount + " " + info.currency;
+        let amountSBD = (info.amount / rate.price).toFixed(3) + " SBD";
         let message = "";
-        if (info.receiver.exchange) {
+        if (info.type == 'exchange') {
             message = info.receiver.wallet;
         } else {
             message = "[SteemPay] " + info.memo + " | " + amount + " | " + amountSBD;
         }
         console.log(message);
-        let scUrl = "https://steemconnect.com/sign/transfer?to=" + info.receiver.account
+        let scUrl = "https://steemconnect.com/sign/transfer?to=" + info.receiver
                 + "&amount=" + encodeURIComponent(amountSBD)
                 + "&memo=" + encodeURIComponent(message);
         document.location.href = scUrl;
     }
 
-    fetchInvoice = () => {
-        let getInvoice = "https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Beta/invoice/" + this.props.invoiceId;
-        console.log(getInvoice);
-        let self = this;
-        fetch(getInvoice)
-        .then(function(res){ return res.json(); })
-        .then(function(data){ self.setState({invoice: data})})
-        .catch((err) => {
-            self.setState({errorMessage: "Failed to open invoice"});
-        });
+    renderPaymentBlock = () => {
+        const rate = this.props.feed && this.props.feed.find((item) => item.currency === this.state.invoice.currency);
+        return <div>
+                <InvoiceDetailView invoice={this.state.invoice} rate={rate}/>
+                <Button fluid onClick={this.payViaSteemConnect(rate)}>Pay via SteemConnect</Button>
+                </div>;
+    }
+
+    renderLoadingBlock= () => {
+        return this.state.errorMessage ?
+                (<div>{this.state.errorMessage}</div>)
+            :
+                (<Dimmer active>
+                    <Loader>Loading</Loader>
+                </Dimmer>);
     }
 
     render() {
-        return this.state.invoice ? (
-                    <div>
-                    <InvoiceDetailView invoice={this.state.invoice} />
-                    <Button fluid onClick={this.payViaSteemConnect}>Pay via SteemConnect</Button>
-                    </div>
-                ) : this.state.errorMessage ? (<div>{this.state.errorMessage}</div>) : (
-                    <Dimmer active>
-                        <Loader>Loading</Loader>
-                    </Dimmer>
-                );
+        return this.state.invoice ? this.renderPaymentBlock() : this.renderLoadingBlock();
     }
 }
 

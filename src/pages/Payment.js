@@ -1,13 +1,13 @@
 import React from 'react';
 
 import PaymentInject from 'components/PaymentInject'
-import PaymentView from 'components/PaymentView'
+import PaymentViewContainer from 'containers/PaymentViewContainer'
 import './PageCommon.css'
 
 const Payment = ({match}) => {
     return (
         <div className="pageArea">
-            {match.params.id ? <PaymentView invoiceId={match.params.id} /> : <PaymentInject />}
+            {match.params.id ? <PaymentViewContainer invoiceId={match.params.id} /> : <PaymentInject />}
         </div>
     );
 };
