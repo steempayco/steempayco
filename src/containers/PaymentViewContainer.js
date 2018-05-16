@@ -15,6 +15,12 @@ const mapStateToProps = (state) => ({
             exchange: 'Upbit',
             price: 2700,
             lastUpdate: 'data time'
+        },
+        {
+            currency: 'JPY',
+            exchange: 'YONO',
+            price: 250,
+            lastUpdate: 'data time'
         }
     ]
 });

@@ -1,4 +1,6 @@
 import Exchange from 'resources/exchange.json'
+import getSymbolFromCurrency from 'currency-symbol-map'
+
 
 var Utils = {
     getExchange: () => {
@@ -70,6 +72,14 @@ var Utils = {
     },
     numberWithCommas: (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    currencyFormat: (value, code) => {
+        let symbol = getSymbolFromCurrency(code);
+        if (symbol.length > 1) {
+            return `${Utils.numberWithCommas(value)} ${symbol}`;
+        } else {
+            return `${symbol}${Utils.numberWithCommas(value)}`;
+        }
     }
 };
 

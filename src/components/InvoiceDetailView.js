@@ -2,7 +2,6 @@ import React from "react";
 import { Table } from 'semantic-ui-react';
 import Utils from 'shared/Utils.js'
 
-
 const InvoiceDetailView = ({invoice, rate}) => {
     let receiverDetail = invoice.receiverDetail;
     let issueDate = new Date(invoice.timestamp);
@@ -13,7 +12,7 @@ const InvoiceDetailView = ({invoice, rate}) => {
         <Table.Row verticalAlign='top'>
           <Table.Cell active>Amount</Table.Cell>
           <Table.Cell textAlign='right'>
-            <span style={{fontSize: '16pt'}}>{Utils.numberWithCommas(invoice.amount)} {invoice.currency}</span>
+            <span style={{fontSize: '28pt'}}>{Utils.currencyFormat(invoice.amount, invoice.currency)}</span>
             {rate &&
             <p style={{fontSize: '16pt'}}>{Utils.numberWithCommas((invoice.amount/rate.price).toFixed(3))} SBD</p>}
           </Table.Cell>
@@ -22,18 +21,23 @@ const InvoiceDetailView = ({invoice, rate}) => {
         {invoice.type === 'exchange' ? (
         <Table.Row verticalAlign='top'>
           <Table.Cell active>Receiver</Table.Cell>
-          <Table.Cell textAlign='right'>{invoice.account}<br/>{receiverDetail.wallet}</Table.Cell>
+          <Table.Cell textAlign='right'>
+            {invoice.receiver}<br/>
+            {receiverDetail.wallet}
+          </Table.Cell>
         </Table.Row>
         ) : (
             <Table.Row verticalAlign='top'>
             <Table.Cell active>Receiver</Table.Cell>
-            <Table.Cell textAlign='right'>{invoice.account}</Table.Cell>
+            <Table.Cell textAlign='right'>
+              <span style={{fontSize: '28pt'}}>{invoice.receiver}</span>
+            </Table.Cell>
           </Table.Row>
         )}
         <Table.Row verticalAlign='top'>
           <Table.Cell active>Memo</Table.Cell>
           <Table.Cell textAlign='right'>
-          {invoice.type === 'exchange' ? "Not applied" : invoice.memo}
+          {invoice.type === 'exchange' ? "Not applicable" : invoice.memo}
           </Table.Cell>
         </Table.Row>
         {rate && 

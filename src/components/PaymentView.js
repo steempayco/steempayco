@@ -25,7 +25,7 @@ class PaymentView extends Component {
         let amountSBD = (info.amount / rate.price).toFixed(3) + " SBD";
         let message = "";
         if (info.type == 'exchange') {
-            message = info.receiver.wallet;
+            message = info.receiverDetail.wallet;
         } else {
             message = "[SteemPay] " + info.memo + " | " + amount + " | " + amountSBD;
         }
@@ -40,7 +40,7 @@ class PaymentView extends Component {
         const rate = this.props.feed && this.props.feed.find((item) => item.currency === this.state.invoice.currency);
         return <div>
                 <InvoiceDetailView invoice={this.state.invoice} rate={rate}/>
-                <Button fluid onClick={this.payViaSteemConnect(rate)}>Pay via SteemConnect</Button>
+                <Button fluid onClick={() => this.payViaSteemConnect(rate)}>Pay via SteemConnect</Button>
                 </div>;
     }
 
