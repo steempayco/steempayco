@@ -1,3 +1,5 @@
+const dbg_str = JSON.parse('{"receiver":"asbear","currency":"KRW","receiverDetail":{"account":"asbear"},"timestamp":1526542377256,"amount":"21323","memo":"123123","invoiceId":"3f017b29b9a044a9a6adf89f3193c2e7","type":"user"}');
+
 
 let Api = {
     fetchInvoice: (invoiceId, onSuccess, onFail) => {
@@ -5,7 +7,7 @@ let Api = {
         console.log(getPayment);
         fetch(getPayment)
         .then(function(res){ return res.json(); })
-        .then(function(data){ onSuccess(data); })
+        .then(function(data){ console.log(data); onSuccess(data); })
         .catch((err) => {
             onFail({errorMessage: "Failed to open invoice"})
         });

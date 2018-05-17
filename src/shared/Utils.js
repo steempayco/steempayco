@@ -1,4 +1,5 @@
 import Exchange from 'resources/exchange.json'
+import Currency from 'resources/currency.json'
 import getSymbolFromCurrency from 'currency-symbol-map'
 
 
@@ -12,6 +13,9 @@ var Utils = {
     },
     getExchangeAccount: (name) => {
         return Exchange.find((item) => item.name === name).account;
+    },
+    getCurrencies: () => {
+        return Currency.map(item => { return {...item, symbol: getSymbolFromCurrency(item.code)}});
     },
     shortenNumber: (num, digits) => {
         var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],

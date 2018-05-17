@@ -1,0 +1,10 @@
+[
+    {"code": "KRW", "name": "South Korean won"},
+    {"code": "USD", "name": "United States dollar"},
+    {"code": "GBP", "name": "Pound sterling"},
+    {"code": "JPY", "name": "Japanese yen"},
+    {"code": "PHP", "name": "Philippine peso"},
+    {"code": "EUR", "name": "European euro"},
+    {"code": "MYR", "name": "Malaysian ringgit"},
+    {"code": "CNY", "name": "Chinese Yuan Renminbi"}
+]

@@ -52,7 +52,7 @@ class InvoiceView extends Component {
                 <div style={{width: '100%', textAlign: 'center' }} >
                     <QRCode style={{width: '100%', maxWidth: 260}} value={this.getData()} />
                     <InvoiceDetailView invoice = {this.state.invoice} feed={this.props.feed} />
-                    <p><Button circular onClick={this.copyLink}>Get Link</Button></p>
+                    <p><Button size="huge" circular onClick={this.copyLink}>Get Link</Button></p>
 
                 </div>
             </div>
