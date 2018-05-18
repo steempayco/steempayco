@@ -10,16 +10,8 @@ class PriceFetcher extends Component {
     }
 
     onPrice = (result) => {
-        var average = result.map((hr) => hr.highPrice).reduce((avg,e,i,arr)=>avg+e/arr.length,0);
         var date = new Date();
-        this.props.onPriceFeed(
-            {
-                exchange: 'Upbit',
-                currency: 'KRW',
-                price: Math.round(average),
-                lastUpdate: date.toLocaleDateString() + " " + date.toLocaleTimeString()
-            }
-        );
+        this.props.onPriceFeed(result);
     }
 
     onError = (error) => {

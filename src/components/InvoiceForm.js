@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Button, Segment, Form, Label, Dimmer, Loader, Input, Dropdown, Select, Statistic, TextArea } from 'semantic-ui-react'
 import { Redirect, withRouter } from 'react-router-dom';
-import Utils from 'shared/Utils'
+import Api from 'shared/Api';
+import Utils from 'shared/Utils';
 
 class InvoiceForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            invoiceData: {amount: 0, currency: 'KRW'},
+            invoiceData: {amount: 0, currency: localStorage.getItem('preferred_currency') || 'KRW'},
             invoiceId: null,
             fetching: false,
             receivers: this.props.users.map((user) => {
@@ -33,9 +34,17 @@ class InvoiceForm extends Component {
 
     onPaymentCreated = (result) => {
         this.setState({invoiceId: result.invoiceId});
+        this.setState({fetching: false});
     }
 
+    onPaymentCreationFailed = (err) => {
+        this.setState({fetching: false});
+    }
+
+    
+
     createPayment = (onSuccess) => {
+        localStorage.setItem('preferred_currency', this.state.invoiceData.currency);
         this.setState({fetching: true});
         var receiver = JSON.parse(this.state.invoiceData.receiver);
         var payload = {
@@ -46,25 +55,11 @@ class InvoiceForm extends Component {
             currency: this.state.invoiceData.currency,
             memo: this.state.invoiceData.memo
         };
-        console.log(payload);
 
-        var data = new FormData();
-        data.append( "json", JSON.stringify( payload ) );
-        fetch("https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Beta/invoice",
-        {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        })
-        .then((res) => { return res.json(); })
-        .then((data) => {
-            onSuccess(data);
-        })
-        .finally(() => {
-            this.setState({fetching: false});
-        });
+        Api.createInvoice(payload,
+            (data) => { this.onPaymentCreated(data); },
+            (error) => { this.onPaymentCreationFailed(error); }
+        );
     }
 
     isReady = () => {

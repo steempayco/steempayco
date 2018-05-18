@@ -30,18 +30,6 @@ class InvoiceView extends Component {
         Utils.copyToClipboard(this.getData());
     }
 
-    fetchInvoice = () => {
-        let getPayment = "https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Beta/invoice/" + this.props.invoiceId;
-        console.log(getPayment);
-        let self = this;
-        fetch(getPayment)
-        .then(function(res){ return res.json(); })
-        .then(function(data){ self.setState({invoice: data})})
-        .catch((err) => {
-            self.setState({errorMessage: "Failed to open invoice"});
-        });
-    }
-
     render() {
         let i = this.state.invoice;
         return i ? (

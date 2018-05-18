@@ -13,7 +13,7 @@ const memoStyle = {
 const InvoiceDetailView = ({invoice, rate}) => {
     let receiverDetail = invoice.receiverDetail;
     let issueDate = new Date(invoice.timestamp);
-
+  console.log(rate);
     return (
     <Table celled unstackable>
       <Table.Body>
@@ -52,9 +52,9 @@ const InvoiceDetailView = ({invoice, rate}) => {
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Exchange Rate</Table.Cell>
           <Table.Cell textAlign='right'>
-            {rate.exchange}<br/>
-            1 SBD = {rate.price} {rate.currency}<br/>
-            {rate.lastUpdate}
+            <span style={{fontSize: '14pt'}}>1 SBD = {rate.price.toFixed(3)} {invoice.currency}</span><br/>
+            {rate.source}<br/>
+            {rate.detail}<br/>
           </Table.Cell>
         </Table.Row>
         }
