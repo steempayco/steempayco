@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
-import Api from 'shared/Api'
+import Api from 'shared/API'
 
 class PaymentView extends Component {
     constructor(props) {

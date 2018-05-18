@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Segment, Form, Label, Dimmer, Loader, Input, Dropdown, Select, Statistic, TextArea } from 'semantic-ui-react'
 import { Redirect, withRouter } from 'react-router-dom';
-import Api from 'shared/Api';
+import Api from 'shared/API';
 import Utils from 'shared/Utils';
 
 class InvoiceForm extends Component {

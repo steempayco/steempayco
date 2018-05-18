@@ -3,7 +3,8 @@ import { Table } from 'semantic-ui-react';
 import Utils from 'shared/Utils.js'
 
 const leftStyle = {
-  fontSize: '14pt',
+  fontSize: '12pt',
+  fontWeight: 700
 }
 
 const memoStyle = {
@@ -30,15 +31,15 @@ const InvoiceDetailView = ({invoice, rate}) => {
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Receiver</Table.Cell>
           <Table.Cell textAlign='right'>
-            {invoice.receiver}<br/>
-            {receiverDetail.wallet}
+            <span style={{fontSize: '18pt'}}>{invoice.receiver}</span><br/>
+            <span style={{fontSize: 11, fontFamily: "monospace"}}>{receiverDetail.wallet}</span>
           </Table.Cell>
         </Table.Row>
         ) : (
             <Table.Row verticalAlign='top'>
             <Table.Cell active style={leftStyle}>Receiver</Table.Cell>
             <Table.Cell textAlign='right'>
-              <span style={{fontSize: '20pt'}}>{invoice.receiver}</span>
+              <span style={{fontSize: '18pt'}}>{invoice.receiver}</span>
             </Table.Cell>
           </Table.Row>
         )}

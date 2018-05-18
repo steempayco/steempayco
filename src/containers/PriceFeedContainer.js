@@ -1,7 +1,7 @@
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Component } from "react";
-import Api from 'shared/Api';
+import Api from 'shared/API';
 
 class PriceFetcher extends Component {
     componentDidMount() {

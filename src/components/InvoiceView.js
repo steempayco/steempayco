@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { QRCode } from 'react-qr-svg';
 import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
-import Api from 'shared/Api'
+import Api from 'shared/API'
 import Utils from 'shared/Utils'
 
 class InvoiceView extends Component {
