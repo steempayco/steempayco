@@ -1,9 +1,9 @@
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => ({
-    color: state.color,
-    number: state.number
+const mapStateToProps = ({config}) => ({
+    color: config.color,
+    number: config.number
 });
 
 const mapDispatchToProps = (dispatch) => ({

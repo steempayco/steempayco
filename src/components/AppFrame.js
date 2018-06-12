@@ -1,9 +1,10 @@
-import _ from "lodash";
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import { Icon, Menu, Sidebar } from "semantic-ui-react";
-
+import _ from "lodash"
+import React, { Component } from "react"
+import { Link } from 'react-router-dom'
+import { Icon, Menu, Sidebar, Container } from "semantic-ui-react"
+import LoginPanelContainer from 'containers/LoginPanelContainer'
 import Footer from 'components/Footer'
+import * as actions from '../actions';
 
 const NavBarMobile = ({
     children,
@@ -33,7 +34,7 @@ const NavBarMobile = ({
           <Footer/>
         </Sidebar>
       <div onClick={visible ? onToggle : null}>
-        <Menu fixed="top">
+        <Menu fixed="top" borderless>
           <Menu secondary>
           <Menu.Item onClick={onToggle}>
             <Icon name="sidebar" />
@@ -43,7 +44,9 @@ const NavBarMobile = ({
           </Menu.Item>
           </Menu>
           <Menu.Menu position="right">
-            {_.map(rightItems, item => <Menu.Item {...item} />)}
+            <Menu.Item fitted={true}>
+              <LoginPanelContainer />
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
         {children}
@@ -80,7 +83,7 @@ class AppFrame extends Component {
     const { visible } = this.state;
 
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
           <NavBarMobile
             slideMenu={slideMenu}
             onPusherClick={this.handlePusher}
