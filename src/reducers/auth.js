@@ -6,6 +6,7 @@ const authManager = (state = {}, action) => {
             return {
                 ...state,
                 auth: action.auth,
+                loginStateChecked: true,
                 error: false,
                 inProgress: false
             };

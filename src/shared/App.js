@@ -23,7 +23,6 @@ class App extends Component {
   }
   render() {
     return (<div>
-              <div>
                 <AppFrame leftItems={leftItems} rightItems={rightItems}>
                   <Route exact path="/" component={Home} />
                       <Route path="/pay/:id?" component={Payment} />
@@ -35,7 +34,6 @@ class App extends Component {
                       <Route path="/auth/confirm" component={Confirm} />
                   <PriceFeedContainer />
                 </AppFrame>
-              </div>
             </div>)
   }
 }

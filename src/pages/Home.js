@@ -3,7 +3,9 @@ import './Home.css';
 
 const Home = () => {
     return (
-        <img src='/img/home.jpeg' style={{width: '100%'}}/>
+        <div>
+            <img src='/img/home.jpeg' style={{width: '100%'}}/>
+        </div>
     );
 };
 

@@ -1,9 +1,9 @@
-import LoginIcon from '../components/login/LoginIcon';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import LoginPanel from '../components/login/LoginPanel';
 
 const mapStateToProps = ({auth}) => {
-    return {auth: auth.auth, inProgress: auth.inProgress};
+    return {auth: auth.auth, inProgress: auth.inProgress, loginStateChecked: auth.loginStateChecked};
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch) => ({
 const LoginPanelContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(LoginIcon);
+)(LoginPanel);
 
 export default LoginPanelContainer;

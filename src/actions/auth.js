@@ -1,9 +1,6 @@
 import * as types from './ActionTypes';
 
-import Amplify, { Auth } from 'aws-amplify';
-import config from 'config';
-
-Amplify.configure(config.aws);
+import { Auth, Storage } from 'aws-amplify';
 
 export const setUserId = (userId) => {
     localStorage.setItem("user_id", userId);
@@ -36,9 +33,18 @@ export const initAuth = () => {
                 if (user) {
                     dispatch(userLoginStateUpdate(user));
                 }
+
+                Storage.put('test.txt', 'Protected Content', {
+                    level: 'protected',
+                    contentType: 'text/plain'
+                })
+                .then (result => console.log(result))
+                .catch(err => console.log(err));
+
             })
             .catch((error) => {
-                console.log("Error loading user: " + error)
+                dispatch(userLoginStateUpdate(false));
+                console.log("Error loading user: " + error);
             });
     }
 }
@@ -66,7 +72,6 @@ export const loginRequest = (id, pass) => {
 export const logoutRequest = () => {
     return (dispatch) => {
         dispatch(userLoginStateUpdate(false));
-        setUserId('');
         Auth.signOut()
             .catch((error) => {
             });
@@ -105,8 +110,6 @@ export const signupRequest = (dispatch, id, pass, attributes) => {
             dispatch(userSignupFail(error.message));
         });
 }
-
-
 
 export const userSignupConfirmInProgress = () => {
     return { type: types.USER_SIGNUP_CONFIRM_IN_PROGRESS }
