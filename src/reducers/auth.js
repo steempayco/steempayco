@@ -1,11 +1,10 @@
 import * as types from '../actions/ActionTypes';
 
-const authManager = (state = {}, action) => {
+const authReducer = (state = {}, action) => {
     switch (action.type) {
         case types.USER_LOGIN_STATE_UPDATE:
             return {
                 ...state,
-                auth: action.auth,
                 loginStateChecked: true,
                 error: false,
                 inProgress: false
@@ -68,4 +67,4 @@ const authManager = (state = {}, action) => {
     }
 };
 
-export default authManager;
+export default authReducer;

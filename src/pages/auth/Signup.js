@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from 'actions';
 
 import { Component } from 'react';
-import { Container, Button, Form, Grid, Header, Image, Message, Segment, Loader, Dimmer } from 'semantic-ui-react'
-import { Redirect, withRouter } from 'react-router-dom';
+import { Container, Button, Form, Grid, Header, Message, Segment, Loader, Dimmer } from 'semantic-ui-react'
+import { Redirect } from 'react-router-dom';
 
 class SignupComponent extends Component {
     constructor(props) {

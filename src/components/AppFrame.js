@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import { Icon, Menu, Sidebar, Container } from "semantic-ui-react"
+import { Icon, Menu, Sidebar } from "semantic-ui-react"
 import LoginPanelContainer from 'containers/LoginPanelContainer'
 import Footer from 'components/Footer'
 

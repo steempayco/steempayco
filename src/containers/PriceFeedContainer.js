@@ -10,7 +10,6 @@ class PriceFetcher extends Component {
     }
 
     onPrice = (result) => {
-        var date = new Date();
         this.props.onPriceFeed(result);
     }
 

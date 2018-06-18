@@ -1,46 +1,26 @@
 import React, { Component } from "react";
-import { Button, Image, List, Divider, Container, Header, Segment } from 'semantic-ui-react'
+import { Button, Image, List, Divider, Container, Header, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import AddUser from './AddUser';
 import AddExchange from './AddExchange';
 import Utils from 'shared/Utils'
 
 let steem = require('steem');
 
-const config = {
-    users: [],
-    exchanges: [],
-}
-
 class SettingEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            config: this.getStateFromConfig()
-        };
-
-        this.getUserAccounts = this.getUserAccounts.bind(this);
-        this.addUser = this.addUser.bind(this);
-        this.deleteUser = this.deleteUser.bind(this);
-        this.addExchange = this.addExchange.bind(this);
-        this.deleteExchange = this.deleteExchange.bind(this);
-        this.save = this.save.bind(this);
+        this.state = { config: false };
     }
 
-    getStateFromConfig() {
-        let rawConfig = localStorage.getItem('steempay_config');
-        if (!rawConfig) return config;
-        try {
-            return JSON.parse(rawConfig);
-        } catch(error) {
-            return config;
-        }
+    componentDidMount() {
+        this.props.loadConfig(this.onConfig);
     }
 
-    setStateToConfig() {
-        localStorage.setItem('steempay_config', JSON.stringify(this.state.config));
+    onConfig = (config) => {
+        this.setState({config});
     }
 
-    getUserAccounts() {
+    getUserAccounts = () => {
         let userList = this.state.config.users.map((user) => user.account);
         steem.api.getAccountsAsync(userList)
         .then( (result) => {
@@ -55,48 +35,44 @@ class SettingEditor extends Component {
         .done();
     }
 
-    addUser(userData) {
+    addUser = (userData) => {
         this.state.config.users.push(userData);
         this.setState(this.state.config.users);
         this.getUserAccounts();
     }
 
-    deleteUser(userId) {
+    deleteUser = (userId) => {
         this.state.config.users = this.state.config.users.filter((user) => user.account !== userId);
         this.setState(this.state.config.users);
     }
 
-    addExchange(exchangeData) {
-        console.log(exchangeData);
-
+    addExchange = (exchangeData) => {
         this.state.config.exchanges.push(exchangeData);
         this.setState(this.state.config.exchanges);
-        console.log(this.state.config.exchanges);
     }
-    deleteExchange(index) {
+    deleteExchange = (index) => {
         this.state.config.exchanges.splice(index, 1);
         this.setState(this.state.config.exchanges);
     }
 
-    save() {
-        this.setStateToConfig();
-        this.props.onSave();
+    save = () => {
+        this.props.onSave(this.state.config);
     }
 
-    componentDidMount() {
-        this.getUserAccounts();
-    }
-    
-    render() {
+    rednerSetting = () => {
+        let config = this.state.config;
         return (
-            <div>
+            <Container>
+                <h2>
+                Setting
+                </h2>
                 <Header as='h4' attached='top'>
-                    Steem Accounts
-                    <AddUser onSave={this.addUser}/>
+                Steem Accounts
+                <AddUser onSave={this.addUser}/>
                 </Header>
                 <Segment attached>
                 <List verticalAlign='middle' size='big'>
-                    {this.state.config.users.map( (user, key) => ( 
+                    {config && config.users.map( (user, key) => ( 
                         <List.Item key={key}>
                             <List.Content floated='right'>
                                 <Button circular onClick={() => this.deleteUser(user.account)}>Delete</Button>
@@ -116,7 +92,7 @@ class SettingEditor extends Component {
                 </Header>
                 <Segment attached>
                 <List divided verticalAlign='middle' size='big'>
-                    {this.state.config.exchanges.map( (exchange, index) => ( 
+                    {config && config.exchanges.map( (exchange, index) => ( 
                         <List.Item key={index}>
                             <List.Content floated='right'>
                                 <Button circular onClick={() => this.deleteExchange(index)}>Delete</Button>
@@ -135,7 +111,19 @@ class SettingEditor extends Component {
                 </List>
                 </Segment>
                 <Divider/>
-                <Button circular large fluid positive onClick={ this.save }>Save</Button>
+                <Button circular fluid positive onClick={ this.save }>Save</Button>
+            </Container>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                {this.rednerSetting()}
+                {this.props.inProgress && (
+                    <Dimmer active inverted>
+                            <Loader size='large'>Loading</Loader>
+                    </Dimmer>)}
             </div>
         )
     }

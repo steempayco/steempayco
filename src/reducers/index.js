@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import auth from './auth'
-import config from './config'
+import common from './common'
+import setting from './setting'
 
 export default combineReducers({
     auth,
-    config
+    common,
+    setting
   })

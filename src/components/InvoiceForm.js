@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Segment, Form, Label, Dimmer, Loader, Input, Dropdown, Select, Statistic, TextArea } from 'semantic-ui-react'
+import { Button, Form, Dimmer, Loader, Input, Dropdown, TextArea } from 'semantic-ui-react'
 import { Redirect, withRouter } from 'react-router-dom';
 import Api from 'shared/API';
 import Utils from 'shared/Utils';
@@ -68,11 +68,28 @@ class InvoiceForm extends Component {
             && this.state.invoiceData.amount;
     }
 
-    showInvoiceForm = () => {
-        const receivers = this.state.receivers;
-        const exchanges = this.state.exchanges;
+    getParameters = () => {
+        let config = this.props.config;
 
-        return (
+        return config && {
+            receivers: config.users.map((user) => {
+                var key = JSON.stringify({account: user.account});
+                return {text: user.account, key: user.account, value: key}
+            }),
+            exchanges: config.exchanges.map((exchange) => {
+                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
+                return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
+            }),
+            currencies: Utils.getCurrencies().map((currency) => {
+                return {key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
+            })
+        }
+    }
+
+    showInvoiceForm = () => {
+        let param = this.getParameters();
+        console.log(param);
+        return ( param &&
             <div>
                 <h2>Create Invoice</h2>
                 {this.state.fetching && (
@@ -83,15 +100,15 @@ class InvoiceForm extends Component {
                 <h3>Amount</h3>
                 <Input fluid name='amount' size='huge' type="number" 
                     label={<Dropdown name='currency' defaultValue={this.state.invoiceData.currency}
-                    options={this.state.currencies} onChange={this.handleChange} direction='left' />}
+                    options={param.currencies} onChange={this.handleChange} direction='left' />}
                     labelPosition='right' placeholder='Price' onChange={this.handleChange}
                 />
                 <h3>Receiver</h3>
-                <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...receivers, ...exchanges]}
+                <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...param.receivers, ...param.exchanges]}
                         onChange={this.handleChange} style={{fontSize: '16pt'}} />
                 <h3>Memo (optional)</h3>
                 <Form>
-                    <TextArea fluid name='memo' 
+                    <TextArea name='memo' 
                         placeholder='Transaction message'
                         onChange={this.handleChange}
                         style={{fontSize: '16pt'}}/>
@@ -105,7 +122,6 @@ class InvoiceForm extends Component {
     }
 
     render() {
-
         return this.state.invoiceId ? 
             <Redirect push to={this.props.location.pathname + "/" + this.state.invoiceId} />
             :

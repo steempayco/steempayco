@@ -1,6 +1,7 @@
 import * as types from './ActionTypes';
 
-import { Auth, Storage } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+import * as setting from './setting';
 
 export const setUserId = (userId) => {
     localStorage.setItem("user_id", userId);
@@ -14,8 +15,8 @@ export const userLoginInProgress = () => {
     return { type: types.USER_LOGIN_IN_PROGRESS }
 }
 
-export const userLoginStateUpdate = (auth) => {
-    return { type: types.USER_LOGIN_STATE_UPDATE, auth }
+export const userLoginStateUpdate = () => {
+    return { type: types.USER_LOGIN_STATE_UPDATE }
 }
 
 export const userLoginSuccess = (auth) => {
@@ -26,55 +27,46 @@ export const userLoginFail = (error) => {
     return { type: types.USER_LOGIN_ERROR, error }
 }
 
-export const initAuth = () => {
-    return (dispatch) => {
-        Auth.currentAuthenticatedUser()
-            .then((user) => {
-                if (user) {
-                    dispatch(userLoginStateUpdate(user));
-                }
-
-                Storage.put('test.txt', 'Protected Content', {
-                    level: 'protected',
-                    contentType: 'text/plain'
-                })
-                .then (result => console.log(result))
-                .catch(err => console.log(err));
-
-            })
-            .catch((error) => {
-                dispatch(userLoginStateUpdate(false));
-                console.log("Error loading user: " + error);
-            });
-    }
-}
-
-export const loginRequest = (id, pass) => {
-    return (dispatch) => {
-        dispatch(userLoginInProgress());
-        Auth.signIn(id, pass)
-            .then((user) => {
-                if (user) {
-                    setUserId(id);
-                    dispatch(userLoginStateUpdate(user));
-                }
-            })
-            .catch((error) => {
-                if (error.code === "UserNotConfirmedException") {
-                    dispatch(userSignupConfirmRequired());
-                }
-                console.log(error);
-                dispatch(userLoginFail(error.message));
-            });
-    }
-}
-
-export const logoutRequest = () => {
-    return (dispatch) => {
+export const initAuth = async (dispatch) => {
+    try {
+        let user = await Auth.currentAuthenticatedUser()
+        if (user) {
+            await setting.loadConfig(dispatch, false);
+            dispatch(userLoginStateUpdate(user));
+        }
+    } catch (error) {
+        console.log("Error loading user: " + error);
         dispatch(userLoginStateUpdate(false));
-        Auth.signOut()
-            .catch((error) => {
-            });
+    }
+}
+
+export const loginRequest = async (dispatch, id, pass) => {
+    dispatch(userLoginInProgress());
+    try {
+        await Auth.signIn(id, pass);
+        let user_auth = await Auth.currentAuthenticatedUser()
+        localStorage.setItem("user_auth", JSON.stringify(user_auth));
+        localStorage.setItem("user_id", id);
+        //window.location.reload();
+        await setting.loadConfig(dispatch, true);
+        dispatch(userLoginStateUpdate());
+    } catch (error) {
+        console.log("Login error: " + error);
+        if (error.code === "UserNotConfirmedException") {
+            dispatch(userSignupConfirmRequired());
+        }
+        dispatch(userLoginFail(error.message));
+    }
+}
+
+export const logoutRequest = async (dispatch) => {
+    dispatch(userLoginStateUpdate(false));
+    try {
+        await Auth.signOut();
+        localStorage.removeItem("user_auth");
+        window.location.reload();
+    } catch (error) {
+        console.log("Logout failed " + error);
     }
 }
 

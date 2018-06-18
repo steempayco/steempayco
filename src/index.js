@@ -7,18 +7,18 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Amplify
 import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
+//import aws_exports from './aws-exports';
+import config from './config.json';
 
 // Redux
 import { createStore } from 'redux'
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 
-Amplify.configure(aws_exports)
+Amplify.configure(config.aws)
 
 
 const store = createStore(reducers);
-console.log(store.getState());
 
 ReactDOM.render(
     <Provider store={store}>

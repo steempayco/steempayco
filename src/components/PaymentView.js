@@ -24,7 +24,7 @@ class PaymentView extends Component {
         let amount = info.amount + " " + info.currency;
         let amountSBD = (info.amount / rate.price).toFixed(3) + " SBD";
         let message = "";
-        if (info.type == 'exchange') {
+        if (info.type === 'exchange') {
             message = info.receiverDetail.wallet;
         } else {
             message = "[SteemPay] " + info.memo + " | " + amount + " | " + amountSBD;

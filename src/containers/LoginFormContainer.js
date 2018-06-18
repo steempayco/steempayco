@@ -2,9 +2,9 @@ import LoginForm from '../components/login/LoginForm';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-const mapStateToProps = ({auth}) => {
+const mapStateToProps = ({auth, common}) => {
     return {
-        auth: auth.auth,
+        auth: common.auth,
         inProgress: auth.inProgress,
         error: auth.error,
         redirectToConfirm: auth.redirectToConfirm,
@@ -14,8 +14,7 @@ const mapStateToProps = ({auth}) => {
 
 const mapDispatchToProps = (dispatch) => ({
     onLoginRequest: (id, pass) => {
-        console.log(id, pass);
-        actions.loginRequest(id, pass)(dispatch);
+        actions.loginRequest(dispatch, id, pass);
     } 
 })
 

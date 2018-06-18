@@ -2,13 +2,18 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import LoginPanel from '../components/login/LoginPanel';
 
-const mapStateToProps = ({auth}) => {
-    return {auth: auth.auth, inProgress: auth.inProgress, loginStateChecked: auth.loginStateChecked};
+const mapStateToProps = ({auth, common}) => {
+    return {
+        auth: common.auth,
+        inProgress: auth.inProgress,
+        loginStateChecked: auth.loginStateChecked,
+        userId: actions.getUserId()
+    };
 };
 
 const mapDispatchToProps = (dispatch) => ({
     onLogoutRequest: () => {
-        actions.logoutRequest()(dispatch);
+        actions.logoutRequest(dispatch);
     } 
 })
 

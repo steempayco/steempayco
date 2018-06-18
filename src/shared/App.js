@@ -18,9 +18,6 @@ const rightItems = [
 ];
 
 class App extends Component {
-  componentDidMount() {
-    this.props.getCurrentUser();
-  }
   render() {
     return (<div>
                 <AppFrame leftItems={leftItems} rightItems={rightItems}>
@@ -40,16 +37,8 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-      auth: state.auth ? state.auth : false
+      auth: state.common.auth
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getCurrentUser: () => {
-      actions.initAuth()(dispatch);
-    }
-  }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps,)(App));
