@@ -28,7 +28,12 @@ class AddUser extends Component {
     }
 
     handleSave() {
-        this.props.onSave({account: this.state.account});
+        this.props.onSave(
+            {
+                type: 'user',
+                account: this.state.account,
+                id: this.state.account
+            });
         this.handleClose();
     }
 
@@ -51,7 +56,7 @@ class AddUser extends Component {
             <Button circular onClick={this.handleClose}>
                 Cancel
             </Button>
-            <Button circular positive onClick={this.handleSave} 
+            <Button circular color='teal' onClick={this.handleSave} 
                 icon='checkmark' labelPosition='right' content='Add' />
             </Modal.Actions>
         </Modal>

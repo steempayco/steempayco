@@ -17,6 +17,9 @@ var Utils = {
     getCurrencies: () => {
         return Currency.map(item => { return {...item, symbol: getSymbolFromCurrency(item.code)}});
     },
+    getCurrencySymbol: (currencyCode) => {
+        return getSymbolFromCurrency(currencyCode);
+    },
     shortenNumber: (num, digits) => {
         var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
             decimal;

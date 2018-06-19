@@ -1,23 +1,55 @@
 import React, { Component } from 'react'
-import { Button, Dropdown, Image } from 'semantic-ui-react'
+import { Button, Dropdown, Image, Icon, Confirm } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import userIcon from './user.jpg' 
 
 class LoginPanel extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            logoutConfirmOpen: false
+        }
+    }
+
+    showLogoutDialog = () => {
+        this.setState({logoutConfirmOpen: true})
+    }
+
+    handleLogoutConfirm = () => {
+        this.props.onLogoutRequest()
+        this.setState({logoutConfirmOpen: false})
+    }
+
+    handleLogoutCancel = () => {
+        this.setState({logoutConfirmOpen: false})
+    }
+
     renderAuthenticated = () => {
+        let nickname = this.props.auth.attributes.nickname
         const trigger = (
-            <span>
-                Hello, aaaaadfs <Image avatar src={"http://localhost:3000/img/home.jpeg"} /> 
-            </span>
+                <Image avatar src={userIcon} /> 
         )
-        const options = [
-            { key: 'user', text: 'Account', icon: 'user' },
-            { key: 'settings', text: 'Settings', icon: 'settings' },
-            { key: 'sign-out', text: 'Sign Out', icon: 'sign out', onClick: this.props.onLogoutRequest },
-        ]
-        console.log(this.props.auth)
+
         return (
             <div>
-            <Dropdown trigger={trigger} options={options} icon={null} />
+                <Dropdown trigger={trigger} size="big">
+                    <Dropdown.Menu>
+                        <Dropdown.Header content={`hello, ${nickname}`} />
+                        <Dropdown.Item as={Link} to="/setting">
+                            <Icon name="setting"/> Settings
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={this.showLogoutDialog}>
+                            <Icon name="sign out"/> Sign Out
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Confirm open={this.state.logoutConfirmOpen}
+                    onCancel={this.handleLogoutCancel}
+                    onConfirm={this.handleLogoutConfirm} style={{
+                        marginTop: '40px !important',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                      }}/>
             </div>
         )
     }

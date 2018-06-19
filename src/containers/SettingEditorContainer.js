@@ -10,9 +10,6 @@ const mapStateToProps = ({setting}) => {
 
 const mapDispatchToProps = (dispatch) => ({
     onSave: (config) => {
-        console.log(config)
-        dispatch(actions.updateConfig())
-
         dispatch(actions.settingSaveInProgress())
         let configJson = JSON.stringify(config)
         Storage.put('config.json', configJson, {
@@ -20,7 +17,9 @@ const mapDispatchToProps = (dispatch) => ({
             contentType: 'text/json'
         })
         .then (result => {
+            localStorage.setItem('config', configJson)
             dispatch(actions.settingSaveSuccess(result))
+            dispatch(actions.updateConfig())
         })
         .catch(err => {
             dispatch(actions.settingSaveFailed(err))

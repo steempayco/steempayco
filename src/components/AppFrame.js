@@ -49,6 +49,7 @@ const NavBarChildren = ({ children }) => (
 
 const slideMenu = [
   { name: 'Home', link: '/', icon: 'home' },
+  { name: 'Sell', link: '/sell', icon: 'tag' },
   { name: 'Payment', link: '/pay', icon: 'payment' },
   { name: 'Invoice', link: '/invoice', icon: 'tag' },
   { name: 'Setting', link: '/setting', icon: 'setting' },
