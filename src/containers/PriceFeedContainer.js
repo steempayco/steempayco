@@ -1,25 +1,16 @@
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Component } from "react";
-import Api from 'shared/Api';
+import Api from 'shared/API';
 
 class PriceFetcher extends Component {
     componentDidMount() {
         Api.getPrice(this.onPrice, this.onError);
-        setInterval(() => Api.getPrice(this.onPrice, this.onError), 10000);
+        setInterval(() => Api.getPrice(this.onPrice, this.onError), 30000);
     }
 
     onPrice = (result) => {
-        var average = result.map((hr) => hr.highPrice).reduce((avg,e,i,arr)=>avg+e/arr.length,0);
-        var date = new Date();
-        this.props.onPriceFeed(
-            {
-                exchange: 'Upbit',
-                currency: 'KRW',
-                price: Math.round(average),
-                lastUpdate: date.toLocaleDateString() + " " + date.toLocaleTimeString()
-            }
-        );
+        this.props.onPriceFeed(result);
     }
 
     onError = (error) => {

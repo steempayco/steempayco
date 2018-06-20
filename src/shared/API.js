@@ -1,16 +1,32 @@
+import globalConfig from 'config'
+
+//const apiBase = 'https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Prod';
+const apiBase = globalConfig.apiBase
+
 let Api = {
     fetchInvoice: (invoiceId, onSuccess, onFail) => {
-        let getPayment = "https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Beta/invoice/" + invoiceId;
-        console.log(getPayment);
+        let getPayment = `${apiBase}/invoice/${invoiceId}`;
         fetch(getPayment)
         .then(function(res){ return res.json(); })
-        .then(function(data){ console.log(data); onSuccess(data); })
+        .then(function(data){ onSuccess(data); })
         .catch((err) => {
             onFail({errorMessage: "Failed to open invoice"})
         });
     },
+    createInvoice: (payload, onSuccess, onFail) => {
+        let fetchOption = {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        };
+
+        fetch(`${apiBase}/invoice`, fetchOption)
+        .then((res) => res.json())
+        .then(onSuccess, onFail)
+        .catch(onFail);
+    },
     getPrice: (onSuccess, onFail) => {
-        fetch("https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/1?code=CRIX.UPBIT.KRW-SBD&count=30&to")
+        fetch(`${apiBase}/price-feed`)
         .then(res => res.json())
         .then(onSuccess, onFail)
         .catch(onFail);

@@ -1,27 +1,17 @@
-import _ from "lodash";
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import { Icon, Menu, Sidebar } from "semantic-ui-react";
-
+import React, { Component } from "react"
+import { Link } from 'react-router-dom'
+import { Icon, Menu, Sidebar } from "semantic-ui-react"
+import LoginPanelContainer from 'containers/LoginPanelContainer'
 import Footer from 'components/Footer'
 
 const NavBarMobile = ({
     children,
     slideMenu,
-    onPusherClick,
     onToggle,
-    rightItems,
     visible
   }) => (
     <div>
-        <Sidebar
-          as={Menu}
-          animation="overlay"
-          icon="labeled"
-          inverted
-          vertical
-          visible={visible}
-          width="thin">
+        <Sidebar as={Menu} animation="overlay" icon="labeled" inverted vertical visible={visible} width="thin">
           { slideMenu.map( (item, key) => (
             <Link key={key} to={item.link} onClick={onToggle}>
               <Menu.Item name={item.name} >
@@ -33,7 +23,7 @@ const NavBarMobile = ({
           <Footer/>
         </Sidebar>
       <div onClick={visible ? onToggle : null}>
-        <Menu fixed="top">
+        <Menu fixed="top" borderless>
           <Menu secondary>
           <Menu.Item onClick={onToggle}>
             <Icon name="sidebar" />
@@ -42,8 +32,10 @@ const NavBarMobile = ({
             <h3>Steem Pay</h3>
           </Menu.Item>
           </Menu>
-          <Menu.Menu position="right">
-            {_.map(rightItems, item => <Menu.Item {...item} />)}
+          <Menu.Menu position="right" style={{padding: '10px'}}>
+            <Menu.Item fitted={true}>
+              <LoginPanelContainer />
+            </Menu.Item>
           </Menu.Menu>
         </Menu>
         {children}
@@ -52,13 +44,15 @@ const NavBarMobile = ({
   );
   
 const NavBarChildren = ({ children }) => (
-  <div style={{ display: 'inline-block', marginTop: '50px'}}>{children}</div>
+  <div style={{ display: 'inline-block', marginTop: '70px'}}>{children}</div>
 );
 
 const slideMenu = [
   { name: 'Home', link: '/', icon: 'home' },
-  { name: 'Payment', link: '/pay', icon: 'payment' },
-  { name: 'Invoice', link: '/invoice', icon: 'tag' },
+  { name: 'Sell', link: '/sell', icon: 'tag' },
+  { name: 'Instant Sell', link: '/invoice', icon: 'clipboard' },
+  { name: 'Scan to Pay', link: '/pay', icon: 'payment' },
+  { name: 'Steempay API', link: '/api', icon: 'plug' },
   { name: 'Setting', link: '/setting', icon: 'setting' },
 ];
 
@@ -80,7 +74,7 @@ class AppFrame extends Component {
     const { visible } = this.state;
 
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
           <NavBarMobile
             slideMenu={slideMenu}
             onPusherClick={this.handlePusher}

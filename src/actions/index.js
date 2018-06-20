@@ -1,4 +1,5 @@
 import * as types from './ActionTypes';
+export * from './auth.js';
 
 export const updateConfig = () => ({
     type: types.UPDATE_CONFIG

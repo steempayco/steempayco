@@ -3,4 +3,20 @@
     width: 100vw;
     max-width: 400px;
     padding: 10px;
+    text-align: left;
+}
+
+.responsiblePageArea
+{
+    width: 100vw;
+    padding: 10px;
+    text-align: left;
+}
+
+.fixedPageArea
+{
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
 }

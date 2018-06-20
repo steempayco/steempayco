@@ -1,10 +1,9 @@
 import InvoiceForm from '../components/InvoiceForm';
 import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => ({
-    users: state.config.users,
-    exchanges: state.config.exchanges,
-});
+const mapStateToProps = ({common}) => {
+    return {config: common.config};
+};
 
 const mapDispatchToProps = (dispatch) => ({
 })

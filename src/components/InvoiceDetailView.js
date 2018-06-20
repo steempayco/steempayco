@@ -3,7 +3,8 @@ import { Table } from 'semantic-ui-react';
 import Utils from 'shared/Utils.js'
 
 const leftStyle = {
-  fontSize: '14pt',
+  fontSize: '12pt',
+  fontWeight: 700
 }
 
 const memoStyle = {
@@ -13,7 +14,6 @@ const memoStyle = {
 const InvoiceDetailView = ({invoice, rate}) => {
     let receiverDetail = invoice.receiverDetail;
     let issueDate = new Date(invoice.timestamp);
-
     return (
     <Table celled unstackable>
       <Table.Body>
@@ -30,31 +30,32 @@ const InvoiceDetailView = ({invoice, rate}) => {
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Receiver</Table.Cell>
           <Table.Cell textAlign='right'>
-            {invoice.receiver}<br/>
-            {receiverDetail.wallet}
+            <span style={{fontSize: '18pt'}}>{invoice.receiver}</span><br/>
+            <span style={{fontSize: 11, fontFamily: "monospace"}}>{receiverDetail.wallet}</span>
           </Table.Cell>
         </Table.Row>
         ) : (
             <Table.Row verticalAlign='top'>
             <Table.Cell active style={leftStyle}>Receiver</Table.Cell>
             <Table.Cell textAlign='right'>
-              <span style={{fontSize: '20pt'}}>{invoice.receiver}</span>
+              <span style={{fontSize: '18pt'}}>{invoice.receiver}</span>
             </Table.Cell>
           </Table.Row>
         )}
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Memo</Table.Cell>
           <Table.Cell textAlign='right' style={memoStyle}>
-          {invoice.type === 'exchange' ? "Not applicable" : invoice.memo}
+          {invoice.memo}<br/>
+          <sub>this memo will not be sent for exchange account</sub>
           </Table.Cell>
         </Table.Row>
         {rate && 
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Exchange Rate</Table.Cell>
           <Table.Cell textAlign='right'>
-            {rate.exchange}<br/>
-            1 SBD = {rate.price} {rate.currency}<br/>
-            {rate.lastUpdate}
+            <span style={{fontSize: '14pt'}}>1 SBD = {rate.price.toFixed(3)} {invoice.currency}</span><br/>
+            {rate.source}<br/>
+            {rate.detail}<br/>
           </Table.Cell>
         </Table.Row>
         }

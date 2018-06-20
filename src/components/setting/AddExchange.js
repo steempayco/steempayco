@@ -32,6 +32,8 @@ class AddExchange extends Component {
     handleSave = () => {
         let exchange = this.state.exchangeData;
         exchange.account = Utils.getExchangeAccount(this.state.exchangeData.name);
+        exchange.id = exchange.nickname
+        exchange.type = 'exchange'
         this.props.onSave(exchange);
         this.setState({exchangeData: {}});
         this.handleClose();
@@ -56,7 +58,7 @@ class AddExchange extends Component {
             <Button circular onClick={this.handleClose}>
                 Cancel
             </Button>
-            <Button circular positive onClick={this.handleSave} 
+            <Button circular color='teal' onClick={this.handleSave} 
                 icon='checkmark' labelPosition='right' content='Add' />
             </Modal.Actions>
         </Modal>

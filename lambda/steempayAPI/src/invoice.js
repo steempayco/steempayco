@@ -1,7 +1,7 @@
 "use strict";
 
 const AWS = require('aws-sdk');
-const docClient = new AWS.DynamoDB.DocumentClient({region: 'us-west-2'});
+const docClient = new AWS.DynamoDB.DocumentClient({region: 'eu-west-2'});
 const uuidv4 = require('uuid/v4');
 
 const invoice = {

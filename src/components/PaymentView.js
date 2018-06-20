@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
-import Api from 'shared/Api'
+import Api from 'shared/API'
 
 class PaymentView extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class PaymentView extends Component {
         let amount = info.amount + " " + info.currency;
         let amountSBD = (info.amount / rate.price).toFixed(3) + " SBD";
         let message = "";
-        if (info.type == 'exchange') {
+        if (info.type === 'exchange') {
             message = info.receiverDetail.wallet;
         } else {
             message = "[SteemPay] " + info.memo + " | " + amount + " | " + amountSBD;
@@ -37,7 +37,7 @@ class PaymentView extends Component {
     }
 
     renderPaymentBlock = () => {
-        const rate = this.props.feed && this.props.feed.find((item) => item.currency === this.state.invoice.currency);
+        const rate = this.props.feed.prices[this.state.invoice.currency];
         return <div>
                 <InvoiceDetailView invoice={this.state.invoice} rate={rate}/>
                 <Button circular fluid size="huge" onClick={() => this.payViaSteemConnect(rate)}>Pay via SteemConnect</Button>
@@ -54,7 +54,7 @@ class PaymentView extends Component {
     }
 
     render() {
-        return this.state.invoice ? this.renderPaymentBlock() : this.renderLoadingBlock();
+        return (this.state.invoice && this.props.feed) ? this.renderPaymentBlock() : this.renderLoadingBlock();
     }
 }
 

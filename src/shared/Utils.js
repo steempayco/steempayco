@@ -2,6 +2,8 @@ import Exchange from 'resources/exchange.json'
 import Currency from 'resources/currency.json'
 import getSymbolFromCurrency from 'currency-symbol-map'
 
+let sortedCurrency = Currency;
+sortedCurrency.sort((a,b) => a.code - b.code);
 
 var Utils = {
     getExchange: () => {
@@ -15,7 +17,10 @@ var Utils = {
         return Exchange.find((item) => item.name === name).account;
     },
     getCurrencies: () => {
-        return Currency.map(item => { return {...item, symbol: getSymbolFromCurrency(item.code)}});
+        return sortedCurrency.map(item => { return {...item, symbol: getSymbolFromCurrency(item.code)}});
+    },
+    getCurrencySymbol: (currencyCode) => {
+        return getSymbolFromCurrency(currencyCode);
     },
     shortenNumber: (num, digits) => {
         var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
