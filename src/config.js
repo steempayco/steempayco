@@ -16,4 +16,6 @@ const stagedConfig = {
     ...config[stage]
 }
 
+console.log("Welcome to Steempay " + stage)
+
 export default stagedConfig;

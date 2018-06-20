@@ -26,4 +26,8 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-registerServiceWorker();
+if (globalConfig.stage == 'dev') {
+    console.log(globalConfig)
+    console.log("Regitering development ServiceWorker")
+    registerServiceWorker();
+}
