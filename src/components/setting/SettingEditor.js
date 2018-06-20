@@ -193,8 +193,8 @@ class SettingEditor extends Component {
                         <Table.Cell>
                                 <b>{item.name}</b>
                         </Table.Cell>
-                        <Table.Cell>
-                                {item.price}
+                        <Table.Cell style={{textAlign: 'right'}}>
+                                {Utils.currencyFormat(item.price, store.currency) }
                         </Table.Cell>
                         <Table.Cell>
                                 <Button floated='right' icon='trash' color='orange' size='mini'
@@ -233,7 +233,7 @@ class SettingEditor extends Component {
                 />
                 {this.state.config.stores.map((store, index) => (
                     <div key={index} style={{marginTop: '10px'}}>
-                        <Header as='h3' attached='top'>
+                        <Header as='h2' attached='top'>
                         {store.name}
                             <span><Button icon="trash" floated='right' style={{backgroundColor: 'white'}} onClick={() => this.deleteStore(index)}/></span>
                             <ManageStore

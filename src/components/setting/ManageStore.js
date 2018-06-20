@@ -50,6 +50,13 @@ class AddStore extends Component {
     }
 
     isAllSet = () => {
+        if (!this.state.storeData['name'] ||
+            !this.state.storeData['description'] ||
+            !this.state.storeData['address'] ||
+            !this.state.storeData['linkedAccount'] ||
+            !this.state.storeData['currency']) {
+            return false;
+        }
         for (let key in this.state.storeData) {
             if(!this.state.storeData[key]) {
                 return false;
@@ -60,9 +67,10 @@ class AddStore extends Component {
 
     handleSave = () => {
         if (!this.isAllSet()) return;
-
         this.props.onSave(this.state.storeData);
-        this.setState({storeData: {}});
+        if (!this.props.storeData)
+            this.setState({storeData: {}});
+        
         this.handleClose();
     }
 
