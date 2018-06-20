@@ -2,7 +2,6 @@ import SettingEditor from '../components/setting/SettingEditor';
 import * as actions from '../actions/setting';
 import { connect } from 'react-redux';
 import { Storage } from 'aws-amplify';
-import config from 'config';
 
 const mapStateToProps = ({setting}) => {
     return setting;
@@ -36,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
             dispatch(actions.settingLoadSuccess());
         })
         .catch(err => {
-            callback(config);
+            console.log(err)
             dispatch(actions.settingLoadFailed(err));
         });
     }

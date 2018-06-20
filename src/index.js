@@ -7,15 +7,14 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Amplify
 import Amplify from 'aws-amplify';
-//import aws_exports from './aws-exports';
-import config from './config.json';
+import globalConfig from 'config';
 
 // Redux
 import { createStore } from 'redux'
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 
-Amplify.configure(config.aws)
+Amplify.configure(globalConfig.aws)
 
 
 const store = createStore(reducers);

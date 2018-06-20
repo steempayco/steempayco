@@ -1,11 +1,14 @@
-const apiBase = 'https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Prod';
+import globalConfig from 'config'
+
+//const apiBase = 'https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Prod';
+const apiBase = globalConfig.apiBase
 
 let Api = {
     fetchInvoice: (invoiceId, onSuccess, onFail) => {
         let getPayment = `${apiBase}/invoice/${invoiceId}`;
         fetch(getPayment)
         .then(function(res){ return res.json(); })
-        .then(function(data){ console.log(data); onSuccess(data); })
+        .then(function(data){ onSuccess(data); })
         .catch((err) => {
             onFail({errorMessage: "Failed to open invoice"})
         });

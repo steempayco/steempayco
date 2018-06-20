@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button, Form, Dimmer, Loader, Input, Dropdown, TextArea } from 'semantic-ui-react'
-import { Redirect, withRouter } from 'react-router-dom';
+import { Button, Form, Dimmer, Loader, Input, Dropdown, TextArea, Message } from 'semantic-ui-react'
+import { Redirect, withRouter, Link } from 'react-router-dom';
 import Api from 'shared/API';
 import Utils from 'shared/Utils';
 
@@ -88,10 +88,11 @@ class InvoiceForm extends Component {
 
     showInvoiceForm = () => {
         let param = this.getParameters();
-        console.log(param);
         return ( param &&
-            <div>
-                <h2>Create Invoice</h2>
+            <div style={{textAlign:'center'}}>
+                <div style={{display:'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px'}}>
+                <h2>Instant Sell</h2>
+                <Message><b>Instant Sell</b> will be unavilable soon. Please try to use <Link to="/sell">Sell</Link> instead.</Message>
                 {this.state.fetching && (
                     <Dimmer active>
                         <Loader>Creating...</Loader>
@@ -117,6 +118,7 @@ class InvoiceForm extends Component {
                 <Button size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
                     Create Invoice
                 </Button>
+                </div>
             </div>
         );
     }

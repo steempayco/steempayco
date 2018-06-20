@@ -1,10 +1,10 @@
 const AWS = require('aws-sdk');
-const docClient = new AWS.DynamoDB.DocumentClient({region: 'us-west-2'});
+const docClient = new AWS.DynamoDB.DocumentClient({region: 'eu-west-2'});
 const uuidv4 = require('uuid/v4');
 
 
 let fetch = require('node-fetch');
-const currencyList = ['USD', 'JPY', 'GBP', 'KRW', 'PHP', 'EUR', 'MYR', 'CNY'];
+const currencyList = ['USD', 'JPY', 'GBP', 'KRW', 'PHP', 'EUR', 'MYR', 'CNY', 'AUD', 'NZD', 'THB', 'INR', 'IDR', 'VND', 'PLN', 'CAD'];
 const cmcAPI = "https://api.coinmarketcap.com/v2/ticker/1312/?convert=";
 
 const overrideKRW = () => {

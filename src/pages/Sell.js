@@ -8,7 +8,7 @@ const Sell = ({match}) => {
     return (
         <div className="responsiblePageArea">
             <AuthContainer>
-                {match.params.id ? <SellFormContainer storeId={match.params.id} /> : <SellFormContainer />}
+                <SellFormContainer />
             </AuthContainer>
         </div>
     );

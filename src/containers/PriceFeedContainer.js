@@ -6,7 +6,7 @@ import Api from 'shared/API';
 class PriceFetcher extends Component {
     componentDidMount() {
         Api.getPrice(this.onPrice, this.onError);
-        setInterval(() => Api.getPrice(this.onPrice, this.onError), 10000);
+        setInterval(() => Api.getPrice(this.onPrice, this.onError), 30000);
     }
 
     onPrice = (result) => {

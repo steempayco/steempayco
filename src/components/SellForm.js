@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dimmer, Loader, Input, Dropdown, TextArea, Label, Message, Table, Divider } from 'semantic-ui-react'
+import { Button, Dimmer, Loader, Dropdown, Label, Message, Table, Divider, Icon } from 'semantic-ui-react'
 import { Redirect, withRouter, Link } from 'react-router-dom';
 import Api from 'shared/API';
 import Utils from 'shared/Utils';
@@ -43,8 +43,7 @@ class SellForm extends Component {
 
     onPaymentCreated = (result) => {
         console.log(result)
-        this.setState({invoiceId: result.invoiceId});
-        this.setState({fetching: false});
+        this.setState({fetching: false, invoiceId: result.invoiceId});
     }
 
     onPaymentCreationFailed = (err) => {
@@ -71,6 +70,7 @@ class SellForm extends Component {
         console.log(receiver)
 
         var payload = {
+            creater: this.props.username,
             receiver: receiver.account,
             type: receiver.type,
             receiverDetail: receiver,
@@ -139,9 +139,9 @@ class SellForm extends Component {
     renderStorePanel = () => {
         return (
             <div>
-                <Label.Group color='teal' style={{paddingTop: '10px'}}>
+                <Label.Group color='teal'>
                     {this.state.store.items.map((item, index) => (
-                        <Button key={index} color='teal' size='small' onClick={() => this.addItemList(item)}>
+                        <Button key={index} basic color='black' size='small' onClick={() => this.addItemList(item)} style={{marginTop: '5px'}}>
                             {item.name}
                         </Button>
                     ))}
@@ -151,7 +151,7 @@ class SellForm extends Component {
     }
 
     renderSelectedItems = () => {
-        let currency = Utils.getCurrencySymbol(this.state.store.currency);
+        let currency = this.state.store.currency;
         let selectedItems = this.getUniqueItemList();
         let totalAmount = this.getTotalAmount(selectedItems);
 
@@ -178,24 +178,25 @@ class SellForm extends Component {
                     {selectedItems.map((item, index) => (
                         <Table.Row key={index}>
                             <Table.Cell>
-                            <Button icon='minus' color='orange' size='mini' compact onClick={() => this.removeItemList(item.name)} />
                                 <b>{item.name}</b>
                             </Table.Cell>
                             <Table.Cell textAlign='center'>
                                 {item.count}
+                                <Icon name='minus circle' color='orange' onClick={() => this.removeItemList(item.name)} style={{marginLeft: '2px'}}/>
+
                             </Table.Cell>
                             <Table.Cell textAlign='right'>
-                            {currency}{item.price}
+                            {Utils.currencyFormat(item.price, currency)}
                             </Table.Cell>
                             <Table.Cell textAlign='right'>
-                            {currency}{item.count * item.price} 
+                            {Utils.currencyFormat(item.count * item.price, currency)}
                             </Table.Cell>
                         </Table.Row>
                     ))}
                     </Table.Body>
                 </Table>
                 <div style={{textAlign: 'right'}}>
-                <Label floated='right' color='teal' size='big' tag as='a'>{currency}{totalAmount}</Label>
+                <Label floated='right' color='orange' size='big' tag as='a'>{Utils.currencyFormat(totalAmount, currency)}</Label>
                 </div>
             </div>
         )
@@ -208,38 +209,44 @@ class SellForm extends Component {
         return receiverInfo;
     }
 
-    render() {
+    renderAllCase() {
         if (this.state.invoiceId) {
             return <Redirect push to={"/invoice/" + this.state.invoiceId} />
         }
-        if (!this.props.config.stores) {
-            return <Message>You have no store. <Link to='/setting'>setting</Link></Message>
+        if (this.props.config.stores.length === 0) {
+            return <Message info icon='help' size='large' header='You have no store' content={<span>Add your store at <Link to='/setting'>Setting</Link> and try again.</span>}/>
         }
         let stores = this.props.config.stores.map((store, index) => { return {text: store.name, value: store.name, key: index} });
 
         return (
-            <div style={{textAlign:'center'}}>
-                <div style={{display:'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px'}}>
-                    <h2>Sell Items</h2>
-                    <Divider />
-                    <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...stores]}
-                        onChange={this.onStoreChange}  style={{fontSize: '14pt'}} defaultValue={this.state.store.name}
-                        />
-                    {this.renderStorePanel()}
-                    <h3>Items to Sell</h3>
-                    {this.renderSelectedItems()}
-                    <Divider hidden />
-                    <Button size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
-                        Sell!
-                    </Button>
-                    {this.state.fetching && (
-                        <Dimmer active>
-                            <Loader>Creating...</Loader>
-                        </Dimmer>
-                    )}
-                </div>
+            <div>
+                <h2>Sell Items</h2>
+                <Divider />
+                <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...stores]}
+                    onChange={this.onStoreChange}  style={{fontSize: '14pt'}} defaultValue={this.state.store.name}
+                    />
+                {this.renderStorePanel()}
+                <h3>Items to Sell</h3>
+                {this.renderSelectedItems()}
+                <Divider hidden />
+                <Button color='teal' size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
+                    Sell!
+                </Button>
+                {this.state.fetching && (
+                    <Dimmer active>
+                        <Loader>Creating...</Loader>
+                    </Dimmer>
+                )}
             </div>
         )
+    }
+
+    render() {
+        return  <div style={{textAlign:'center'}}>
+                    <div style={{display:'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px'}}>
+                        {this.renderAllCase()}
+                    </div>
+                </div>
     }
 }
 

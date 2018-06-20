@@ -12,3 +12,11 @@
     padding: 10px;
     text-align: left;
 }
+
+.fixedPageArea
+{
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
+}

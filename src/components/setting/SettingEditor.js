@@ -4,14 +4,19 @@ import AddUser from './AddUser';
 import AddExchange from './AddExchange';
 import ManageStore from './ManageStore';
 import Utils from 'shared/Utils'
-import config from 'config'
 
 let steem = require('steem');
+
+let defaultConfig = {
+    users : [],
+    exchanges : [],
+    stores: []
+};
 
 class SettingEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = { config: config.defaultConfig };
+        this.state = { config: defaultConfig };
     }
 
     componentDidMount() {
@@ -94,7 +99,6 @@ class SettingEditor extends Component {
 
     renderAccountSetting = () => {
         let config = this.state.config;
-
         return (
             <div>
             <Header as='h2'>
@@ -225,7 +229,7 @@ class SettingEditor extends Component {
                 <ManageStore
                     onSave={this.addStore}
                     config={this.state.config}
-                    trigger={<Button color='teal'>Add a new store</Button>}
+                    trigger={<Button basic color='teal'>Add a new store</Button>}
                 />
                 {this.state.config.stores.map((store, index) => (
                     <div key={index} style={{marginTop: '10px'}}>
@@ -253,7 +257,7 @@ class SettingEditor extends Component {
                                     {store.currency}
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <h3>Products</h3>
+                                    <h3>Items</h3>
                                     {this.renderProducts(store, index)}
                                 </Grid.Column>
                             </Grid>

@@ -7,7 +7,7 @@ import './PageCommon.css'
 const Payment = ({match}) => {
     return (
         <div className="pageArea">
-            <h2>Make a Payment</h2>
+            <h2>PAYMENT DETAIL</h2>
             {match.params.id ? <PaymentViewContainer invoiceId={match.params.id} /> : <PaymentInject />}
         </div>
     );

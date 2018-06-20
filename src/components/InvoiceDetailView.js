@@ -14,7 +14,6 @@ const memoStyle = {
 const InvoiceDetailView = ({invoice, rate}) => {
     let receiverDetail = invoice.receiverDetail;
     let issueDate = new Date(invoice.timestamp);
-  console.log(rate);
     return (
     <Table celled unstackable>
       <Table.Body>
@@ -46,7 +45,8 @@ const InvoiceDetailView = ({invoice, rate}) => {
         <Table.Row verticalAlign='top'>
           <Table.Cell active style={leftStyle}>Memo</Table.Cell>
           <Table.Cell textAlign='right' style={memoStyle}>
-          {invoice.type === 'exchange' ? "Not applicable" : invoice.memo}
+          {invoice.memo}<br/>
+          <sub>this memo will not be sent for exchange account</sub>
           </Table.Cell>
         </Table.Row>
         {rate && 

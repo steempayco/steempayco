@@ -20,7 +20,9 @@ class AddStore extends Component {
         super(props);
         this.state = {
             modalOpen: false,
-            storeData: this.props.storeData ? this.props.storeData : {id: uuid()},
+            storeData: this.props.storeData ?
+                this.props.storeData
+                : {id: uuid(), name: '', description: '', address: '', linkedAccount: '', currency: ''},
         };
     }
 
@@ -47,7 +49,18 @@ class AddStore extends Component {
         this.setState({storeData: store});
     }
 
+    isAllSet = () => {
+        for (let key in this.state.storeData) {
+            if(!this.state.storeData[key]) {
+                return false;
+            }
+         }
+        return true;
+    }
+
     handleSave = () => {
+        if (!this.isAllSet()) return;
+
         this.props.onSave(this.state.storeData);
         this.setState({storeData: {}});
         this.handleClose();
@@ -58,6 +71,8 @@ class AddStore extends Component {
         let editMode = this.props.storeData ? true : false
         let params = this.getParameters(this.props.config)
         let trigger = <span onClick={this.handleOpen}>{this.props.trigger}</span> 
+        let readyToSave = this.isAllSet();
+        console.log('render!');
         return (
         <Modal size='tiny' 
             trigger={trigger}
@@ -83,7 +98,7 @@ class AddStore extends Component {
             <Button circular onClick={this.handleClose}>
                 Cancel
             </Button>
-            <Button circular color='teal' onClick={this.handleSave} 
+            <Button disabled={!readyToSave} circular color='teal' onClick={this.handleSave} 
                 icon='checkmark' labelPosition='right' content='Save' />
             </Modal.Actions>
         </Modal>
