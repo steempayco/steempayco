@@ -233,7 +233,7 @@ class SettingEditor extends Component {
                 />
                 {this.state.config.stores.map((store, index) => (
                     <div key={index} style={{marginTop: '10px'}}>
-                        <Header as='h2' attached='top'>
+                        <Header as='h3' attached='top'>
                         {store.name}
                             <span><Button icon="trash" floated='right' style={{backgroundColor: 'white'}} onClick={() => this.deleteStore(index)}/></span>
                             <ManageStore

@@ -53,7 +53,7 @@ class SellForm extends Component {
     getTotalAmount = (items) => {
         let totalAmount = 0;
         items.forEach(item => {
-            totalAmount += item.price * item.count;
+            totalAmount += Utils.safeMultiply(item.price, item.count);
         })
         return totalAmount
     }
@@ -189,7 +189,7 @@ class SellForm extends Component {
                             {Utils.currencyFormat(item.price, currency)}
                             </Table.Cell>
                             <Table.Cell textAlign='right'>
-                            {Utils.currencyFormat(item.count * item.price, currency)}
+                            {Utils.currencyFormat(Utils.safeMultiply(item.count, item.price), currency)}
                             </Table.Cell>
                         </Table.Row>
                     ))}

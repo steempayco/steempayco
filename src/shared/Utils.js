@@ -89,6 +89,10 @@ var Utils = {
         } else {
             return `${symbol}${Utils.numberWithCommas(value)}`;
         }
+    },
+    safeMultiply: (v1, v2) => {
+        const cf = 100;
+        return ((v1 * cf) * (v2 * cf)) / (cf * cf)  
     }
 };
 

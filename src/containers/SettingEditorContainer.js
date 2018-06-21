@@ -31,6 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
             return fetch(result).then((resp) => resp.json());
         })
         .then(result => {
+            localStorage.setItem('config', JSON.stringify(result))
+            dispatch(actions.updateConfig())
             callback(result);
             dispatch(actions.settingLoadSuccess());
         })
