@@ -4,19 +4,14 @@ import AddUser from './AddUser';
 import AddExchange from './AddExchange';
 import ManageStore from './ManageStore';
 import Utils from 'shared/Utils'
+import globalConfig from 'config'
 
 let steem = require('steem');
-
-let defaultConfig = {
-    users : [],
-    exchanges : [],
-    stores: []
-};
 
 class SettingEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = { config: defaultConfig };
+        this.state = { config: globalConfig.defaultConfig };
     }
 
     componentDidMount() {
@@ -24,7 +19,7 @@ class SettingEditor extends Component {
     }
 
     onConfig = (config) => {
-        this.setState({config});
+        this.setState({config: {...this.state.config, ...config}});
     }
 
     getUserAccounts = () => {

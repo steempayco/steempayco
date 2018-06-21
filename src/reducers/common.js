@@ -1,4 +1,5 @@
 import * as types from '../actions/ActionTypes';
+import globalConfig from 'config'
 
 const getAuth = () => {
     let userAuth = localStorage.getItem("user_auth");
@@ -7,9 +8,16 @@ const getAuth = () => {
 }
 
 const getConfig = () => {
-    let config = localStorage.getItem('config');
-    if (!config) return false;
-    return JSON.parse(config);
+    let config = globalConfig.defaultConfig;
+    let configFromStorage = localStorage.getItem('config');
+    if (configFromStorage) {
+        let previousConfig = JSON.parse(configFromStorage);
+        console.log(previousConfig)
+        if (previousConfig.version === config.version) {
+            config =  previousConfig
+        }
+    }
+    return config;
 }
 
 const initialState = {

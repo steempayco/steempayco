@@ -80,7 +80,6 @@ class AddStore extends Component {
         let params = this.getParameters(this.props.config)
         let trigger = <span onClick={this.handleOpen}>{this.props.trigger}</span> 
         let readyToSave = this.isAllSet();
-        console.log('render!');
         return (
         <Modal size='tiny' 
             trigger={trigger}

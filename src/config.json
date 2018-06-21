@@ -1,0 +1,58 @@
+{
+    "common": {
+        "defaultConfig": {
+            "version": 1,
+            "users" : [],
+            "exchanges" : [],
+            "stores": []
+        }
+    },
+    "dev": {
+        "aws": {
+            "Auth": {
+                "identityPoolId": "eu-west-2:95692869-98a1-4912-b963-3ec9127c623e",
+                "region": "eu-west-2",
+                "userPoolId": "eu-west-2_RDYacLh3l",
+                "userPoolWebClientId": "3oktc3t91slggr2dboanp4lpjj",
+                "mandatorySignIn": false
+            },
+            "Storage": {
+                "bucket" : "steempay-user",
+                "region" : "eu-west-2"
+            }
+        },
+        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Beta"
+    },
+    "beta": {
+        "aws": {
+            "Auth": {
+                "identityPoolId": "eu-west-2:95692869-98a1-4912-b963-3ec9127c623e",
+                "region": "eu-west-2",
+                "userPoolId": "eu-west-2_RDYacLh3l",
+                "userPoolWebClientId": "3oktc3t91slggr2dboanp4lpjj",
+                "mandatorySignIn": false
+            },
+            "Storage": {
+                "bucket" : "steempay-user",
+                "region" : "eu-west-2"
+            }
+        },
+        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Beta"
+    },
+    "prod": {
+        "aws": {
+            "Auth": {
+                "identityPoolId": "eu-west-2:95692869-98a1-4912-b963-3ec9127c623e",
+                "region": "eu-west-2",
+                "userPoolId": "eu-west-2_RDYacLh3l",
+                "userPoolWebClientId": "3oktc3t91slggr2dboanp4lpjj",
+                "mandatorySignIn": false
+            },
+            "Storage": {
+                "bucket" : "steempay-user",
+                "region" : "eu-west-2"
+            }
+        },
+        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Prod"
+    }
+}
