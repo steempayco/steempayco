@@ -2,7 +2,7 @@ import React from 'react';
 import '../PageCommon.css'
 import LoginFormContainer from 'containers/LoginFormContainer'
 
-const Login = ({match}) => {
+const Login = ({ match }) => {
     return (
         <div className="responsiblePageArea">
             <LoginFormContainer />

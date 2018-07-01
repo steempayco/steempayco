@@ -17,8 +17,8 @@ class InvoiceView extends Component {
     componentDidMount() {
         Api.fetchInvoice(
             this.props.invoiceId,
-            (data) => { this.setState({invoice: data}); },
-            (error) => { this.setState({errorMessage: "Failed to open invoice"}); }
+            (data) => { this.setState({ invoice: data }); },
+            (error) => { this.setState({ errorMessage: "Failed to open invoice" }); }
         );
     }
 
@@ -33,13 +33,13 @@ class InvoiceView extends Component {
     render() {
         let i = this.state.invoice;
         return i ? (
-            <div style={{textAlign:'center'}}>
-                <div style={{display:'inline-block', textAlign: 'center', width: '100%', maxWidth: '400px'}}>
+            <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'inline-block', textAlign: 'center', width: '100%', maxWidth: '400px' }}>
                     <h2>
                         SCAN TO PAY
                     </h2>
-                    <QRCode style={{width: '100%', maxWidth: 260}} value={this.getData()} />
-                    <InvoiceDetailView invoice = {this.state.invoice} feed={this.props.feed} />
+                    <QRCode style={{ width: '100%', maxWidth: 260 }} value={this.getData()} />
+                    <InvoiceDetailView invoice={this.state.invoice} feed={this.props.feed} />
                     <p><Button size="huge" circular onClick={this.copyLink}>Get Link</Button></p>
                 </div>
             </div>

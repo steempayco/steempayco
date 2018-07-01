@@ -5,7 +5,7 @@ import InvoiceView from 'components/InvoiceView'
 import AuthContainer from 'containers/AuthContainer';
 
 
-const Invoice = ({match}) => {
+const Invoice = ({ match }) => {
     return (
         <div className="responsiblePageArea">
             <AuthContainer>

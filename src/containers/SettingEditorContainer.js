@@ -3,7 +3,7 @@ import * as actions from '../actions/setting';
 import { connect } from 'react-redux';
 import { Storage } from 'aws-amplify';
 
-const mapStateToProps = ({setting}) => {
+const mapStateToProps = ({ setting }) => {
     return setting;
 };
 
@@ -15,31 +15,31 @@ const mapDispatchToProps = (dispatch) => ({
             level: 'private',
             contentType: 'text/json'
         })
-        .then (result => {
-            localStorage.setItem('config', configJson)
-            dispatch(actions.settingSaveSuccess(result))
-            dispatch(actions.updateConfig())
-        })
-        .catch(err => {
-            dispatch(actions.settingSaveFailed(err))
-        });
+            .then(result => {
+                localStorage.setItem('config', configJson)
+                dispatch(actions.settingSaveSuccess(result))
+                dispatch(actions.updateConfig())
+            })
+            .catch(err => {
+                dispatch(actions.settingSaveFailed(err))
+            });
     },
     loadConfig: (callback) => {
         dispatch(actions.settingLoadInProgress());
-        Storage.get('config.json', { level: 'private', contentType: 'text/json'})
-        .then(result => {
-            return fetch(result).then((resp) => resp.json());
-        })
-        .then(result => {
-            localStorage.setItem('config', JSON.stringify(result))
-            dispatch(actions.updateConfig())
-            callback(result);
-            dispatch(actions.settingLoadSuccess());
-        })
-        .catch(err => {
-            console.log(err)
-            dispatch(actions.settingLoadFailed(err));
-        });
+        Storage.get('config.json', { level: 'private', contentType: 'text/json' })
+            .then(result => {
+                return fetch(result).then((resp) => resp.json());
+            })
+            .then(result => {
+                localStorage.setItem('config', JSON.stringify(result))
+                dispatch(actions.updateConfig())
+                callback(result);
+                dispatch(actions.settingLoadSuccess());
+            })
+            .catch(err => {
+                console.log(err)
+                dispatch(actions.settingLoadFailed(err));
+            });
     }
 });
 

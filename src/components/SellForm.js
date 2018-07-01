@@ -11,20 +11,20 @@ class SellForm extends Component {
 
         this.state = {
             store: store,
-            itemList : [],
+            itemList: [],
             receiverInfo: false,
             invoiceId: null,
             fetching: false,
             receivers: this.props.users.map((user) => {
-                var key = JSON.stringify({account: user.account});
-                return {text: user.account, key: user.account, value: key}
+                var key = JSON.stringify({ account: user.account });
+                return { text: user.account, key: user.account, value: key }
             }),
             exchanges: this.props.exchanges.map((exchange) => {
-                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-                return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
+                var key = JSON.stringify({ exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname });
+                return { text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
             }),
             currencies: Utils.getCurrencies().map((currency) => {
-                return {key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
+                return { key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
             })
         };
         this.handleChange = this.handleChange.bind(this);
@@ -32,7 +32,7 @@ class SellForm extends Component {
 
     onStoreChange = (event, data) => {
         let store = this.props.config.stores.find((store) => store.name === data.value)
-        this.setState({store, itemList: []});
+        this.setState({ store, itemList: [] });
     }
 
     handleChange = (event, data) => {
@@ -42,11 +42,11 @@ class SellForm extends Component {
     }
 
     onPaymentCreated = (result) => {
-        this.setState({fetching: false, invoiceId: result.invoiceId});
+        this.setState({ fetching: false, invoiceId: result.invoiceId });
     }
 
     onPaymentCreationFailed = (err) => {
-        this.setState({fetching: false});
+        this.setState({ fetching: false });
     }
 
     getTotalAmount = (items) => {
@@ -64,7 +64,7 @@ class SellForm extends Component {
         let totalAmount = this.getTotalAmount(items);
         let memo = items.map(item => item.name + '✕' + item.count).join(', ')
 
-        this.setState({fetching: true});
+        this.setState({ fetching: true });
         var receiver = this.getReceiverDetail();
         var payload = {
             creater: this.props.username,
@@ -91,15 +91,15 @@ class SellForm extends Component {
 
         return config && {
             receivers: config.users.map((user) => {
-                var key = JSON.stringify({account: user.account});
-                return {text: user.account, key: user.account, value: key}
+                var key = JSON.stringify({ account: user.account });
+                return { text: user.account, key: user.account, value: key }
             }),
             exchanges: config.exchanges.map((exchange) => {
-                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-                return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
+                var key = JSON.stringify({ exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname });
+                return { text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
             }),
             currencies: Utils.getCurrencies().map((currency) => {
-                return {key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
+                return { key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
             })
         }
     }
@@ -110,7 +110,7 @@ class SellForm extends Component {
         itemList.forEach((item) => {
             let uniqItem = uniqItems.find(uniqItem => uniqItem.name === item.name);
             if (!uniqItem) {
-                uniqItems.push({...item, count: 1});
+                uniqItems.push({ ...item, count: 1 });
             } else {
                 uniqItem.count += 1;
             }
@@ -121,7 +121,7 @@ class SellForm extends Component {
     addItemList = (item) => {
         let itemList = this.state.itemList;
         itemList.push(item)
-        this.setState({itemList});
+        this.setState({ itemList });
     }
 
     removeItemList = (name) => {
@@ -130,7 +130,7 @@ class SellForm extends Component {
         if (index > -1) {
             itemList.splice(index, 1);
         }
-        this.setState({itemList});
+        this.setState({ itemList });
     }
 
     renderStorePanel = () => {
@@ -138,7 +138,7 @@ class SellForm extends Component {
             <div>
                 <Label.Group color='teal'>
                     {this.state.store.items.map((item, index) => (
-                        <Button key={index} basic color='black' size='small' onClick={() => this.addItemList(item)} style={{marginTop: '5px'}}>
+                        <Button key={index} basic color='black' size='small' onClick={() => this.addItemList(item)} style={{ marginTop: '5px' }}>
                             {item.name}
                         </Button>
                     ))}
@@ -172,28 +172,28 @@ class SellForm extends Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                    {selectedItems.map((item, index) => (
-                        <Table.Row key={index}>
-                            <Table.Cell>
-                                <b>{item.name}</b>
-                            </Table.Cell>
-                            <Table.Cell textAlign='center'>
-                                {item.count}
-                                <Icon name='minus circle' color='orange' onClick={() => this.removeItemList(item.name)} style={{marginLeft: '2px'}}/>
+                        {selectedItems.map((item, index) => (
+                            <Table.Row key={index}>
+                                <Table.Cell>
+                                    <b>{item.name}</b>
+                                </Table.Cell>
+                                <Table.Cell textAlign='center'>
+                                    {item.count}
+                                    <Icon name='minus circle' color='orange' onClick={() => this.removeItemList(item.name)} style={{ marginLeft: '2px' }} />
 
-                            </Table.Cell>
-                            <Table.Cell textAlign='right'>
-                            {Utils.currencyFormat(item.price, currency)}
-                            </Table.Cell>
-                            <Table.Cell textAlign='right'>
-                            {Utils.currencyFormat(Utils.safeMultiply(item.count, item.price), currency)}
-                            </Table.Cell>
-                        </Table.Row>
-                    ))}
+                                </Table.Cell>
+                                <Table.Cell textAlign='right'>
+                                    {Utils.currencyFormat(item.price, currency)}
+                                </Table.Cell>
+                                <Table.Cell textAlign='right'>
+                                    {Utils.currencyFormat(Utils.safeMultiply(item.count, item.price), currency)}
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
-                <div style={{textAlign: 'right'}}>
-                <Label floated='right' color='orange' size='big' tag as='a'>{Utils.currencyFormat(totalAmount, currency)}</Label>
+                <div style={{ textAlign: 'right' }}>
+                    <Label floated='right' color='orange' size='big' tag as='a'>{Utils.currencyFormat(totalAmount, currency)}</Label>
                 </div>
             </div>
         )
@@ -211,17 +211,17 @@ class SellForm extends Component {
             return <Redirect push to={"/invoice/" + this.state.invoiceId} />
         }
         if (this.props.config.stores.length === 0) {
-            return <Message info icon='help' size='large' header='You have no store' content={<span>Add your store at <Link to='/setting'>Setting</Link> and try again.</span>}/>
+            return <Message info icon='help' size='large' header='You have no store' content={<span>Add your store at <Link to='/setting'>Setting</Link> and try again.</span>} />
         }
-        let stores = this.props.config.stores.map((store, index) => { return {text: store.name, value: store.name, key: index} });
+        let stores = this.props.config.stores.map((store, index) => { return { text: store.name, value: store.name, key: index } });
 
         return (
             <div>
                 <h2>Sell Items</h2>
                 <Divider />
                 <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...stores]}
-                    onChange={this.onStoreChange}  style={{fontSize: '14pt'}} defaultValue={this.state.store.name}
-                    />
+                    onChange={this.onStoreChange} style={{ fontSize: '14pt' }} defaultValue={this.state.store.name}
+                />
                 {this.renderStorePanel()}
                 <h3>Items to Sell</h3>
                 {this.renderSelectedItems()}
@@ -239,11 +239,11 @@ class SellForm extends Component {
     }
 
     render() {
-        return  <div style={{textAlign:'center'}}>
-                    <div style={{display:'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px'}}>
-                        {this.renderAllCase()}
-                    </div>
-                </div>
+        return <div style={{ textAlign: 'center' }}>
+            <div style={{ display: 'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px' }}>
+                {this.renderAllCase()}
+            </div>
+        </div>
     }
 }
 

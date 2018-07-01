@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Dropdown, Image, Icon, Confirm } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
-import userIcon from './user.jpg' 
+import userIcon from './user.jpg'
 
 class LoginPanel extends Component {
     constructor(props) {
@@ -12,22 +12,22 @@ class LoginPanel extends Component {
     }
 
     showLogoutDialog = () => {
-        this.setState({logoutConfirmOpen: true})
+        this.setState({ logoutConfirmOpen: true })
     }
 
     handleLogoutConfirm = () => {
         this.props.onLogoutRequest()
-        this.setState({logoutConfirmOpen: false})
+        this.setState({ logoutConfirmOpen: false })
     }
 
     handleLogoutCancel = () => {
-        this.setState({logoutConfirmOpen: false})
+        this.setState({ logoutConfirmOpen: false })
     }
 
     renderAuthenticated = () => {
         let nickname = this.props.auth.attributes.nickname
         const trigger = (
-                <Image avatar src={userIcon} /> 
+            <Image avatar src={userIcon} />
         )
 
         return (
@@ -36,10 +36,10 @@ class LoginPanel extends Component {
                     <Dropdown.Menu>
                         <Dropdown.Header content={`hello, ${nickname}`} />
                         <Dropdown.Item as={Link} to="/setting">
-                            <Icon name="setting"/> Settings
+                            <Icon name="setting" /> Settings
                         </Dropdown.Item>
                         <Dropdown.Item onClick={this.showLogoutDialog}>
-                            <Icon name="sign out"/> Sign Out
+                            <Icon name="sign out" /> Sign Out
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -49,7 +49,7 @@ class LoginPanel extends Component {
                         marginTop: '40px !important',
                         marginLeft: 'auto',
                         marginRight: 'auto',
-                      }}/>
+                    }} />
             </div>
         )
     }

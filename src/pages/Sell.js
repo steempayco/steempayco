@@ -4,7 +4,7 @@ import SellFormContainer from 'containers/SellFormContainer'
 import AuthContainer from 'containers/AuthContainer';
 
 
-const Sell = ({match}) => {
+const Sell = ({ match }) => {
     return (
         <div className="responsiblePageArea">
             <AuthContainer>

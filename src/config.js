@@ -16,6 +16,6 @@ const stagedConfig = {
     ...config[stage]
 }
 
-console.log("Welcome to Steempay " + stage)
+console.log("Welcome to SteemPayco " + stage)
 
 export default stagedConfig;

@@ -39,6 +39,7 @@ class PaymentView extends Component {
     renderPaymentBlock = () => {
         const rate = this.props.feed.prices[this.state.invoice.currency];
         return <div>
+                <h2>PAYMENT DETAIL</h2>
                 <InvoiceDetailView invoice={this.state.invoice} rate={rate}/>
                 <Button circular fluid size="huge" onClick={() => this.payViaSteemConnect(rate)}>Pay via SteemConnect</Button>
                 </div>;

@@ -18,7 +18,7 @@ class AuthContainer extends Component {
                 </div>
             );
         } else {
-            return <LoginFormContainer/>
+            return <LoginFormContainer />
         }
     }
 }

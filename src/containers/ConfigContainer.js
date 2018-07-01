@@ -1,7 +1,7 @@
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
-const mapStateToProps = ({config}) => ({
+const mapStateToProps = ({ config }) => ({
     color: config.color,
     number: config.number
 });

@@ -14,7 +14,7 @@ const getConfig = () => {
         let previousConfig = JSON.parse(configFromStorage);
         console.log(previousConfig)
         if (previousConfig.version === config.version) {
-            config =  previousConfig
+            config = previousConfig
         }
     }
     return config;

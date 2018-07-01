@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Image, List, Divider, Container, Header, Segment, Dimmer, Loader, Icon, Grid, Form ,Table } from 'semantic-ui-react'
+import { Button, Image, List, Divider, Container, Header, Segment, Dimmer, Loader, Icon, Grid, Form, Table } from 'semantic-ui-react'
 import AddUser from './AddUser';
 import AddExchange from './AddExchange';
 import ManageStore from './ManageStore';
@@ -19,22 +19,22 @@ class SettingEditor extends Component {
     }
 
     onConfig = (config) => {
-        this.setState({config: {...this.state.config, ...config}});
+        this.setState({ config: { ...this.state.config, ...config } });
     }
 
     getUserAccounts = () => {
         let userList = this.state.config.users.map((user) => user.account);
         steem.api.getAccountsAsync(userList)
-        .then( (result) => {
-            let config = this.state.config;
-            for (let i = 0  ; i < result.length ; i++) {
-                config.users[i].img = "https://steemitimages.com/400x0/" + JSON.parse(result[i].json_metadata).profile.profile_image;
-            }
-            this.setState(config);
-        })
-        .catch((error) => {
-        })
-        .done();
+            .then((result) => {
+                let config = this.state.config;
+                for (let i = 0; i < result.length; i++) {
+                    config.users[i].img = "https://steemitimages.com/400x0/" + JSON.parse(result[i].json_metadata).profile.profile_image;
+                }
+                this.setState(config);
+            })
+            .catch((error) => {
+            })
+            .done();
     }
 
     addUser = (userData) => {
@@ -46,7 +46,7 @@ class SettingEditor extends Component {
         this.setState(this.state.config.users);
         this.getUserAccounts();
     }
-    
+
     addStore = (storeData) => {
         console.log(storeData);
         let stores = this.state.config.stores;
@@ -96,62 +96,62 @@ class SettingEditor extends Component {
         let config = this.state.config;
         return (
             <div>
-            <Header as='h2'>
-                <Icon name='users' />
-                <Header.Content>
-                Account Settings
+                <Header as='h2'>
+                    <Icon name='users' />
+                    <Header.Content>
+                        Account Settings
                 <Header.Subheader>Manage your preferences</Header.Subheader>
-                </Header.Content>
-            </Header>
-            <Grid stackable columns={2}>
-            <Grid.Column>
-            <Header as='h4' attached='top'>
-                Steem Accounts
-                <AddUser onSave={this.addUser}/>
-            </Header>
-            <Segment attached>
-                <List verticalAlign='middle' size='big'>
-                    {config && config.users.map( (user, key) => ( 
-                        <List.Item key={key}>
-                            <List.Content floated='right'>
-                                <Button circular onClick={() => this.deleteUser(user.account)} icon="trash" color='orange' />
-                            </List.Content>
-                            <Image avatar src={user.img} />
-                            <List.Content>
-                                {user.account}
-                            </List.Content>
-                        </List.Item>
-                    ))}
-                </List>
-            </Segment>
-            </Grid.Column>
-            <Grid.Column>
-            <Header as='h4' attached='top'>
-                Exchange Accounts
+                    </Header.Content>
+                </Header>
+                <Grid stackable columns={2}>
+                    <Grid.Column>
+                        <Header as='h4' attached='top'>
+                            Steem Accounts
+                <AddUser onSave={this.addUser} />
+                        </Header>
+                        <Segment attached>
+                            <List verticalAlign='middle' size='big'>
+                                {config && config.users.map((user, key) => (
+                                    <List.Item key={key}>
+                                        <List.Content floated='right'>
+                                            <Button circular onClick={() => this.deleteUser(user.account)} icon="trash" color='orange' />
+                                        </List.Content>
+                                        <Image avatar src={user.img} />
+                                        <List.Content>
+                                            {user.account}
+                                        </List.Content>
+                                    </List.Item>
+                                ))}
+                            </List>
+                        </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Header as='h4' attached='top'>
+                            Exchange Accounts
                 <AddExchange onSave={this.addExchange} />
-            </Header>
-            <Segment attached>
-                <List divided verticalAlign='middle' size='big'>
-                    {config && config.exchanges.map( (exchange, index) => ( 
-                        <List.Item key={index}>
-                            <List.Content floated='right'>
-                                <Button circular onClick={() => this.deleteExchange(index)} icon="trash" color='orange' />
-                            </List.Content>
-                            <Image avatar src={Utils.getExchangeImage(exchange.name)} />
-                            <List.Content>
-                                {exchange.nickname}
-                            </List.Content>
-                            <Container text textAlign='left'>
-                                <span style={{fontSize: 11, fontFamily: "monospace"}}>
-                                {exchange.wallet}
-                                </span>
-                            </Container>
-                        </List.Item>
-                    ))}
-                </List>
-            </Segment>
-            </Grid.Column>
-            </Grid>
+                        </Header>
+                        <Segment attached>
+                            <List divided verticalAlign='middle' size='big'>
+                                {config && config.exchanges.map((exchange, index) => (
+                                    <List.Item key={index}>
+                                        <List.Content floated='right'>
+                                            <Button circular onClick={() => this.deleteExchange(index)} icon="trash" color='orange' />
+                                        </List.Content>
+                                        <Image avatar src={Utils.getExchangeImage(exchange.name)} />
+                                        <List.Content>
+                                            {exchange.nickname}
+                                        </List.Content>
+                                        <Container text textAlign='left'>
+                                            <span style={{ fontSize: 11, fontFamily: "monospace" }}>
+                                                {exchange.wallet}
+                                            </span>
+                                        </Container>
+                                    </List.Item>
+                                ))}
+                            </List>
+                        </Segment>
+                    </Grid.Column>
+                </Grid>
             </div>
         )
     }
@@ -162,50 +162,50 @@ class SettingEditor extends Component {
         }
         let items = store.items;
         return (
-        <div>
-            <Form onSubmit={(event) => {
-                event.preventDefault();
-                if (!event.target[0].value || !event.target[1].value) return;
-                if (items.find(item => item.name == event.target[0].value)) return;
+            <div>
+                <Form onSubmit={(event) => {
+                    event.preventDefault();
+                    if (!event.target[0].value || !event.target[1].value) return;
+                    if (items.find(item => item.name == event.target[0].value)) return;
 
-                items.push({name: event.target[0].value, price: event.target[1].value});
-                this.setState({stores: this.state.stores});
-                event.target[0].value = ''
-                event.target[1].value = ''
-                event.target[0].focus()
-            }
-            }>
-                <Form.Group unstackable width={16}>
-                    <Form.Input placeholder='Name' name='name' width={10} />
-                    <Form.Input placeholder='price' name='price'  width={4}  />
-                    <Form.Button icon='add' width={2} />
-                </Form.Group>
-            </Form>
-            <Table compact='very' unstackable>
-                <Table.Body>
-                {items.map((item, index) => (
-                    <Table.Row key={index}>
-                        <Table.Cell>
-                                <b>{item.name}</b>
-                        </Table.Cell>
-                        <Table.Cell style={{textAlign: 'right'}}>
-                                {Utils.currencyFormat(item.price, store.currency) }
-                        </Table.Cell>
-                        <Table.Cell>
-                                <Button floated='right' icon='trash' color='orange' size='mini'
-                                    onClick={() => {
-                                        console.log(index);
+                    items.push({ name: event.target[0].value, price: event.target[1].value });
+                    this.setState({ stores: this.state.stores });
+                    event.target[0].value = ''
+                    event.target[1].value = ''
+                    event.target[0].focus()
+                }
+                }>
+                    <Form.Group unstackable width={16}>
+                        <Form.Input placeholder='Name' name='name' width={10} />
+                        <Form.Input placeholder='price' name='price' width={4} />
+                        <Form.Button icon='add' width={2} />
+                    </Form.Group>
+                </Form>
+                <Table compact='very' unstackable>
+                    <Table.Body>
+                        {items.map((item, index) => (
+                            <Table.Row key={index}>
+                                <Table.Cell>
+                                    <b>{item.name}</b>
+                                </Table.Cell>
+                                <Table.Cell style={{ textAlign: 'right' }}>
+                                    {Utils.currencyFormat(item.price, store.currency)}
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <Button floated='right' icon='trash' color='orange' size='mini'
+                                        onClick={() => {
+                                            console.log(index);
 
-                                        items.splice(index, 1);
-                                        this.setState(this.state.config);
-                                    }}
-                                />
-                        </Table.Cell>
-                    </Table.Row>
-                ))}
-                </Table.Body>
-            </Table>
-        </div>
+                                            items.splice(index, 1);
+                                            this.setState(this.state.config);
+                                        }}
+                                    />
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
+            </div>
         )
     }
 
@@ -217,45 +217,45 @@ class SettingEditor extends Component {
                 <Header as='h2'>
                     <Icon name='home' />
                     <Header.Content>
-                    Store Settings
+                        Store Settings
                     <Header.Subheader>Manage your Store</Header.Subheader>
                     </Header.Content>
-                </Header>  
+                </Header>
                 <ManageStore
                     onSave={this.addStore}
                     config={this.state.config}
                     trigger={<Button basic color='teal'>Add a new store</Button>}
                 />
                 {this.state.config.stores.map((store, index) => (
-                    <div key={index} style={{marginTop: '10px'}}>
+                    <div key={index} style={{ marginTop: '10px' }}>
                         <Header as='h3' attached='top'>
-                        {store.name}
-                            <span><Button icon="trash" floated='right' style={{backgroundColor: 'white'}} onClick={() => this.deleteStore(index)}/></span>
+                            {store.name}
+                            <span><Button icon="trash" floated='right' style={{ backgroundColor: 'white' }} onClick={() => this.deleteStore(index)} /></span>
                             <ManageStore
                                 onSave={this.addStore}
                                 config={this.state.config}
                                 storeData={store}
-                                trigger={<Button icon='pencil' floated='right' style={{backgroundColor: 'white'}}/>}
+                                trigger={<Button icon='pencil' floated='right' style={{ backgroundColor: 'white' }} />}
                             />
                         </Header>
                         <Segment attached>
                             <List divided verticalAlign='middle' size='medium'>
-                            <Grid stackable columns={2}>
-                                <Grid.Column>
-                                    <h4>Description</h4>
-                                    {store.description}
-                                    <h4>Address</h4>
-                                    {store.address}
-                                    <h4>Linked Account</h4>
-                                    {store.linkedAccount}
-                                    <h4>Currency</h4>
-                                    {store.currency}
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <h3>Items</h3>
-                                    {this.renderProducts(store, index)}
-                                </Grid.Column>
-                            </Grid>
+                                <Grid stackable columns={2}>
+                                    <Grid.Column>
+                                        <h4>Description</h4>
+                                        {store.description}
+                                        <h4>Address</h4>
+                                        {store.address}
+                                        <h4>Linked Account</h4>
+                                        {store.linkedAccount}
+                                        <h4>Currency</h4>
+                                        {store.currency}
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <h3>Items</h3>
+                                        {this.renderProducts(store, index)}
+                                    </Grid.Column>
+                                </Grid>
                             </List>
                         </Segment>
                     </div>
@@ -268,10 +268,10 @@ class SettingEditor extends Component {
         return (
             <Container>
                 {this.renderAccountSetting()}
-                <Divider/>
+                <Divider />
                 {this.renderStoreSetting()}
-                <Divider/>
-                <Button circular fluid color='teal' onClick={ this.save }>Save</Button>
+                <Divider />
+                <Button circular fluid color='teal' onClick={this.save}>Save</Button>
             </Container>
         )
     }
@@ -282,7 +282,7 @@ class SettingEditor extends Component {
                 {this.rednerSetting()}
                 {this.props.inProgress && (
                     <Dimmer active inverted>
-                            <Loader size='large'>Loading</Loader>
+                        <Loader size='large'>Loading</Loader>
                     </Dimmer>)}
             </div>
         )

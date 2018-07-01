@@ -8,19 +8,19 @@ class InvoiceForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            invoiceData: {amount: 0, currency: localStorage.getItem('preferred_currency') || 'KRW'},
+            invoiceData: { amount: 0, currency: localStorage.getItem('preferred_currency') || 'KRW' },
             invoiceId: null,
             fetching: false,
             receivers: this.props.users.map((user) => {
-                var key = JSON.stringify({account: user.account});
-                return {text: user.account, key: user.account, value: key}
+                var key = JSON.stringify({ account: user.account });
+                return { text: user.account, key: user.account, value: key }
             }),
             exchanges: this.props.exchanges.map((exchange) => {
-                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-                return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
+                var key = JSON.stringify({ exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname });
+                return { text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
             }),
             currencies: Utils.getCurrencies().map((currency) => {
-                return {key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
+                return { key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
             })
         };
         this.handleChange = this.handleChange.bind(this);
@@ -33,19 +33,19 @@ class InvoiceForm extends Component {
     }
 
     onPaymentCreated = (result) => {
-        this.setState({invoiceId: result.invoiceId});
-        this.setState({fetching: false});
+        this.setState({ invoiceId: result.invoiceId });
+        this.setState({ fetching: false });
     }
 
     onPaymentCreationFailed = (err) => {
-        this.setState({fetching: false});
+        this.setState({ fetching: false });
     }
 
-    
+
 
     createPayment = (onSuccess) => {
         localStorage.setItem('preferred_currency', this.state.invoiceData.currency);
-        this.setState({fetching: true});
+        this.setState({ fetching: true });
         var receiver = JSON.parse(this.state.invoiceData.receiver);
         var payload = {
             receiver: receiver.account,
@@ -73,50 +73,50 @@ class InvoiceForm extends Component {
 
         return config && {
             receivers: config.users.map((user) => {
-                var key = JSON.stringify({account: user.account});
-                return {text: user.account, key: user.account, value: key}
+                var key = JSON.stringify({ account: user.account });
+                return { text: user.account, key: user.account, value: key }
             }),
             exchanges: config.exchanges.map((exchange) => {
-                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-                return {text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
+                var key = JSON.stringify({ exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname });
+                return { text: exchange.nickname + ' (' + exchange.account + ')', value: key, key: key };
             }),
             currencies: Utils.getCurrencies().map((currency) => {
-                return {key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
+                return { key: currency.code, text: currency.symbol, value: currency.code, content: currency.code + ", " + currency.name };
             })
         }
     }
 
     showInvoiceForm = () => {
         let param = this.getParameters();
-        return ( param &&
-            <div style={{textAlign:'center'}}>
-                <div style={{display:'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px'}}>
-                <h2>Instant Sell</h2>
-                <Message><b>Instant Sell</b> will be unavilable soon. Please try to use <Link to="/sell">Sell</Link> instead.</Message>
-                {this.state.fetching && (
-                    <Dimmer active>
-                        <Loader>Creating...</Loader>
-                    </Dimmer>
-                )}
-                <h3>Amount</h3>
-                <Input fluid name='amount' size='huge' type="number" 
-                    label={<Dropdown name='currency' defaultValue={this.state.invoiceData.currency}
-                    options={param.currencies} onChange={this.handleChange} direction='left' />}
-                    labelPosition='right' placeholder='Price' onChange={this.handleChange}
-                />
-                <h3>Receiver</h3>
-                <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...param.receivers, ...param.exchanges]}
-                        onChange={this.handleChange} style={{fontSize: '16pt'}} />
-                <h3>Memo (optional)</h3>
-                <Form>
-                    <TextArea name='memo' 
-                        placeholder='Transaction message'
-                        onChange={this.handleChange}
-                        style={{fontSize: '16pt'}}/>
-                </Form>
-                <br/>
-                <Button size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
-                    Create Invoice
+        return (param &&
+            <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'inline-block', textAlign: 'left', width: '100%', maxWidth: '600px' }}>
+                    <h2>Instant Sell</h2>
+                    <Message><b>Instant Sell</b> will be unavilable soon. Please try to use <Link to="/sell">Sell</Link> instead.</Message>
+                    {this.state.fetching && (
+                        <Dimmer active>
+                            <Loader>Creating...</Loader>
+                        </Dimmer>
+                    )}
+                    <h3>Amount</h3>
+                    <Input fluid name='amount' size='huge' type="number"
+                        label={<Dropdown name='currency' defaultValue={this.state.invoiceData.currency}
+                            options={param.currencies} onChange={this.handleChange} direction='left' />}
+                        labelPosition='right' placeholder='Price' onChange={this.handleChange}
+                    />
+                    <h3>Receiver</h3>
+                    <Dropdown placeholder='Choose Receiver' name='receiver' fluid selection options={[...param.receivers, ...param.exchanges]}
+                        onChange={this.handleChange} style={{ fontSize: '16pt' }} />
+                    <h3>Memo (optional)</h3>
+                    <Form>
+                        <TextArea name='memo'
+                            placeholder='Transaction message'
+                            onChange={this.handleChange}
+                            style={{ fontSize: '16pt' }} />
+                    </Form>
+                    <br />
+                    <Button size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
+                        Create Invoice
                 </Button>
                 </div>
             </div>
@@ -124,7 +124,7 @@ class InvoiceForm extends Component {
     }
 
     render() {
-        return this.state.invoiceId ? 
+        return this.state.invoiceId ?
             <Redirect push to={this.props.location.pathname + "/" + this.state.invoiceId} />
             :
             this.showInvoiceForm();

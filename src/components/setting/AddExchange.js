@@ -3,15 +3,15 @@ import { Button, Header, Modal, Form } from 'semantic-ui-react'
 import Utils from 'shared/Utils'
 
 const inlineStyle = {
-    modal : {
-      marginTop: '40px !important',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+    modal: {
+        marginTop: '40px !important',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     }
 };
 
 const exchanges = Utils.getExchange().map((exchange) => (
-{key: exchange.name, value: exchange.name, text: exchange.name, image: exchange.image }));
+    { key: exchange.name, value: exchange.name, text: exchange.name, image: exchange.image }));
 
 class AddExchange extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class AddExchange extends Component {
     handleChange = (event, data) => {
         let exchange = this.state.exchangeData;
         exchange[data.name] = data.value;
-        this.setState({exchangeData: exchange});
+        this.setState({ exchangeData: exchange });
     }
 
     handleSave = () => {
@@ -35,35 +35,35 @@ class AddExchange extends Component {
         exchange.id = exchange.nickname
         exchange.type = 'exchange'
         this.props.onSave(exchange);
-        this.setState({exchangeData: {}});
+        this.setState({ exchangeData: {} });
         this.handleClose();
     }
 
     render() {
         return (
-        <Modal size='tiny' 
-            trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{backgroundColor: 'white'}}/>}
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            style={inlineStyle.modal}>
-        <Header icon='paste' content='Add an exchange account' />
-        <Modal.Content>
-        <Form>
-            <Form.Select fluid name='name' label='Exchange' options={exchanges} placeholder='Choose Exchange'  onChange={this.handleChange}/>
-            <Form.Input fluid name='nickname' label='Nick Name' placeholder='Nick name of this wallet'  onChange={this.handleChange}/>
-            <Form.Input fluid name='wallet' label='Wallet Code' placeholder='Your personal SBD wallet code'  onChange={this.handleChange}/>
-        </Form>
-        </Modal.Content>
-        <Modal.Actions>
-            <Button circular onClick={this.handleClose}>
-                Cancel
+            <Modal size='tiny'
+                trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{ backgroundColor: 'white' }} />}
+                open={this.state.modalOpen}
+                onClose={this.handleClose}
+                style={inlineStyle.modal}>
+                <Header icon='paste' content='Add an exchange account' />
+                <Modal.Content>
+                    <Form>
+                        <Form.Select fluid name='name' label='Exchange' options={exchanges} placeholder='Choose Exchange' onChange={this.handleChange} />
+                        <Form.Input fluid name='nickname' label='Nick Name' placeholder='Nick name of this wallet' onChange={this.handleChange} />
+                        <Form.Input fluid name='wallet' label='Wallet Code' placeholder='Your personal SBD wallet code' onChange={this.handleChange} />
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button circular onClick={this.handleClose}>
+                        Cancel
             </Button>
-            <Button circular color='teal' onClick={this.handleSave} 
-                icon='checkmark' labelPosition='right' content='Add' />
-            </Modal.Actions>
-        </Modal>
+                    <Button circular color='teal' onClick={this.handleSave}
+                        icon='checkmark' labelPosition='right' content='Add' />
+                </Modal.Actions>
+            </Modal>
         );
     }
 }
 
-  export default AddExchange;
+export default AddExchange;

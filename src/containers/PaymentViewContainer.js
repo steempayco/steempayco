@@ -1,8 +1,8 @@
 import PaymentView from '../components/PaymentView';
 import { connect } from 'react-redux';
 
-const mapStateToProps = ({common}) => {
-    return {feed: common.feed};
+const mapStateToProps = ({ common }) => {
+    return { feed: common.feed };
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -3,7 +3,7 @@ import Currency from 'resources/currency.json'
 import getSymbolFromCurrency from 'currency-symbol-map'
 
 let sortedCurrency = Currency;
-sortedCurrency.sort((a,b) => a.code - b.code);
+sortedCurrency.sort((a, b) => a.code - b.code);
 
 let Utils = {
     getExchange: () => {
@@ -17,7 +17,7 @@ let Utils = {
         return Exchange.find((item) => item.name === name).account;
     },
     getCurrencies: () => {
-        return sortedCurrency.map(item => { return {...item, symbol: getSymbolFromCurrency(item.code)}});
+        return sortedCurrency.map(item => { return { ...item, symbol: getSymbolFromCurrency(item.code) } });
     },
     getCurrencySymbol: (currencyCode) => {
         return getSymbolFromCurrency(currencyCode);
@@ -26,10 +26,10 @@ let Utils = {
         var units = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'],
             decimal;
 
-        for(var i=units.length-1; i>=0; i--) {
-            decimal = Math.pow(1000, i+1);
+        for (var i = units.length - 1; i >= 0; i--) {
+            decimal = Math.pow(1000, i + 1);
 
-            if(num <= -decimal || num >= decimal) {
+            if (num <= -decimal || num >= decimal) {
                 return +(num / decimal).toFixed(digits) + ' ' + units[i];
             }
         }
@@ -45,11 +45,11 @@ let Utils = {
         return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
             function toSolidBytes(match, p1) {
                 return String.fromCharCode('0x' + p1);
-        }));
+            }));
     },
     b64DecodeUnicode: (str) => {
         // Going backwards: from bytestream, to percent-encoding, to original string.
-        return decodeURIComponent(atob(str).split('').map(function(c) {
+        return decodeURIComponent(atob(str).split('').map(function (c) {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
     },
@@ -77,7 +77,7 @@ let Utils = {
     },
     getBaseUrl: () => {
         let loc = window.location;
-        return loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "";
+        return loc.protocol + "//" + loc.hostname + (loc.port ? ":" + loc.port : "") + "";
     },
     numberWithCommas: (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -92,7 +92,7 @@ let Utils = {
     },
     safeMultiply: (v1, v2) => {
         const cf = 100;
-        return ((v1 * cf) * (v2 * cf)) / (cf * cf)  
+        return ((v1 * cf) * (v2 * cf)) / (cf * cf)
     }
 };
 

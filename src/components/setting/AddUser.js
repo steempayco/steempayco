@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Button, Header, Modal, Input, Form } from 'semantic-ui-react'
 
 const inlineStyle = {
-    modal : {
-      marginTop: '40px !important',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+    modal: {
+        marginTop: '40px !important',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     }
 };
 
@@ -39,29 +39,29 @@ class AddUser extends Component {
 
     render() {
         return (
-        <Modal size='tiny' 
-            trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{backgroundColor: 'white'}}/>}
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            style={inlineStyle.modal}>
-        <Header icon='paste' content='Add a Steem account' />
-        <Modal.Content>
-        <Form>
-            <Form.Group widths='equal'>
-            <Form.Field control={Input} onChange={this.handleChange} label='Steem Account' placeholder='Steem account' />
-            </Form.Group>
-        </Form>
-        </Modal.Content>
-        <Modal.Actions>
-            <Button circular onClick={this.handleClose}>
-                Cancel
+            <Modal size='tiny'
+                trigger={<Button icon='add user' floated='right' onClick={this.handleOpen} style={{ backgroundColor: 'white' }} />}
+                open={this.state.modalOpen}
+                onClose={this.handleClose}
+                style={inlineStyle.modal}>
+                <Header icon='paste' content='Add a Steem account' />
+                <Modal.Content>
+                    <Form>
+                        <Form.Group widths='equal'>
+                            <Form.Field control={Input} onChange={this.handleChange} label='Steem Account' placeholder='Steem account' />
+                        </Form.Group>
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button circular onClick={this.handleClose}>
+                        Cancel
             </Button>
-            <Button circular color='teal' onClick={this.handleSave} 
-                icon='checkmark' labelPosition='right' content='Add' />
-            </Modal.Actions>
-        </Modal>
+                    <Button circular color='teal' onClick={this.handleSave}
+                        icon='checkmark' labelPosition='right' content='Add' />
+                </Modal.Actions>
+            </Modal>
         );
     }
 }
 
-  export default AddUser;
+export default AddUser;

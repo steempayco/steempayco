@@ -4,15 +4,15 @@ import Utils from 'shared/Utils'
 import uuid from 'uuid/v4'
 
 const inlineStyle = {
-    modal : {
-      marginTop: '40px !important',
-      marginLeft: 'auto',
-      marginRight: 'auto',
+    modal: {
+        marginTop: '40px !important',
+        marginLeft: 'auto',
+        marginRight: 'auto',
     }
 };
 
 const currencies = Utils.getCurrencies().map((currency) => {
-    return {key: currency.code, text: currency.code + ", " + currency.name, value: currency.code };
+    return { key: currency.code, text: currency.code + ", " + currency.name, value: currency.code };
 })
 
 class AddStore extends Component {
@@ -22,19 +22,19 @@ class AddStore extends Component {
             modalOpen: false,
             storeData: this.props.storeData ?
                 this.props.storeData
-                : {id: uuid(), name: '', description: '', address: '', linkedAccount: '', currency: ''},
+                : { id: uuid(), name: '', description: '', address: '', linkedAccount: '', currency: '' },
         };
     }
 
     getParameters = (config) => {
         return config && {
             receivers: config.users.map((user) => {
-                var key = JSON.stringify({account: user.account});
-                return {text: user.account, key: user.account, value: user.id}
+                var key = JSON.stringify({ account: user.account });
+                return { text: user.account, key: user.account, value: user.id }
             }),
             exchanges: config.exchanges.map((exchange) => {
-                var key = JSON.stringify({exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname});
-                return {text: exchange.nickname + ' (' + exchange.account + ')', value: exchange.id, key: key };
+                var key = JSON.stringify({ exchange: exchange.name, account: exchange.account, wallet: exchange.wallet, nickname: exchange.nickname });
+                return { text: exchange.nickname + ' (' + exchange.account + ')', value: exchange.id, key: key };
             })
         }
     }
@@ -46,7 +46,7 @@ class AddStore extends Component {
     handleChange = (event, data) => {
         let store = this.state.storeData;
         store[data.name] = data.value;
-        this.setState({storeData: store});
+        this.setState({ storeData: store });
     }
 
     isAllSet = () => {
@@ -58,10 +58,10 @@ class AddStore extends Component {
             return false;
         }
         for (let key in this.state.storeData) {
-            if(!this.state.storeData[key]) {
+            if (!this.state.storeData[key]) {
                 return false;
             }
-         }
+        }
         return true;
     }
 
@@ -69,8 +69,8 @@ class AddStore extends Component {
         if (!this.isAllSet()) return;
         this.props.onSave(this.state.storeData);
         if (!this.props.storeData)
-            this.setState({storeData: {}});
-        
+            this.setState({ storeData: {} });
+
         this.handleClose();
     }
 
@@ -78,39 +78,39 @@ class AddStore extends Component {
         if (!this.props.config) return false
         let editMode = this.props.storeData ? true : false
         let params = this.getParameters(this.props.config)
-        let trigger = <span onClick={this.handleOpen}>{this.props.trigger}</span> 
+        let trigger = <span onClick={this.handleOpen}>{this.props.trigger}</span>
         let readyToSave = this.isAllSet();
         return (
-        <Modal size='tiny' 
-            trigger={trigger}
-            open={this.state.modalOpen}
-            onClose={this.handleClose}
-            style={inlineStyle.modal}>
-        <Header icon='paste' content={editMode ? 'Modify a store' : 'Add a store'} />
-        <Modal.Content>
-        <Form>
-            <Form.Input fluid name='name' label='Store Name' placeholder='Name of your store'
-                defaultValue={this.state.storeData.name} onChange={this.handleChange}/>
-            <Form.Input fluid name='description' label='Store Description' placeholder='About your store'
-                defaultValue={this.state.storeData.description} onChange={this.handleChange}/>
-            <Form.Input fluid name='address' label='Address' placeholder='Address of your store'
-                defaultValue={this.state.storeData.address} onChange={this.handleChange}/>
-            <Form.Select fluid name='linkedAccount' label='Receiving Account' options={[...params.receivers, ...params.exchanges]} placeholder='Choose the receiving account'
-                defaultValue={this.state.storeData.linkedAccount} onChange={this.handleChange}/>
-            <Form.Select fluid name='currency' label='Currency' name='currency' options={currencies} placeholder='Choose the currency'
-                defaultValue={this.state.storeData.currency} onChange={this.handleChange} direction='left' />
-        </Form>
-        </Modal.Content>
-        <Modal.Actions>
-            <Button circular onClick={this.handleClose}>
-                Cancel
+            <Modal size='tiny'
+                trigger={trigger}
+                open={this.state.modalOpen}
+                onClose={this.handleClose}
+                style={inlineStyle.modal}>
+                <Header icon='paste' content={editMode ? 'Modify a store' : 'Add a store'} />
+                <Modal.Content>
+                    <Form>
+                        <Form.Input fluid name='name' label='Store Name' placeholder='Name of your store'
+                            defaultValue={this.state.storeData.name} onChange={this.handleChange} />
+                        <Form.Input fluid name='description' label='Store Description' placeholder='About your store'
+                            defaultValue={this.state.storeData.description} onChange={this.handleChange} />
+                        <Form.Input fluid name='address' label='Address' placeholder='Address of your store'
+                            defaultValue={this.state.storeData.address} onChange={this.handleChange} />
+                        <Form.Select fluid name='linkedAccount' label='Receiving Account' options={[...params.receivers, ...params.exchanges]} placeholder='Choose the receiving account'
+                            defaultValue={this.state.storeData.linkedAccount} onChange={this.handleChange} />
+                        <Form.Select fluid name='currency' label='Currency' name='currency' options={currencies} placeholder='Choose the currency'
+                            defaultValue={this.state.storeData.currency} onChange={this.handleChange} direction='left' />
+                    </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button circular onClick={this.handleClose}>
+                        Cancel
             </Button>
-            <Button disabled={!readyToSave} circular color='teal' onClick={this.handleSave} 
-                icon='checkmark' labelPosition='right' content='Save' />
-            </Modal.Actions>
-        </Modal>
+                    <Button disabled={!readyToSave} circular color='teal' onClick={this.handleSave}
+                        icon='checkmark' labelPosition='right' content='Save' />
+                </Modal.Actions>
+            </Modal>
         );
     }
 }
 
-  export default AddStore;
+export default AddStore;

@@ -9,7 +9,8 @@ class Scan extends Component {
         this.state = {
             scanValue: null,
             scanner: null,
-            scanning: false};
+            scanning: false
+        };
 
         this.toggleScan = this.toggleScan.bind(this);
     }
@@ -25,10 +26,10 @@ class Scan extends Component {
             let _this = this;
             let videoComponent = document.getElementById('preview');
             let scanner = new window.Instascan.Scanner({ video: videoComponent, mirror: false });
-            _this.setState({scanner: scanner});
+            _this.setState({ scanner: scanner });
             scanner.addListener('scan', function (content) {
                 console.log(content);
-                _this.setState({scanValue: content});
+                _this.setState({ scanValue: content });
                 _this.props.onScanFinished(content.split("/").pop());
                 _this.toggleScan();
             });
@@ -45,33 +46,33 @@ class Scan extends Component {
         } else {
             window.Instascan.Camera.getCameras().then(function (cameras) {
                 if (cameras.length > 0) {
-                    _this.state.scanner.start(cameras[cameras.length-1]);
+                    _this.state.scanner.start(cameras[cameras.length - 1]);
                 } else {
                     console.error('No cameras found.');
                 }
-                }).catch(function (e) {
-                    console.error(e);
+            }).catch(function (e) {
+                console.error(e);
             });
         }
-        this.setState({scanning: !this.state.scanning});
+        this.setState({ scanning: !this.state.scanning });
     }
-    
+
     render() {
         return (
-            <div style={{textAlign: 'center'}}>
+            <div style={{ textAlign: 'center' }}>
                 {this.state.scanner &&
-                <Button fluid secondary onClick={this.toggleScan}>
-                    {this.state.scanning ? "Cancel" : (
-                        <span>
-                        Scan QR Code
-                        <Icon name="camera" style={{paddingLeft: 10}} />
-                        </span>
+                    <Button fluid secondary onClick={this.toggleScan}>
+                        {this.state.scanning ? "Cancel" : (
+                            <span>
+                                Scan QR Code
+                        <Icon name="camera" style={{ paddingLeft: 10 }} />
+                            </span>
                         )}
-                </Button>}
-                <div style={{paddingTop: 10}}>
-                    <div className="videoContainer" style={{display: this.state.scanning ? "inline-block":"none"}}>
+                    </Button>}
+                <div style={{ paddingTop: 10 }}>
+                    <div className="videoContainer" style={{ display: this.state.scanning ? "inline-block" : "none" }}>
                         <video id="preview"
-                        style={{width: 300, height: 300, objectFit: 'cover', display: 'inline-block'}}></video>
+                            style={{ width: 300, height: 300, objectFit: 'cover', display: 'inline-block' }}></video>
                         {this.state.scanValue && (
                             <div> {this.state.scanValue} </div>
                         )}
