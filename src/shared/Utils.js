@@ -5,7 +5,7 @@ import getSymbolFromCurrency from 'currency-symbol-map'
 let sortedCurrency = Currency;
 sortedCurrency.sort((a,b) => a.code - b.code);
 
-var Utils = {
+let Utils = {
     getExchange: () => {
         return Exchange;
     },

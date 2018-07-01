@@ -1,5 +1,7 @@
 {
     "common": {
+        "appName": "Steem Payco",
+        "brandName": "STEEMPAYCO",
         "defaultConfig": {
             "version": 1,
             "users" : [],

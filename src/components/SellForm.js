@@ -42,7 +42,6 @@ class SellForm extends Component {
     }
 
     onPaymentCreated = (result) => {
-        console.log(result)
         this.setState({fetching: false, invoiceId: result.invoiceId});
     }
 
@@ -67,8 +66,6 @@ class SellForm extends Component {
 
         this.setState({fetching: true});
         var receiver = this.getReceiverDetail();
-        console.log(receiver)
-
         var payload = {
             creater: this.props.username,
             receiver: receiver.account,

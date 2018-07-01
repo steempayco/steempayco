@@ -18,6 +18,8 @@ Amplify.configure(globalConfig.aws)
 
 
 const store = createStore(reducers);
+window.stateStore = store
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -26,7 +28,7 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-if (globalConfig.stage == 'dev') {
+if (globalConfig.stage === 'dev') {
     console.log(globalConfig)
     console.log("Regitering development ServiceWorker")
     registerServiceWorker();

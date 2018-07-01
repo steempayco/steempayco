@@ -1,7 +1,9 @@
 import globalConfig from 'config'
+import AuthHelper from './AuthHelper'
 
-//const apiBase = 'https://05ngwbbeu3.execute-api.us-west-2.amazonaws.com/Prod';
 const apiBase = globalConfig.apiBase
+
+
 
 let Api = {
     fetchInvoice: (invoiceId, onSuccess, onFail) => {
@@ -16,7 +18,7 @@ let Api = {
     createInvoice: (payload, onSuccess, onFail) => {
         let fetchOption = {
             method: "POST",
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'Authorization': AuthHelper.getIdToken()},
             body: JSON.stringify(payload)
         };
 

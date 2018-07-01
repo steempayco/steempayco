@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { Icon, Menu, Sidebar } from "semantic-ui-react"
 import LoginPanelContainer from 'containers/LoginPanelContainer'
 import Footer from 'components/Footer'
+import globalConfig from 'config';
+
 
 const NavBarMobile = ({
     children,
@@ -29,7 +31,7 @@ const NavBarMobile = ({
             <Icon name="sidebar" />
           </Menu.Item>
           <Menu.Item>
-            <h3>Steem Pay</h3>
+            <h3>{globalConfig.brandName}</h3>
           </Menu.Item>
           </Menu>
           <Menu.Menu position="right" style={{padding: '10px'}}>

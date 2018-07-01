@@ -55,7 +55,7 @@ class SettingEditor extends Component {
         }
         let updated = false;
         stores.forEach((item, index) => {
-            if (item.name == storeData.name) {
+            if (item.name === storeData.name) {
                 stores[index] = storeData;
                 updated = true
             }
