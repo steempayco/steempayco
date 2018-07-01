@@ -47,6 +47,8 @@ Serviced via AWS CloudFront.
 
 ## Design/Idea
 
+We have a design member, and for now public contribution in design area is limited
+
 ## Support STEEMPAYCO project
 
 You can support this project by various ways.
