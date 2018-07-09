@@ -6,6 +6,10 @@ import asyncio
 import logging
 import os
 import json
+import time
+import datetime
+from dynamodb import TransactionStore
+
 from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 from steem.blockchain import Blockchain
@@ -14,6 +18,7 @@ from block_pointer import BlockPointer
 from steem.steemd import Steemd
 from steem import Steem
 
+transactionStore = TransactionStore()
 
 class TransferStream:
     log = logging.getLogger(__name__)
@@ -41,6 +46,8 @@ class TransferStream:
                 if trans['operations'][0][0] == 'transfer':
                     transfer = trans['operations'][0][1]
                     if transfer['to'] == self.filter_account:
+                        memo = transfer['memo'].split(' ')
+                        timestamp = time.mktime(datetime.datetime.strptime(block['timestamp'], "%Y-%m-%dT%H:%M:%S").timetuple())*1000
                         transfer_detail = {
                             'block_num': block_no,
                             'tx_id': block['transaction_ids'][index],
@@ -48,7 +55,8 @@ class TransferStream:
                             'from': transfer['from'],
                             'to': transfer['to'],
                             'amount': transfer['amount'],
-                            'memo': transfer['memo']
+                            'invoiceId': memo[0],
+                            'memo': memo[1]
                         }
                         output.append(transfer_detail)
             if block_no > (self.last_shown_no + 100):
@@ -108,4 +116,5 @@ class Feed:
 
     def handle_data(self, transfer):
         self.log.info(transfer)
+        transactionStore.store(transfer)
         # Skip long comments
