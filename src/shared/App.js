@@ -9,7 +9,7 @@ import * as actions from "../actions"
 import globalConfig from 'config';
 
 
-import { Home, Payment, Invoice, Sell, Price, Api, Setting, Login, Signup, Confirm } from 'pages';
+import { Home, Payment, Invoice, Sell, Price, Api, Setting, Login, Signup, Confirm, StoreLocator } from 'pages';
 
 const leftItems = [
     { as: "a", content: "Home", key: "home" },
@@ -51,6 +51,7 @@ class App extends Component {
                 <Route path="/auth/login" component={Login} />
                 <Route path="/auth/signup" component={Signup} />
                 <Route path="/auth/confirm" component={Confirm} />
+                <Route path="/stores"  component={StoreLocator} />
                 <PriceFeedContainer />
             </AppFrame>
         </div>)
