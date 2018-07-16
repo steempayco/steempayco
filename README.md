@@ -14,7 +14,7 @@ You must have the following dependencies installed
 
 ## Installation
 ```
-git@github.com:steempayco/steempay.git
+git@github.com:steempayco/steempayco.git
 ```
 
 ## Run
