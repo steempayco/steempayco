@@ -56,7 +56,7 @@ class AddUser extends Component {
                     <Button circular onClick={this.handleClose}>
                         Cancel
             </Button>
-                    <Button circular color='teal' onClick={this.handleSave}
+                    <Button circular color='blue' onClick={this.handleSave}
                         icon='checkmark' labelPosition='right' content='Add' />
                 </Modal.Actions>
             </Modal>

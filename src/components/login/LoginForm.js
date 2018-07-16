@@ -43,7 +43,7 @@ class LoginForm extends Component {
             <Container>
                 <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450, textAlign: 'left' }}>
-                        <Header as='h2' color='teal' textAlign='center'>
+                        <Header as='h2' color='blue' textAlign='center'>
                             Log-in
                     </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>
@@ -51,7 +51,7 @@ class LoginForm extends Component {
                                 {this.renderError()}
                                 <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' defaultValue={this.props.userId} />
                                 <Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' type='password' />
-                                <Button color='teal' fluid size='large'>Login</Button>
+                                <Button color='blue' fluid size='large'>Login</Button>
                             </Segment>
                         </Form>
                         <Message>

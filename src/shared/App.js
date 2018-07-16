@@ -3,7 +3,6 @@ import { Route } from 'react-router'
 import { withRouter, Redirect } from 'react-router-dom';
 
 import AppFrame from 'components/AppFrame'
-import PriceFeedContainer from 'containers/PriceFeedContainer'
 import { connect } from 'react-redux'
 import * as actions from "../actions"
 import globalConfig from 'config';
@@ -39,8 +38,9 @@ class App extends Component {
             }
             return null;
         }
+        let overlay = this.props.location.pathname === '/';
         return (<div>
-            <AppFrame leftItems={leftItems} rightItems={rightItems}>
+            <AppFrame leftItems={leftItems} rightItems={rightItems} overlay={overlay}>
                 <Route exact path="/" component={Home} />
                 <Route path="/pay/:id?" component={Payment} />
                 <Route path="/invoice/:id?" component={Invoice} />
@@ -52,7 +52,6 @@ class App extends Component {
                 <Route path="/auth/signup" component={Signup} />
                 <Route path="/auth/confirm" component={Confirm} />
                 <Route path="/stores"  component={StoreLocator} />
-                <PriceFeedContainer />
             </AppFrame>
         </div>)
     }

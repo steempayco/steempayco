@@ -46,7 +46,7 @@ class SignupConfirm extends Component {
             <Container>
                 <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450, textAlign: 'left' }}>
-                        <Header as='h2' color='teal' textAlign='center'>
+                        <Header as='h2' color='blue' textAlign='center'>
                             E-mail Confirmation
                     </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>
@@ -54,7 +54,7 @@ class SignupConfirm extends Component {
                                 {this.renderError()}
                                 <Form.Input fluid icon='user' iconPosition='left' value={this.props.userEmail} placeholder='E-mail address' />
                                 <Form.Input fluid icon='lock' iconPosition='left' placeholder='Verification code' />
-                                <Button color='teal' fluid size='large'>Confirm</Button>
+                                <Button color='blue' fluid size='large'>Confirm</Button>
                             </Segment>
                         </Form>
                     </Grid.Column>

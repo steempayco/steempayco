@@ -58,7 +58,7 @@ class SignupComponent extends Component {
             <Container>
                 <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 500, textAlign: 'left' }}>
-                        <Header as='h2' color='teal' textAlign='center'>
+                        <Header as='h2' color='blue' textAlign='center'>
                             Sign-up
                     </Header>
                         <Form size='large' onSubmit={this.handleSubmit}>
@@ -79,7 +79,7 @@ class SignupComponent extends Component {
                                 </Form.Group>
 
                                 {error && <Message negative>{error}</Message>}
-                                <Button color='teal' fluid size='large'>
+                                <Button color='blue' fluid size='large'>
                                     Submit
                         </Button>
                             </Segment>

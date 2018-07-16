@@ -5,14 +5,20 @@ import LoginPanelContainer from 'containers/LoginPanelContainer'
 import Footer from 'components/Footer'
 import globalConfig from 'config';
 
+let menuStyleTransparent = {
+    background: 'rgba(0,0,0,0)',
+    boxShadow: 'none',
+    border: 0
+}
 
 const NavBarMobile = ({
     children,
     slideMenu,
     onToggle,
-    visible
-}) => (
-        <div>
+    visible,
+    overlay
+}) => {
+    return <div>
             <Sidebar as={Menu} animation="overlay" icon="labeled" inverted vertical visible={visible} width="thin">
                 {slideMenu.map((item, key) => (
                     <Link key={key} to={item.link} onClick={onToggle}>
@@ -25,7 +31,7 @@ const NavBarMobile = ({
                 <Footer />
             </Sidebar>
             <div onClick={visible ? onToggle : null}>
-                <Menu fixed="top" borderless>
+                <Menu fixed="top" borderless style={overlay ? menuStyleTransparent : {}}>
                     <Menu secondary>
                         <Menu.Item onClick={onToggle}>
                             <Icon name="sidebar" />
@@ -43,11 +49,7 @@ const NavBarMobile = ({
                 {children}
             </div>
         </div>
-    );
-
-const NavBarChildren = ({ children }) => (
-    <div style={{ display: 'inline-block', marginTop: '70px' }}>{children}</div>
-);
+};
 
 const slideMenu = [
     { name: 'Home', link: '/', icon: 'home' },
@@ -74,6 +76,7 @@ class AppFrame extends Component {
     render() {
         const { children, rightItems } = this.props;
         const { visible } = this.state;
+        const topMargin = this.props.overlay ? "0px" : "70px";
 
         return (
             <div style={{ textAlign: 'center' }}>
@@ -82,8 +85,9 @@ class AppFrame extends Component {
                     onPusherClick={this.handlePusher}
                     onToggle={this.handleToggle}
                     rightItems={rightItems}
-                    visible={visible}>
-                    <NavBarChildren>{children}</NavBarChildren>
+                    visible={visible}
+                    overlay={this.props.overlay}>
+                    <div style={{ display: 'inline-block', marginTop: topMargin }}>{children}</div>
                 </NavBarMobile>
             </div>
         );

@@ -224,7 +224,7 @@ class SettingEditor extends Component {
                 <ManageStore
                     onSave={this.addStore}
                     config={this.state.config}
-                    trigger={<Button basic color='teal'>Add a new store</Button>}
+                    trigger={<Button basic color='blue'>Add a new store</Button>}
                 />
                 {this.state.config.stores.map((store, index) => (
                     <div key={index} style={{ marginTop: '10px' }}>
@@ -271,7 +271,7 @@ class SettingEditor extends Component {
                 <Divider />
                 {this.renderStoreSetting()}
                 <Divider />
-                <Button circular fluid color='teal' onClick={this.save}>Save</Button>
+                <Button circular fluid color='blue' onClick={this.save}>Save</Button>
             </Container>
         )
     }

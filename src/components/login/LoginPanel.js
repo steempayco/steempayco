@@ -57,8 +57,8 @@ class LoginPanel extends Component {
     renderNotAuthenticated = () => {
         return (
             <div>
-                <Button basic color='teal' size="medium" compact as={Link} to="/auth/login">Log in</Button>
-                <Button color='teal' size="medium" compact as={Link} to="/auth/signup">Sign up</Button>
+                <Button basic color='blue' size="medium" compact as={Link} to="/auth/login">Log in</Button>
+                <Button color='blue' size="medium" compact as={Link} to="/auth/signup">Sign up</Button>
             </div>
         )
     }

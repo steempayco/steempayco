@@ -105,7 +105,7 @@ class AddStore extends Component {
                     <Button circular onClick={this.handleClose}>
                         Cancel
             </Button>
-                    <Button disabled={!readyToSave} circular color='teal' onClick={this.handleSave}
+                    <Button disabled={!readyToSave} circular color='blue' onClick={this.handleSave}
                         icon='checkmark' labelPosition='right' content='Save' />
                 </Modal.Actions>
             </Modal>

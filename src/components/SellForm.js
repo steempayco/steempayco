@@ -136,9 +136,9 @@ class SellForm extends Component {
     renderStorePanel = () => {
         return (
             <div>
-                <Label.Group color='teal'>
+                <Label.Group color='blue'>
                     {this.state.store.items.map((item, index) => (
-                        <Button key={index} basic color='black' size='small' onClick={() => this.addItemList(item)} style={{ marginTop: '5px' }}>
+                        <Button key={index} basic color='blue' size='small' onClick={() => this.addItemList(item)} style={{ marginTop: '5px' }}>
                             {item.name}
                         </Button>
                     ))}
@@ -226,7 +226,7 @@ class SellForm extends Component {
                 <h3>Items to Sell</h3>
                 {this.renderSelectedItems()}
                 <Divider hidden />
-                <Button color='teal' size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
+                <Button color='blue' size='big' circular disabled={!this.isReady()} fluid onClick={() => this.createPayment(this.onPaymentCreated)}>
                     Sell!
                 </Button>
                 {this.state.fetching && (
