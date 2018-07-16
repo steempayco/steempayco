@@ -48,6 +48,7 @@ const Home = () => {
                         marginTop: mobile ? '0.5em' : '1.5em',
                     }}
                 />
+                <br/>
                 <Button as={Link} to='/auth/signup' primary size='huge'>
                     Get Started
                     <Icon name='right arrow' />
