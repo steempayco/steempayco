@@ -11,11 +11,10 @@ Building a real economy on Steem blockchain by enabling on/offline commerce usin
 You must have the following dependencies installed
 - NodeJS 8.x or higher
 - yarn
-- python 3.x
 
 ## Installation
 ```
-git clone git@github.com:ianpark/steempay.git
+git@github.com:steempayco/steempay.git
 ```
 
 ## Run
