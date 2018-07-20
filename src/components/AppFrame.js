@@ -30,7 +30,7 @@ const NavBarMobile = ({
                 ))}
                 <Footer />
             </Sidebar>
-            <div class="wrapper" onClick={visible ? onToggle : null}>
+            <div className="wrapper" onClick={visible ? onToggle : null}>
                 <Menu fixed="top" borderless style={overlay ? menuStyleTransparent : {}}>
                     <Menu secondary>
                         <Menu.Item onClick={onToggle}>

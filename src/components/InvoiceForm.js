@@ -39,6 +39,7 @@ class InvoiceForm extends Component {
 
     onPaymentCreationFailed = (err) => {
         this.setState({ fetching: false });
+        alert(`Failed to create invoice: ${err}`)
     }
 
 

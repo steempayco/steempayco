@@ -32,7 +32,7 @@ const Home = () => {
                     content='Welcome to STEEMPAYCO!'
                     color='blue'
                     style={{
-                        fontSize: mobile ? '1.5em' : '3em',
+                        fontSize: mobile ? '1em' : '2em',
                         fontWeight: 'normal',
                         marginBottom: 0,
                         marginTop: mobile ? '1.5em' : '3em',
@@ -43,7 +43,7 @@ const Home = () => {
                     content='Buy Real, Sell Real, Pay Real'
                     color='blue'
                     style={{
-                        fontSize: mobile ? '1.5em' : '1.7em',
+                        fontSize: mobile ? '1.2em' : '1.4em',
                         fontWeight: 'normal',
                         marginTop: mobile ? '0.5em' : '1.5em',
                     }}
