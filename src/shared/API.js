@@ -3,8 +3,7 @@ import AuthHelper from "./AuthHelper";
 
 const apiBase = globalConfig.apiBase;
 
-const devMode = globalConfig.stage === "dev" ? true : false;
-const baseFetchOption = devMode ? { mode: "no-cors" } : {};
+const baseFetchOption = {};
 
 let Api = {
   fetchInvoice: (invoiceId, onSuccess, onFail) => {
