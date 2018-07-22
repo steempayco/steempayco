@@ -2,12 +2,13 @@ import React from 'react';
 import './PageCommon.css'
 
 import fetch from "isomorphic-fetch";
-import { compose, withProps, withHandlers } from "recompose";
+import { compose, withProps, withHandlers, withStateHandlers } from "recompose";
 import {
     withScriptjs,
     withGoogleMap,
     GoogleMap,
     Marker,
+    InfoWindow
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
@@ -18,7 +19,7 @@ const MapWithAMarkerClusterer = compose(
     withProps({
         googleMapURL: googleMapURL,
         loadingElement: <div style={{ height: `100%` }} />,
-        containerElement: <div style={{ height: `400px` }} />,
+        containerElement: <div style={{ height: window.innerHeight-90 }} />,
         mapElement: <div style={{ height: `100%` }} />,
     }),
     withHandlers({
@@ -27,6 +28,18 @@ const MapWithAMarkerClusterer = compose(
             console.log(`Current clicked markers length: ${clickedMarkers.length}`)
             console.log(clickedMarkers)
         },
+    }),
+    withStateHandlers(() => ({
+        isOpen: false,
+        showInfoIndex: '0'
+    }), {
+        onToggleOpen: ({ isOpen }) => () => ({
+            isOpen: !isOpen
+        }),
+        showInfo: ({ showInfo, isOpen}) => (key) => ({
+            isOpen: !isOpen,
+            showInfoIndex: key
+        })
     }),
     withScriptjs,
     withGoogleMap
@@ -45,11 +58,19 @@ const MapWithAMarkerClusterer = compose(
                 <Marker
                     key={marker.photo_id}
                     position={{ lat: marker.latitude, lng: marker.longitude }}
-                />
+                    onClick = { ()=> {console.log(props); props.showInfo(marker.photo_id)}}
+                >
+                    {props.showInfoIndex === marker.photo_id && <InfoWindow onCloseClick={props.onToggleOpen}>
+                        <div>
+                        <div>{marker.photo_title}</div>
+                        <img src={marker.photo_file_url} style={{maxWidth:window.innerWidth-100}}/>
+                        </div>
+                    </InfoWindow>}
+                </Marker>
             ))}
         </MarkerClusterer>
     </GoogleMap>
-);
+)
 
 class DemoApp extends React.PureComponent {
     componentWillMount() {
