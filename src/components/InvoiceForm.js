@@ -74,6 +74,8 @@ class InvoiceForm extends Component {
             this.state.invoiceData.currency
         );
 
+        var receiver = JSON.parse(this.state.invoiceData.receiver);
+
         // Check upbit account and reject.
         if (receiver.account === "myupbit") {
             alert(
@@ -81,9 +83,7 @@ class InvoiceForm extends Component {
             );
             return;
         }
-
         this.setState({ fetching: true });
-        var receiver = JSON.parse(this.state.invoiceData.receiver);
         var payload = {
             receiver: receiver.account,
             type: receiver.exchange ? "exchange" : "user",
