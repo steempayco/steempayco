@@ -27,17 +27,33 @@ const MapWithAMarkerClusterer = compose(
             const clickedMarkers = markerClusterer.getMarkers()
             console.log(`Current clicked markers length: ${clickedMarkers.length}`)
             console.log(clickedMarkers)
-        },
+        }
+        
+    }),
+    withHandlers(() => {
+        const refs = {
+          map: undefined,
+        }
+    
+        return {
+          onMapMounted: () => ref => {
+            refs.map = ref
+          },
+          onZoomChanged: ({ onZoomChange }) => (zoomChange) => {
+            zoomChange(refs.map.getZoom());
+          }
+        }
     }),
     withStateHandlers(() => ({
         isOpen: false,
         showInfoIndex: '0'
     }), {
-        onToggleOpen: ({ isOpen }) => () => ({
-            isOpen: !isOpen
+        showInfo: ({ isOpen }) => (key) => ({
+            isOpen: true,
+            showInfoIndex: key
         }),
-        showInfo: ({ showInfo, isOpen}) => (key) => ({
-            isOpen: !isOpen,
+        closeInfo: ({ isOpen }) => (key) => ({
+            isOpen: false,
             showInfoIndex: key
         })
     }),
@@ -45,8 +61,10 @@ const MapWithAMarkerClusterer = compose(
     withGoogleMap
 )(props =>
     <GoogleMap
-        defaultZoom={3}
-        defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+        zoom={props.zoom}
+        center={{ lat: props.lat, lng: props.lng }}
+        ref={props.onMapMounted}
+        onZoomChanged={ () => {props.onZoomChanged(props.zoomChange)}}
     >
         <MarkerClusterer
             onClick={props.onMarkerClustererClick}
@@ -58,12 +76,12 @@ const MapWithAMarkerClusterer = compose(
                 <Marker
                     key={marker.photo_id}
                     position={{ lat: marker.latitude, lng: marker.longitude }}
-                    onClick = { ()=> {console.log(props); props.showInfo(marker.photo_id)}}
+                    onClick = { ()=> { props.handleMarkerClick(marker); props.showInfo(marker.photo_id); }}
                 >
-                    {props.showInfoIndex === marker.photo_id && <InfoWindow onCloseClick={props.onToggleOpen}>
+                    {props.isOpen && props.showInfoIndex === marker.photo_id && <InfoWindow onCloseClick={ ()=>{ props.closeInfo(marker.photo_id);}}>
                         <div>
                         <div>{marker.photo_title}</div>
-                        <img src={marker.photo_file_url} style={{maxWidth:window.innerWidth-100}}/>
+                        <img src={marker.photo_file_url} style={{maxWidth:window.innerWidth-100}} alt=""/>
                         </div>
                     </InfoWindow>}
                 </Marker>
@@ -73,21 +91,68 @@ const MapWithAMarkerClusterer = compose(
 )
 
 class DemoApp extends React.PureComponent {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            lat: 36.126012,
+            lng: 127.552712,
+            zoom: 7   
+        }
+      }
+    
     componentWillMount() {
-        this.setState({ markers: [] })
+        this.setState({ markers: []});
+        this.getGeoLocation();
     }
 
     componentDidMount() {
         fetch(storeDataAPI)
             .then(res => res.json())
             .then(data => {
-                this.setState({ markers: data.photos });
-            });
+                this.setState({ 
+                    markers: data.photos
+                });                
+            });            
     }
 
+    handleMarkerClick = (marker) => {
+        this.setState({ 
+            lat: marker.latitude,
+            lng: marker.longitude,
+            zoom: 14
+          })
+    }
+
+    getGeoLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              this.setState({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                zoom: 14
+              });
+            }
+          )
+        } else {
+          error => console.log(error)
+        }
+    }
+
+    zoomChange = (zoom) => {
+        this.setState({
+            zoom :zoom
+        })
+    }
     render() {
         return (
-            <MapWithAMarkerClusterer markers={this.state.markers} />
+            <MapWithAMarkerClusterer markers={this.state.markers}
+            lat={this.state.lat}
+            lng={this.state.lng}
+            zoom={this.state.zoom}
+            handleMarkerClick={this.handleMarkerClick}
+            zoomChange={this.zoomChange}/>
         )
     }
 }
