@@ -35,7 +35,10 @@ class PaymentView extends Component {
         }
 
         let amount = info.amount + " " + info.currency;
-        let amountSBD = (info.amount / rate.price).toFixed(3) + " SBD";
+        let valueInSBD = parseInt(
+            rate ? info.amount / rate.price : info.amount
+        ).toFixed(3);
+        let amountSBD = valueInSBD + " SBD";
         let message = "";
         if (info.type === "exchange") {
             message = info.receiverDetail.wallet;
@@ -55,7 +58,9 @@ class PaymentView extends Component {
     };
 
     renderPaymentBlock = () => {
-        const rate = this.props.feed.prices[this.state.invoice.currency];
+        const rate =
+            this.state.invoice.currency !== "SBD" &&
+            this.props.feed.prices[this.state.invoice.currency];
         return (
             <div>
                 <h2>PAYMENT DETAIL</h2>
