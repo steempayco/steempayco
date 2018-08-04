@@ -12,7 +12,7 @@ import {
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
 
-const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places";
+const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAL9c8j-aqKaGnzawfzfZ8tK7dv5L4QC6s";
 const storeDataAPI = "https://gist.githubusercontent.com/farrrr/dfda7dd7fccfec5474d3/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json";
 
 const MapWithAMarkerClusterer = compose(
