@@ -4,6 +4,7 @@ import { Dimmer, Loader, Button } from 'semantic-ui-react'
 import InvoiceDetailView from 'components/InvoiceDetailView'
 import Api from 'shared/API'
 import Utils from 'shared/Utils'
+import PaymentPoller from './PaymentPoller'
 
 class InvoiceView extends Component {
     constructor(props) {
@@ -28,6 +29,7 @@ class InvoiceView extends Component {
 
     copyLink = () => {
         Utils.copyToClipboard(this.getData());
+        alert("The payment link is copied to the cilpboard.");
     }
 
     render() {
@@ -38,9 +40,10 @@ class InvoiceView extends Component {
                     <h2>
                         SCAN TO PAY
                     </h2>
-                    <QRCode style={{ width: '100%', maxWidth: 260 }} value={this.getData()} />
-                    <InvoiceDetailView invoice={this.state.invoice} feed={this.props.feed} />
-                    <p><Button size="huge" circular onClick={this.copyLink}>Get Link</Button></p>
+                    <QRCode style={{ width: '100%', maxWidth: 260, padding: '10px' }} value={this.getData()} />
+                    <PaymentPoller invoice={i} />
+                    <InvoiceDetailView invoice={i} feed={this.props.feed} />
+                    <p><Button size="large" circular onClick={this.copyLink}>Copy Link</Button></p>
                 </div>
             </div>
         ) : this.state.errorMessage ? (<div>{this.state.errorMessage}</div>) : (

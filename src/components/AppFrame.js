@@ -18,7 +18,7 @@ const NavBarMobile = ({
     visible,
     overlay
 }) => {
-    return <div>
+    return <div className="wrapper">
             <Sidebar as={Menu} animation="overlay" icon="labeled" inverted vertical visible={visible} width="thin">
                 {slideMenu.map((item, key) => (
                     <Link key={key} to={item.link} onClick={onToggle}>
@@ -30,7 +30,7 @@ const NavBarMobile = ({
                 ))}
                 <Footer />
             </Sidebar>
-            <div onClick={visible ? onToggle : null}>
+            <div className="wrapper" onClick={visible ? onToggle : null}>
                 <Menu fixed="top" borderless style={overlay ? menuStyleTransparent : {}}>
                     <Menu secondary>
                         <Menu.Item onClick={onToggle}>
@@ -79,7 +79,7 @@ class AppFrame extends Component {
         const topMargin = this.props.overlay ? "0px" : "70px";
 
         return (
-            <div style={{ textAlign: 'center' }}>
+            <div className="wrapper" style={{ textAlign: 'center' }}>
                 <NavBarMobile
                     slideMenu={slideMenu}
                     onPusherClick={this.handlePusher}
@@ -87,7 +87,7 @@ class AppFrame extends Component {
                     rightItems={rightItems}
                     visible={visible}
                     overlay={this.props.overlay}>
-                    <div style={{ display: 'inline-block', marginTop: topMargin }}>{children}</div>
+                    <div className="wrapper" style={{ display: 'inline-block', marginTop: topMargin }}>{children}</div>
                 </NavBarMobile>
             </div>
         );

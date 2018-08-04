@@ -1,7 +1,7 @@
 [
     {
         "name": "Upbit",
-        "account": "myupbit",
+        "account": "upbituserwallet",
         "image": "./img/upbit.jpg",
         "currency": "KRW"
     },

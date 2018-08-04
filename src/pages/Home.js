@@ -8,7 +8,8 @@ let backgroundStyle = {
     backgroundSize: "cover",
     width: '100vw',
     height: '100vh',
-    align: 'center'
+    align: 'center',
+    display: 'table-cell'
 }
 
 let markStyle = {
@@ -23,7 +24,7 @@ let markStyle = {
 const Home = () => {
     var mobile = false;
     return (
-        <div style={backgroundStyle}>
+        <div className="wrapper" style={backgroundStyle}>
             <Image src="/img/steempayco-mark.png" style={markStyle} />
             <Container text>
                 <Header
@@ -31,7 +32,7 @@ const Home = () => {
                     content='Welcome to STEEMPAYCO!'
                     color='blue'
                     style={{
-                        fontSize: mobile ? '1.5em' : '3em',
+                        fontSize: mobile ? '1em' : '2em',
                         fontWeight: 'normal',
                         marginBottom: 0,
                         marginTop: mobile ? '1.5em' : '3em',
@@ -42,15 +43,17 @@ const Home = () => {
                     content='Buy Real, Sell Real, Pay Real'
                     color='blue'
                     style={{
-                        fontSize: mobile ? '1.5em' : '1.7em',
+                        fontSize: mobile ? '1.2em' : '1.4em',
                         fontWeight: 'normal',
                         marginTop: mobile ? '0.5em' : '1.5em',
                     }}
                 />
-                <Button as='Link' to='/auth/signup' primary size='huge'>
+                <br/>
+                <Button as={Link} to='/auth/signup' primary size='huge'>
                     Get Started
                     <Icon name='right arrow' />
                 </Button>
+                <div style={{height: '50px'}}></div>
             </Container>
         </div>
     );

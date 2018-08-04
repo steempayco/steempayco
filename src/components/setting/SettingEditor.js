@@ -45,6 +45,7 @@ class SettingEditor extends Component {
         users.push(userData);
         this.setState(this.state.config.users);
         this.getUserAccounts();
+        this.save();
     }
 
     addStore = (storeData) => {

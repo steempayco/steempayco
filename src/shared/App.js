@@ -39,7 +39,7 @@ class App extends Component {
             return null;
         }
         let overlay = this.props.location.pathname === '/';
-        return (<div>
+        return (<div className="wrapper">
             <AppFrame leftItems={leftItems} rightItems={rightItems} overlay={overlay}>
                 <Route exact path="/" component={Home} />
                 <Route path="/pay/:id?" component={Payment} />

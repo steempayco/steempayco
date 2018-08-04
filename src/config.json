@@ -23,7 +23,7 @@
                 "region" : "eu-west-2"
             }
         },
-        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Beta"
+        "apiBase": "https://api.steempay.co/beta"
     },
     "beta": {
         "aws": {
@@ -39,7 +39,7 @@
                 "region" : "eu-west-2"
             }
         },
-        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Beta"
+        "apiBase": "https://api.steempay.co/beta"
     },
     "prod": {
         "aws": {
@@ -55,6 +55,6 @@
                 "region" : "eu-west-2"
             }
         },
-        "apiBase": "https://fsbtnoz6bh.execute-api.eu-west-2.amazonaws.com/Prod"
+        "apiBase": "https://api.steempay.co/prod"
     }
 }
