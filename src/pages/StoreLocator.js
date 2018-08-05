@@ -1,5 +1,6 @@
 import React from 'react';
-import './PageCommon.css'
+import './PageCommon.css';
+import './StoreLocator.css';
 
 import fetch from "isomorphic-fetch";
 import { compose, withProps, withHandlers, withStateHandlers } from "recompose";
@@ -11,6 +12,7 @@ import {
     InfoWindow
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
+import Api from 'shared/API';
 
 const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAL9c8j-aqKaGnzawfzfZ8tK7dv5L4QC6s";
 const storeDataAPI = "https://gist.githubusercontent.com/farrrr/dfda7dd7fccfec5474d3/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json";
@@ -74,14 +76,35 @@ const MapWithAMarkerClusterer = compose(
         >
             {props.markers.map(marker => (
                 <Marker
-                    key={marker.photo_id}
+                    key={marker.store_id}
                     position={{ lat: marker.latitude, lng: marker.longitude }}
-                    onClick = { ()=> { props.handleMarkerClick(marker); props.showInfo(marker.photo_id); }}
+                    onClick = { ()=> { console.log(marker);props.handleMarkerClick(marker); props.showInfo(marker.store_id); }}
                 >
-                    {props.isOpen && props.showInfoIndex === marker.photo_id && <InfoWindow onCloseClick={ ()=>{ props.closeInfo(marker.photo_id);}}>
-                        <div>
-                        <div>{marker.photo_title}</div>
-                        <img src={marker.photo_file_url} style={{maxWidth:window.innerWidth-100}} alt=""/>
+                    {props.isOpen && props.showInfoIndex === marker.store_id && <InfoWindow onCloseClick={ ()=>{ props.closeInfo(marker.store_id);}}>
+                        <div className="inforwindow_wrapper">
+                            <div className="infowindow_title">{marker.name}</div>
+                            <div>
+                                <div className="infowindow_row">
+                                    <img src={marker.photo_urls[0]} className="infowindow_img" alt=""/>
+                                </div>
+                                <div className="infowindow_row">
+                                    <div className="infowindow_item">
+                                        업종 : {marker.category[0]}
+                                    </div>
+                                    <div className="infowindow_item">
+                                        <a target="_blank" href={'https://steemit.com/@'+'seonyu-base'}>@seonyu-base</a>
+                                    </div>
+                                    <div className="infowindow_item">
+                                        <a target="_blank" href={marker.website}>Homepage</a>
+                                    </div>
+                                    <div className="infowindow_item">
+                                        {marker.address}
+                                    </div>
+                                    <div className="infowindow_item">
+                                        {marker.description}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </InfoWindow>}
                 </Marker>
@@ -107,13 +130,17 @@ class DemoApp extends React.PureComponent {
     }
 
     componentDidMount() {
-        fetch(storeDataAPI)
-            .then(res => res.json())
-            .then(data => {
+        fetch(Api.getStores(
+            data => {
+                console.log(data);
                 this.setState({ 
-                    markers: data.photos
-                });                
-            });            
+                    markers: data.stores
+                });   
+            },
+            error => {
+
+            }
+        ));
     }
 
     handleMarkerClick = (marker) => {

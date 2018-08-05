@@ -47,20 +47,20 @@ let Api = {
       version: "1",
       stores: [
         {
-          store_id: "testid",
+          store_id: "1",
           name: "선유기지",
-          photo_urls: [""], // first one will be shown
+          photo_urls: ["http://quoteslab.kr/wordpress/wp-content/uploads/2017/03/%EC%84%A0%EC%9C%A0%EA%B8%B0%EC%A7%80_1_m.jpg"], // first one will be shown
           website: "https://www.instagram.com/seonyu_base/",
           currency: "KRW",
-          description: "",
+          description: "선유기지입니다. 커피 및 대관 가능합니다. 스팀달러로 결제가 가능합니다.",
           category: ["cafe", "restaurant"],
           address: "서울시 어디 저기저거 거기 13-1",
           contact_number: "02-222-1111",
-          longitude: -64.404945,
-          latitude: -32.202924
+          latitude: 37.390371, 
+          longitude: 126.962441
         },
         {
-          store_id: "testid",
+          store_id: "2",
           name: "Jamie's Italian",
           photo_urls: [""], // first one will be shown
           website: "https://www.instagram.com/jamie/",

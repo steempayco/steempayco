@@ -1,0 +1,25 @@
+.inforwindow_wrapper {
+    width: 70vw;
+}
+
+.infowindow_row {
+    width: 35vw;
+    display: inline-block;
+    float: left;
+}
+
+.infowindow_title {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.infowindow_img {
+    max-width: 35vw !important;
+}
+
+.infowindow_item {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
