@@ -3,7 +3,7 @@ import './PageCommon.css';
 import './StoreLocator.css';
 
 import fetch from "isomorphic-fetch";
-import { compose, withProps, withHandlers, withStateHandlers } from "recompose";
+import { compose, withProps, withHandlers, withStateHandlers, lifecycle } from "recompose";
 import {
     withScriptjs,
     withGoogleMap,
@@ -60,7 +60,20 @@ const MapWithAMarkerClusterer = compose(
         })
     }),
     withScriptjs,
-    withGoogleMap
+    withGoogleMap,
+    lifecycle({
+        componentDidMount(props) {
+            let geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode( { 'address': '경기도 의왕시 갈미1로 17'}, function(results, status) {
+                if (status == 'OK') {
+                    console.log('here result of geocoder', results);
+                    console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+                } else {
+                    console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    })
 )(props =>
     <GoogleMap
         zoom={props.zoom}
@@ -78,34 +91,37 @@ const MapWithAMarkerClusterer = compose(
                 <Marker
                     key={marker.store_id}
                     position={{ lat: marker.latitude, lng: marker.longitude }}
-                    onClick = { ()=> { console.log(marker);props.handleMarkerClick(marker); props.showInfo(marker.store_id); }}
+                    onClick = { ()=> { console.log(marker); props.handleMarkerClick(marker); props.showInfo(marker.store_id);console.log(props.lat,props.lng); }}
                 >
-                    {props.isOpen && props.showInfoIndex === marker.store_id && <InfoWindow onCloseClick={ ()=>{ props.closeInfo(marker.store_id);}}>
-                        <div className="inforwindow_wrapper">
-                            <div className="infowindow_title">{marker.name}</div>
-                            <div>
-                                <div className="infowindow_row">
-                                    <img src={marker.photo_urls[0]} className="infowindow_img" alt=""/>
-                                </div>
-                                <div className="infowindow_row">
-                                    <div className="infowindow_item">
-                                        업종 : {marker.category[0]}
+                    {props.isOpen && props.showInfoIndex === marker.store_id && 
+                        <InfoWindow 
+                            onCloseClick={ ()=>{ props.closeInfo(marker.store_id);}}
+                        >
+                            <div className="inforwindow_wrapper">
+                                <div className="infowindow_title">{marker.name}</div>
+                                <div>
+                                    <div className="infowindow_row">
+                                        <img src={marker.photo_urls[0]} className="infowindow_img" alt=""/>
                                     </div>
-                                    <div className="infowindow_item">
-                                        <a target="_blank" href={'https://steemit.com/@'+'seonyu-base'}>@seonyu-base</a>
-                                    </div>
-                                    <div className="infowindow_item">
-                                        <a target="_blank" href={marker.website}>Homepage</a>
-                                    </div>
-                                    <div className="infowindow_item">
-                                        {marker.address}
-                                    </div>
-                                    <div className="infowindow_item">
-                                        {marker.description}
+                                    <div className="infowindow_row">
+                                        <div className="infowindow_item">
+                                            업종 : {marker.category[0]}
+                                        </div>
+                                        <div className="infowindow_item">
+                                            <a target="_blank" href={'https://steemit.com/@'+'seonyu-base'}>@seonyu-base</a>
+                                        </div>
+                                        <div className="infowindow_item">
+                                            <a target="_blank" href={marker.website}>홈페이지</a>
+                                        </div>
+                                        <div className="infowindow_item">
+                                            {marker.address}
+                                        </div>
+                                        <div className="infowindow_item">
+                                            {marker.description}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </InfoWindow>}
                 </Marker>
             ))}
@@ -145,7 +161,7 @@ class DemoApp extends React.PureComponent {
 
     handleMarkerClick = (marker) => {
         this.setState({ 
-            lat: marker.latitude,
+            lat: marker.latitude+0.01,
             lng: marker.longitude,
             zoom: 14
           })
