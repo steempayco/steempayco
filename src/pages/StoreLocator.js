@@ -1,8 +1,9 @@
 import React from 'react';
-import './PageCommon.css'
+import './PageCommon.css';
+import './StoreLocator.css';
 
 import fetch from "isomorphic-fetch";
-import { compose, withProps, withHandlers, withStateHandlers } from "recompose";
+import { compose, withProps, withHandlers, withStateHandlers, lifecycle } from "recompose";
 import {
     withScriptjs,
     withGoogleMap,
@@ -11,8 +12,9 @@ import {
     InfoWindow
 } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/components/addons/MarkerClusterer";
+import Api from 'shared/API';
 
-const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places";
+const googleMapURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAL9c8j-aqKaGnzawfzfZ8tK7dv5L4QC6s";
 const storeDataAPI = "https://gist.githubusercontent.com/farrrr/dfda7dd7fccfec5474d3/raw/758852bbc1979f6c4522ab4e92d1c92cba8fb0dc/data.json";
 
 const MapWithAMarkerClusterer = compose(
@@ -27,26 +29,57 @@ const MapWithAMarkerClusterer = compose(
             const clickedMarkers = markerClusterer.getMarkers()
             console.log(`Current clicked markers length: ${clickedMarkers.length}`)
             console.log(clickedMarkers)
-        },
+        }
+        
+    }),
+    withHandlers(() => {
+        const refs = {
+          map: undefined,
+        }
+    
+        return {
+          onMapMounted: () => ref => {
+            refs.map = ref
+          },
+          onZoomChanged: ({ onZoomChange }) => (zoomChange) => {
+            zoomChange(refs.map.getZoom());
+          }
+        }
     }),
     withStateHandlers(() => ({
         isOpen: false,
         showInfoIndex: '0'
     }), {
-        onToggleOpen: ({ isOpen }) => () => ({
-            isOpen: !isOpen
+        showInfo: ({ isOpen }) => (key) => ({
+            isOpen: true,
+            showInfoIndex: key
         }),
-        showInfo: ({ showInfo, isOpen}) => (key) => ({
-            isOpen: !isOpen,
+        closeInfo: ({ isOpen }) => (key) => ({
+            isOpen: false,
             showInfoIndex: key
         })
     }),
     withScriptjs,
-    withGoogleMap
+    withGoogleMap,
+    lifecycle({
+        componentDidMount(props) {
+            let geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode( { 'address': '경기도 의왕시 갈미1로 17'}, function(results, status) {
+                if (status == 'OK') {
+                    console.log('here result of geocoder', results);
+                    console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+                } else {
+                    console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    })
 )(props =>
     <GoogleMap
-        defaultZoom={3}
-        defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+        zoom={props.zoom}
+        center={{ lat: props.lat, lng: props.lng }}
+        ref={props.onMapMounted}
+        onZoomChanged={ () => {props.onZoomChanged(props.zoomChange)}}
     >
         <MarkerClusterer
             onClick={props.onMarkerClustererClick}
@@ -56,15 +89,39 @@ const MapWithAMarkerClusterer = compose(
         >
             {props.markers.map(marker => (
                 <Marker
-                    key={marker.photo_id}
+                    key={marker.store_id}
                     position={{ lat: marker.latitude, lng: marker.longitude }}
-                    onClick = { ()=> {console.log(props); props.showInfo(marker.photo_id)}}
+                    onClick = { ()=> { console.log(marker); props.handleMarkerClick(marker); props.showInfo(marker.store_id);console.log(props.lat,props.lng); }}
                 >
-                    {props.showInfoIndex === marker.photo_id && <InfoWindow onCloseClick={props.onToggleOpen}>
-                        <div>
-                        <div>{marker.photo_title}</div>
-                        <img src={marker.photo_file_url} style={{maxWidth:window.innerWidth-100}}/>
-                        </div>
+                    {props.isOpen && props.showInfoIndex === marker.store_id && 
+                        <InfoWindow 
+                            onCloseClick={ ()=>{ props.closeInfo(marker.store_id);}}
+                        >
+                            <div className="inforwindow_wrapper">
+                                <div className="infowindow_title">{marker.name}</div>
+                                <div>
+                                    <div className="infowindow_row">
+                                        <img src={marker.photo_urls[0]} className="infowindow_img" alt=""/>
+                                    </div>
+                                    <div className="infowindow_row">
+                                        <div className="infowindow_item">
+                                            업종 : {marker.category[0]}
+                                        </div>
+                                        <div className="infowindow_item">
+                                            <a target="_blank" href={'https://steemit.com/@'+'seonyu-base'}>@seonyu-base</a>
+                                        </div>
+                                        <div className="infowindow_item">
+                                            <a target="_blank" href={marker.website}>홈페이지</a>
+                                        </div>
+                                        <div className="infowindow_item">
+                                            {marker.address}
+                                        </div>
+                                        <div className="infowindow_item">
+                                            {marker.description}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </InfoWindow>}
                 </Marker>
             ))}
@@ -73,21 +130,72 @@ const MapWithAMarkerClusterer = compose(
 )
 
 class DemoApp extends React.PureComponent {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            lat: 36.126012,
+            lng: 127.552712,
+            zoom: 7   
+        }
+      }
+    
     componentWillMount() {
-        this.setState({ markers: [] })
+        this.setState({ markers: []});
+        this.getGeoLocation();
     }
 
     componentDidMount() {
-        fetch(storeDataAPI)
-            .then(res => res.json())
-            .then(data => {
-                this.setState({ markers: data.photos });
-            });
+        fetch(Api.getStores(
+            data => {
+                console.log(data);
+                this.setState({ 
+                    markers: data.stores
+                });   
+            },
+            error => {
+
+            }
+        ));
     }
 
+    handleMarkerClick = (marker) => {
+        this.setState({ 
+            lat: marker.latitude+0.01,
+            lng: marker.longitude,
+            zoom: 14
+          })
+    }
+
+    getGeoLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              this.setState({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                zoom: 14
+              });
+            }
+          )
+        } else {
+          error => console.log(error)
+        }
+    }
+
+    zoomChange = (zoom) => {
+        this.setState({
+            zoom :zoom
+        })
+    }
     render() {
         return (
-            <MapWithAMarkerClusterer markers={this.state.markers} />
+            <MapWithAMarkerClusterer markers={this.state.markers}
+            lat={this.state.lat}
+            lng={this.state.lng}
+            zoom={this.state.zoom}
+            handleMarkerClick={this.handleMarkerClick}
+            zoomChange={this.zoomChange}/>
         )
     }
 }
